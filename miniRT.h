@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 16:13:58 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/12 18:13:45 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/12 20:49:28 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 int		ft_strlen_nb(int nb);
 int		ft_get_coord(double coord[], char *s, int i);
 int		ft_get_color(int color[], char *s, int i);
+int		ft_get_dir(double dir[], char *s, int i);
 /*
  **	ft_parse_block_1
  */

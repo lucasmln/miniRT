@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:01:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/10/21 15:58:06 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/12 16:04:51 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 
 int				ft_atoi(const char *str);
+double			ft_atod(char *s);
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t count, size_t size);
 int				ft_isalnum(int c);

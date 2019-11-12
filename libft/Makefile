@@ -6,13 +6,13 @@
 #    By: jgrandne <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/16 11:50:11 by jgrandne          #+#    #+#              #
-#    Updated: 2019/10/17 11:25:59 by lmoulin          ###   ########.fr        #
+#    Updated: 2019/11/12 17:16:46 by lmoulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-SRCS = ft_atoi.c ft_isascii.c ft_isalpha.c \
+SRCS = ft_atoi.c ft_atod.c ft_isascii.c ft_isalpha.c \
 ft_tolower.c ft_strlcat.c ft_strlen.c \
 ft_strnstr.c ft_toupper.c ft_isalnum.c ft_isdigit.c \
 ft_isprint.c ft_strchr.c  ft_strlcpy.c ft_strncmp.c \

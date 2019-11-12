@@ -1,38 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/07 12:26:29 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/12 15:20:03 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/11/12 16:04:05 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/11/12 20:04:48 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_atoi(const char *str)
+double		ft_atod(char *s)
 {
-	long	i;
-	long	negative;
-	long	nb;
+	double	nb;
+	int		div;
+	double	temp;
+	int		i;
+	int		neg;
 
 	i = 0;
-	negative = 1;
-	nb = 0;
-	while ((str[i] == '\t' || str[i] == '\n' || str[i] == '\r' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == ' ') && str[i])
-		i++;
-	if (str[i] == '-')
+	neg = 1;
+	div = 1;
+	if (s[i] == '-' || s[i] == '+')
+		neg = (s[i++] == '-') ? -1 : 1;
+	while ((s[i] <= '9' && s[i] >= '0'))
+		nb = nb * 10 + (s[i++] - '0');
+	if (s[i] != '.')
+		return (nb * neg);
+	i++;
+	temp = 0.1;
+	while (s[i] >= '0' && s[i] <= '9')
 	{
-		negative = -negative;
-		i++;
+		nb = nb + ((s[i++] - '0') * temp);
+		temp /= 10;
 	}
-	else if (str[i] == '+')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		nb = (str[i] - '0') + nb * 10;
-		i++;
-	}
-	return (nb * negative);
+	return (nb * neg);
 }
