@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/08 19:07:45 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/12 13:07:53 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,40 +65,48 @@ int		*ft_get_render(char *s)
 	return (render);
 }
 
+int		ft_check_file(t_data *data, char *s)
+{
+	int		i;
 
+	i = 0;
+	if (s[i] == 'R')
+}
 
 int		main(int ac, char **av)
 {
-	char	*param;
+	char	*file;
 	int		*render;
+	t_data	*data;
 	unsigned int	color;
-	data_t	data;
+	t_mlx	mlx;
 
 	int		i = 0;
 	int		k = 0;
 
-	param = ft_read_file(av[1]);
-	render = ft_get_render(param);
+	file = ft_read_file(av[1]);
+	render = ft_get_render(file);
 	if (render == NULL)
 		return (-1);
-	if ((data.mlx_ptr = mlx_init()) == NULL)
+	if ((mlx.mlx_ptr = mlx_init()) == NULL)
 		return (-1);
-	if ((data.mlx_win = mlx_new_window(data.mlx_ptr, render[0], render[1], "miniRT")) == NULL)
+	if ((mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, render[0], render[1], "miniRT")) == NULL)
 		return (-1);
-	mlx_loop(data.mlx_ptr);
 	color = 0x255;
 	color = color * 100 + 0x255;
 	color = color * 100 + 0x255;
 	int	save;
-	while (i < render[0])
-	{
-		k = 0;
-		while (i < render[1])
+	k = 0;
+//	while (i < render[0])
+//	{
+//		k = 0;
+		while (k < render[1])
 		{
-			save = mlx_pixel_put(data.mlx_ptr, data.mlx_win, i, k, 0xffffff);
+			save = mlx_pixel_put(mlx.mlx_ptr, mlx.win_ptr, k, i, 0xffcc99);
 			k++;
 		}
-		i++;
-	}
+//		i++;
+//	}
+	mlx_loop(mlx.mlx_ptr);
 	return (0);
 }
