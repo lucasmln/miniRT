@@ -6,13 +6,14 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:06:11 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/12 18:13:09 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/13 15:03:47 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "miniRT_struct.h"
 #include "libft/libft.h"
+#include <stdio.h>
 
 int		ft_get_render(t_data *data, char *s, int i)
 {
@@ -47,10 +48,16 @@ int		ft_get_ambience(t_data *data, char *s, int i)
 	data->ambience.ratio = ft_atod(&s[i]);
 	if (data->ambience.ratio < 0.0 || data->ambience.ratio > 1.0)
 		return (-1);
-	k = 0;
+	while (s[i] <= '9' && s[i] >= '0')
+		i++;
+	if (s[i] == '.')
+		i++;
+	while (s[i] <= '9' && s[i] >= '0')
+		i++;
+	k = -1;
 	while (s[i] == ' ')
 		i++;
-	while (k <= 2)
+	while (++k <= 2)
 	{
 	if (s[i] < '0' || s[i] > '9')
 			return (-1);
@@ -60,7 +67,6 @@ int		ft_get_ambience(t_data *data, char *s, int i)
 			i++;
 		if (data->ambience.color[k] < 0 || data->ambience.color[k] > 255)
 			return (-1);
-		k++;
 	}
 	return ((s[i++] == '\n' ? i : -1));
 }
@@ -76,13 +82,13 @@ int		ft_ambience_and_res(t_data *data, char *s, int i)
 	if (s[i] == 'R')
 	{
 		check = 1;
-		i = ft_get_render(data, s, i);
+		i = ft_get_render(data, s, i + 1);
 	}
 	else
-		i = ft_get_ambience(data, s, i);
-	if (i == -1 || (s[i] != 'R' && check == 0) || (check == 1 && s[i] != 'A'))
+		i = ft_get_ambience(data, s, i + 1);
+	if (i == -1 || (s[i] == 'R' && check == 1) || (check == 0 && s[i] == 'A'))
 		return (-1);
-	i = (check == 1) ? ft_get_ambience(data, s, i) : ft_get_render(data, s, i);
+	i = (check == 1) ? ft_get_ambience(data, s, i + 1) : ft_get_render(data, s, i + 1);
 	check += 2;
 	return (i);
 }

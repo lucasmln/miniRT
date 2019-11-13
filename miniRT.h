@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 16:13:58 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/12 20:49:28 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/13 14:35:42 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 #define MINIRT_H
 
 #include "miniRT_struct.h"
+#include <stdio.h>
 /*
  ** miniRT_utils
  */
 int		ft_strlen_nb(int nb);
 int		ft_get_coord(double coord[], char *s, int i);
 int		ft_get_color(int color[], char *s, int i);
-int		ft_get_dir(double dir[], char *s, int i);
+int		ft_get_dir(double dir[], const char *s, int i);
+int		ft_pass_double(char *s, int i);
 /*
  **	ft_parse_block_1
  */
@@ -33,5 +35,19 @@ int		ft_ambience_and_res(t_data *data, char *s, int i);
 int		ft_get_cam(t_data *data, char *s, int i);
 int		ft_get_light(t_data *data, char *s, int i);
 int		ft_cam_and_light(t_data *data, char *s, int i);
+/*
+ ** ft_parse_obj_1
+ */
+int		ft_check_valid_obj(char *s, int i);
+int		ft_obj_is_sphere(t_data *data, char *s, int i);
+int		ft_obj_is_plane(t_data *data, char *s, int i);
+int		ft_objet(t_data *data, char *s, int i);
+int		ft_check_file(t_data *data, char *s);
+/*
+ ** ft_parse_obj_2
+ */
+int		ft_obj_is_square(t_data *data, char *s, int i);
+int		ft_obj_is_cylinder(t_data *data, char *s, int i);
+int		ft_obj_is_triangle(t_data *data, char *s, int i);
 
 #endif

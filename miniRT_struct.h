@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 16:12:06 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/12 17:50:56 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/13 16:10:20 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct		s_camera
 	double				dir[3];
 	int					fov;
 	struct s_camera		*next;
+	struct s_camera		*start;
 }					t_cam;
 
 typedef struct		s_light
@@ -33,6 +34,7 @@ typedef struct		s_light
 	double				ratio;
 	int					color[3];
 	struct s_light		*next;
+	struct s_light		*start;
 }					t_light;
 
 typedef struct		s_sphere
@@ -41,6 +43,7 @@ typedef struct		s_sphere
 	double				diameter;
 	int					color[3];
 	struct s_sphere		*next;
+	struct s_sphere		*start;
 }					t_sphere;
 
 typedef struct		s_plane
@@ -49,6 +52,7 @@ typedef struct		s_plane
 	double				dir[3];
 	int					color[3];
 	struct s_plane		*next;
+	struct s_plane		*start;
 }					t_plane;
 
 typedef struct		s_square
@@ -58,6 +62,7 @@ typedef struct		s_square
 	double				height;
 	int					color[3];
 	struct s_square		*next;
+	struct s_square		*start;
 }					t_square;
 
 typedef struct		s_cylinder
@@ -68,6 +73,7 @@ typedef struct		s_cylinder
 	double				height;
 	int					color[3];
 	struct s_cylinder	*next;
+	struct s_cylinder	*start;
 }					t_cylinder;
 
 typedef struct		s_triangle
@@ -77,6 +83,7 @@ typedef struct		s_triangle
 	double				coord_three[3];
 	int					color[3];
 	struct s_triangle	*next;
+	struct s_triangle	*start;
 }					t_triangle;
 
 typedef struct		s_data
