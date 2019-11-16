@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/13 16:16:49 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/16 20:37:45 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@
 #include <stdio.h>
 #define BUF_SIZE 1024
 
+t_mlx	mlx;
 
+int		esc_key(int key, void *p)
+{
+	if (key == 0x35)
+		exit (0);
+}
 char	*ft_read_file(char *av)
 {
 	int		ret;
@@ -37,34 +43,7 @@ char	*ft_read_file(char *av)
 	param[size] = '\0';
 	return (param);
 }
-/*
-int		ft_get_render(char *s)
-{
-	int		i;
-	int		k;
-	int		*render;
 
-	i = 0;
-	k = 0;
-	if (!(render = malloc(sizeof(int) * 2)) || !s)
-		return (NULL);
-	while (s[i] && s[i] != 'R')
-		i++;
-	if (s[i] != 'R')
-		return (NULL);
-	i++;
-	while (k < 2)
-	{
-		while (s[i] == ' ')
-			i++;
-		if (s[i] <= '0' || s[i] >= '9')
-			return (NULL);
-		render[k] = ft_atoi(&s[i]);
-		k++;
-	}
-	return (render);
-}
-*/
 void	ft_print_param(t_data *data)
 {
 	printf("R = %d*%d\n", data->render[0], data->render[1]);
@@ -146,15 +125,34 @@ int		ft_malloc_data(t_data	*data)
 	return (0);
 }
 
+int		ft_hexa(int nb)
+{
+	long	nbr;
+
+	nb = (nb < 0) ? -nb : nb;
+	nbr = 0;
+	while (nb > 15)
+	{
+		nbr = (nbr * 16) + (nb / 16);
+		nb /= 16;
+	}
+	return (nbr);
+}
+
 int		main(int ac, char **av)
 {
 	char	*file;
 	int		*render;
 	t_data	*data;
-	unsigned int	color;
-	t_mlx	mlx;
+	int		color;
+	int exit;
 
+	exit = 0;
 	if (!(data = malloc(sizeof(struct s_data) * 1)))
+		return (0);
+	if (!(mlx.mlx_ptr = malloc(sizeof(void*) * 1)))
+		return (0);
+	if (!(mlx.win_ptr = malloc(sizeof(void*) * 1)))
 		return (0);
 	if (ft_malloc_data(data) == -1)
 		return (0);
@@ -165,25 +163,52 @@ int		main(int ac, char **av)
 		return (-1);
 		}
 	ft_print_param(data);
-/*	if ((mlx.mlx_ptr = mlx_init()) == NULL)
+	if ((mlx.mlx_ptr = mlx_init()) == NULL)
 		return (-1);
-	if ((mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, render[0], render[1], "miniRT")) == NULL)
+	if ((mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, data->render[0], data->render[1], "miniRT")) == NULL)
 		return (-1);
-	color = 0x255;
 	color = color * 100 + 0x255;
 	color = color * 100 + 0x255;
+	color = (ft_hexa(data->square->color[0]*1000) + ft_hexa(data->square->color[1] * 10) + ft_hexa(data->square->color[2]));
+	int	k;
 	int	save;
+	printf("color =%d\n", ft_hexa(color));
 	k = 0;
-	while (i < render[0])
-	{	
-	k = 0;		while (k < render[1])
-		{
-			save = mlx_pixel_put(mlx.mlx_ptr, mlx.win_ptr, k, i, 0xffcc99);
-			k++;
-		}
-//		i++;
+	k = 0;
+	int ret;
+	//while (k < data->render[1])
+	//{
+//		save = mlx_pixel_put(mlx.mlx_ptr, mlx.win_ptr, k, 10, color);
+//		k++;
 //	}
+	int w = 1920;
+	int h = 1080;
+	int	x;
+	int	y;
+	int	color2;
+	 x = w;
+	while ((x >= w/2) && x--)
+	{
+		y = h;
+		while (y >= h/2 && y--)
+		{
+			color2 = (x*0)/w+((((w-0)*255)/w)<<16)+(((y*0)/h)<<8);
+			mlx_pixel_put(mlx.mlx_ptr,mlx.win_ptr,x,y,color2);
+		}
+	}
+	x = 0;
+	y = 0;
+	while ((x <= w/2) && x++)
+	{
+		y = h;
+		while (y <= h/2 && y++)
+		{
+			color2 = (x*255)/w+((((w-0)*0)/w)<<16)+(((y*255)/h)<<8);
+			mlx_pixel_put(mlx.mlx_ptr,mlx.win_ptr,x,y,color2);
+		}
+	}
+
+	mlx_key_hook(mlx.win_ptr, esc_key, 0);
 	mlx_loop(mlx.mlx_ptr);
-	*/
 	return (0);
 }
