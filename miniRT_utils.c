@@ -5,120 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 16:08:52 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/13 15:57:33 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/11/20 15:22:36 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/11/20 15:37:38 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_struct.h"
-#include "miniRT.h"
-#include "libft/libft.h"
+#include "inc/miniRT.h"
 
-int		ft_get_coord(double coord[], char *s, int i)
+int		ft_get_color_hexa(int color[])
 {
-	int		k;
-
-	k = 0;
-
-	while (k <= 2)
-	{
-		if ((s[i] < '0' || s[i] > '9') && (s[i] == '-' && (s[i] < '0' && s[i] > '9')))
-			return (-1);
-		coord[k] = ft_atod(&s[i]);
-		if (coord[k] < 0.0)
-			i++;
-		while (s[i] >= '0' && s[i] <= '9')
-			i++;
-		if (s[i] == '.')
-			i++;
-		while (s[i] >= '0' && s[i] <= '9')
-			i++;
-		if (s[i] == ',' && k < 2)
-			i++;
-		k++;
-	}
-	return (i);
+	return ((((color[0] << 8) + color[1]) << 8) + color[2]);
 }
 
-int		ft_get_color(int color[], char *s, int i)
+char	*ft_read_file(char *av)
 {
-	int		k;
+	int		ret;
+	int		fd;
+	int		size;
+	char	buf[BUF_SIZE + 1];
+	char	*param;
 
-	k = 0;
-	while (k <= 2)
-	{
-		while (s[i] == ' ')
-			i++;
-		color[k] = ft_atoi(&s[i]);
-		i += ft_strlen_nb(color[k]);
-		if (s[i] != ',' && k < 2)
-		{
-			return (-1);
-			}
-		i++;
-		k++;
-	}
-	while (--k >= 0)
-		if (color[k] > 255 || color[k] < 0)
-			return (-1);
-	return (i - 1);
-}
-
-int		ft_get_dir(double dir[], const char *s, int i)
-{
-	int		k;
-
-	k = 0;
-	while (k <= 2)
-	{
-		while (s[i] == ' ')
-			i++;
-		if (s[i] == '-')
-			i++;
-		if (s[i] < '0' || s[i] > '9')
-			return (-1);
-		dir[k] = ft_atod((char *)&s[i]);
-		if (dir[k] > 1.0 || dir[k] < -1.0)
-			return (-1);
-		if (dir[k] < 0.0)
-			i++;
-		while (s[i] >= '0' && s[i] <= '9')
-			i++;
-		if (s[i] == '.')
-			i++;
-		while (s[i] >= '0' && s[i] <= '9')
-			i++;
-		if (s[i] == ',' && k != 2)
-			i++;
-		k++;
-	}
-	return (i);
-}
-
-int		ft_strlen_nb(int nb)
-{
-	int		len;
-	long	nbr;
-
-	nbr = (nb < 0) ? -nb : nb;
-	len = (nb == 0) ? 1: 0;
-	while (nb > 0)
-	{
-		len++;
-		nb /= 10;
-	}
-	return (len);
-}
-
-int		ft_pass_double(char *s, int i)
-{
-	if (s[i] == '-' && s[i + 1] <= '9' && s[i + 1] >= '0')
-		i++;
-	while (s[i] >= '0' && s[i] <= '9')
-		i++;
-	if (s[i] == '.')
-		i++;
-	while (s[i] >= '0' && s[i] <= '9')
-		i++;
-	return (i);
+	fd = open(av, O_RDONLY);
+	size = 0;
+	while ((ret = read(fd, buf, BUF_SIZE)) > 0)
+		size += ret;
+	close(fd);
+	fd = open(av, O_RDONLY);
+	if (!(param = malloc(sizeof(char) * (size + 1))))
+		return (NULL);
+	ret = read(fd, param, size);
+	param[size] = '\0';
+	return (param);
 }
