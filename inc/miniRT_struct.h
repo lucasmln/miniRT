@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 16:12:06 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/13 16:10:20 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/20 18:36:09 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,15 @@ typedef struct		s_triangle
 	struct s_triangle	*start;
 }					t_triangle;
 
+typedef struct		s_image
+{
+	void		*image;
+	char		*ptr;
+	int			bpp;
+	int			stride;
+	int			endian;
+}					t_img;
+
 typedef struct		s_data
 {
 	int			render[2];
@@ -97,6 +106,7 @@ typedef struct		s_data
 	t_square	*square;
 	t_cylinder	*cylinder;
 	t_triangle	*triangle;
+	t_img		*img;
 
 }					t_data;
 

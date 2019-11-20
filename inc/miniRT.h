@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 16:13:58 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 15:25:44 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/20 18:18:17 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,15 @@ int		ft_obj_is_triangle(t_data *data, char *s, int i);
  ** miniRT_utils
  */
 int		ft_get_color_hexa(int color[]);
+char	*ft_read_file(char *av);
 /*
  ** ft_close
  */
 int		esc_key(int key, void *p);
 int		close_window(int button,int x,int y, void *p);
-
+/*
+ ** ft_image
+ */
+t_img		*ft_new_img(t_mlx mlx, t_data *data);
+void	put_pixel_to_img(int x, int y, int color, t_data *data);
 #endif

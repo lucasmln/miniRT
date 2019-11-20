@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 15:37:59 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/20 18:34:32 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,27 @@ int		main(int ac, char **av)
 		return (-1);
 	}
 //	ft_print_param(data);
+	int	x = 0, y = 0;
+
 	if ((mlx.mlx_ptr = mlx_init()) == NULL)
 		return (-1);
 	if ((mlx.win_ptr = mlx_new_window(mlx.mlx_ptr, data->render[0], data->render[1], "miniRT")) == NULL)
 		return (-1);
+	data->img->image = ft_new_img(mlx, data);
+//	printf("%d\n", data->img->bpp);
+	while (x < data->render[1])
+	{
+		y = 0;
+		while (y < data->render[0])
+		{
+			if (y == x)
+				put_pixel_to_img(x, y, ft_get_color_hexa(data->sphere->color), data);
+			y++;
+		}
+		x++;
+	}
+//	mlx_put_image_to_window(mlx.mlx_ptr, mlx.win_ptr, data->img->image, 0, 0);
+//	put_pixel_to_img(data->image, tab, ft_get_color_hexa(data->sphere->color), data);
 	mlx_key_hook(mlx.win_ptr, esc_key, 0);
 	mlx_mouse_hook(mlx.win_ptr, close_window, 0);
 	mlx_loop(mlx.mlx_ptr);
