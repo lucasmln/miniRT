@@ -6,12 +6,11 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:14:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 15:17:48 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/21 17:47:00 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT_struct.h"
-#include "../inc/miniRT.h"
+#include "../inc/minirt.h"
 #include "../libft/libft.h"
 
 int		ft_get_coord(double coord[], char *s, int i)

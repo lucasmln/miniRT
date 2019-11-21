@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 17:03:18 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/21 17:09:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		main(int ac, char **av)
 		return (-1);
 	if ((g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, data->render[0], data->render[1], "miniRT")) == NULL)
 		return (-1);
-/*	data->img->image = */ft_new_img(g_mlx, data);
+	ft_new_img(g_mlx, data);
 	printf("%s\n", data->img->image);
 	while (x < data->render[1])
 	{

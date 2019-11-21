@@ -6,12 +6,11 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:07:30 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 18:19:17 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/21 17:10:19 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
-#include "../inc/miniRT_struct.h"
+#include "../inc/minirt.h"
 #include "../libft/libft.h"
 
 int		ft_get_cam(t_data *data, char *s, int i)

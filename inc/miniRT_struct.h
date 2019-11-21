@@ -1,17 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT_struct.h                                    :+:      :+:    :+:   */
+/*   minirt_struct.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 16:12:06 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 18:36:09 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/11/21 17:03:17 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_STRUCT_H
-#define MINIRT_STRUCT_H
+# define MINIRT_STRUCT_H
+
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <math.h>
+#include <stdio.h>
 
 typedef struct		s_ambience
 {
@@ -115,10 +121,5 @@ typedef struct		s_mlx
 	void	*mlx_ptr;
 	void	*win_ptr;
 }					t_mlx;
-
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <math.h>
-
+t_mlx		g_mlx;
 #endif

@@ -6,14 +6,12 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:03:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 15:15:55 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/21 17:10:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
-#include "../inc/miniRT_struct.h"
-#include "../inc/miniRT.h"
-#include <stdio.h>
+#include "../inc/minirt.h"
 
 int		ft_check_valid_obj(char *s, int i)
 {

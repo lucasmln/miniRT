@@ -6,14 +6,13 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 15:16:10 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/21 17:11:01 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../libft/libft.h"
-#include "../inc/miniRT_struct.h"
-#include "../inc/miniRT.h"
+#include "../inc/minirt.h"
 
 int		ft_obj_is_square(t_data *data, char *s, int i)
 {

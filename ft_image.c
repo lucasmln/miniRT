@@ -6,12 +6,11 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:44:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 17:02:02 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/21 17:09:21 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minirt.h"
-#include "inc/minirt_struct.h"
 #include "minilibx_opengl/mlx.h"
 
 void	ft_new_img(t_mlx mlx, t_data *data)
@@ -26,7 +25,6 @@ void	ft_new_img(t_mlx mlx, t_data *data)
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride, &img->endian);
 	img->bpp = 1;
 	data->img = img;
-//	return (img);
 }
 
 void	put_pixel_to_img(int x, int y, int color, t_data *data)

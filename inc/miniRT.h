@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 16:13:58 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 18:18:17 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/11/21 17:04:19 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 #define MINIRT_H
 
-#include "miniRT_struct.h"
-#include <stdio.h>
+#include "minirt_struct.h"
 # define BUF_SIZE 1024
 /*
  ** ft_parse_utils
@@ -63,6 +62,6 @@ int		close_window(int button,int x,int y, void *p);
 /*
  ** ft_image
  */
-t_img		*ft_new_img(t_mlx mlx, t_data *data);
+void	ft_new_img(t_mlx mlx, t_data *data);
 void	put_pixel_to_img(int x, int y, int color, t_data *data);
 #endif

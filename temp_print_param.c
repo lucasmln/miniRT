@@ -6,12 +6,11 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:26:41 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 15:29:19 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/21 17:09:36 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/miniRT.h"
-#include "inc/miniRT_struct.h"
+#include "inc/minirt.h"
 
 void	ft_print_param(t_data *data)
 {

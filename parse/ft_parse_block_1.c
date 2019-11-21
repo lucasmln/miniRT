@@ -6,14 +6,12 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:06:11 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/20 18:19:06 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/21 17:09:50 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/miniRT.h"
-#include "../inc/miniRT_struct.h"
+#include "../inc/minirt.h"
 #include "../libft/libft.h"
-#include <stdio.h>
 
 int		ft_get_render(t_data *data, char *s, int i)
 {
