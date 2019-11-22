@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/22 15:33:14 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/22 15:51:14 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	ft_put_sphere(t_sphere *sp, t_data *data)
 {
 	double		x;
 	double		y;
-	int			k;
 	int			check;
 	int		color;
 
@@ -90,17 +89,8 @@ void	ft_put_sphere(t_sphere *sp, t_data *data)
 		check = 4;
 		while (y <= sp->coord[1] + sp->diameter)
 		{
-			k = -1;
-			while (++k <= data->sphere->diameter)
-			{
-					if (pow(x - sp->coord[0], 2) + pow(y - sp->coord[1], 2) == k)
-					{
-						put_pixel_to_img(x, y, color, data);
-						k = 0;
-						break;
-					}
-			}
-		//	if (fabs(sp->coord[1] - y)
+				if (sqrt(pow(x - sp->coord[0], 2) + pow(y - sp->coord[1], 2)) <= data->sphere->diameter)
+					put_pixel_to_img(x, y, color, data);
 			y += 1;
 		}
 		x += 1;

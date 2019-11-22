@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:44:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/22 14:49:36 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/22 15:43:23 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_new_img(t_mlx mlx, t_data *data)
 	if (img->image == NULL)
 		return ;
 	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride, &img->endian);
-	img->bpp = 4;
+	img->bpp /= 8;
 	data->img = img;
 }
 
