@@ -53,6 +53,58 @@ int		ft_malloc_data(t_data	*data)
 	return (0);
 }
 
+void	ft_put_losange(t_sphere *sp, t_data *data)
+{
+	int		x;
+	int		y;
+	int		color;
+
+	x = 0;
+	color = ft_get_color_hexa(sp->color);
+	while (x < data->render[0])
+	{
+		y = 0;
+		while (y < data->render[1])
+		{
+			if (fabs(x - sp->coord[1]) + fabs(y - sp->coord[0]) == 20)
+				put_pixel_to_img(x, y, color, data);
+			y += 1.0;;
+		}
+		x += 1.0;;
+	}
+}
+
+void	ft_put_sphere(t_sphere *sp, t_data *data)
+{
+	double		x;
+	double		y;
+	int		color;
+
+	printf("%lf = coord 0\n", sp->coord[0]);
+	printf("%lf = coord 0\n", sp->coord[1]);
+	x = sp->coord[0] - 50;
+	color = ft_get_color_hexa(sp->color);
+	while (x <= sp->coord[0] + 50)
+	{
+		y = sp->coord[1] - 50;
+		while (y <= sp->coord[1] + 50)
+		{
+			if (pow(x - sp->coord[0], 2) + pow(y - sp->coord[1], 2) == 50 * 50)
+			{
+				printf("x = %lf, y = %lf\n", x, y);
+				put_pixel_to_img(x, y, color, data);
+			}
+			y++;
+		}
+		x++;
+	}
+}
+
+int		ft_is_on_cam(t_data *data, int x, int y, int z)
+{
+	
+}
+
 int		main(int ac, char **av)
 {
 	char	*file;
@@ -82,8 +134,7 @@ int		main(int ac, char **av)
 	if ((g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, data->render[0], data->render[1], "miniRT")) == NULL)
 		return (-1);
 	ft_new_img(g_mlx, data);
-	printf("%s\n", data->img->image);
-	while (x < data->render[1])
+/*	while (x < data->render[1])
 	{
 		y = 0;
 		while (y < data->render[0])
@@ -93,9 +144,11 @@ int		main(int ac, char **av)
 			y++;
 		}
 		x++;
-	}
+	}*/
+	ft_put_sphere(data->sphere, data);
 	mlx_put_image_to_window(g_mlx.mlx_ptr, g_mlx.win_ptr, data->img->image, 0, 0);
 	mlx_key_hook(g_mlx.win_ptr, esc_key, 0);
+	mlx_hook(g_mlx.win_ptr, 17, 0, &red_cross, g_mlx.mlx_ptr);
 	mlx_mouse_hook(g_mlx.win_ptr, close_window, 0);
 	mlx_loop(g_mlx.mlx_ptr);
 	return (0);
