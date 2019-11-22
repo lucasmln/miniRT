@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/22 15:51:14 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/22 16:50:47 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,23 +74,44 @@ void	ft_put_losange(t_sphere *sp, t_data *data)
 	}
 }
 
+int		ft_distance(int x1, int x2, int y1, int y2)
+{
+	return (sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2)));
+}
+
 void	ft_put_sphere(t_sphere *sp, t_data *data)
 {
 	double		x;
 	double		y;
 	int			check;
-	int		color;
+	int			save[3];
 
 	x = sp->coord[0] - sp->diameter;
-	color = ft_get_color_hexa(sp->color);
+	save[0] = sp->color[0];
+	save[1] = sp->color[1];
+	save[2] = sp->color[2];
 	while (x <= sp->coord[0] + sp->diameter)
 	{
 		y = sp->coord[1] - sp->diameter;
 		check = 4;
 		while (y <= sp->coord[1] + sp->diameter)
 		{
+				save[0] = sp->color[0];
+				save[1] = sp->color[1];
+				save[2] = sp->color[2];
 				if (sqrt(pow(x - sp->coord[0], 2) + pow(y - sp->coord[1], 2)) <= data->sphere->diameter)
-					put_pixel_to_img(x, y, color, data);
+				{
+					save[0] = save[0] - ((save[0] * 100 / 255) * (sp->diameter - ft_distance(x, sp->coord[0], y, sp->coord[1]) - sp->diameter) * -1) / 100;
+					save[1] = save[1] - ((save[1] * 100 / 255) * (sp->diameter - ft_distance(x, sp->coord[0], y, sp->coord[1]) - sp->diameter) * -1) / 100;
+					save[2] = save[2] - ((save[2] * 100 / 255) * (sp->diameter - ft_distance(x, sp->coord[0], y, sp->coord[1]) - sp->diameter) * -1) / 100;
+					if (save[0] < 0)
+						save[0] = 0;
+					if (save[1] < 0)
+						save[1] = 0;
+					if (save[2] < 0)
+						save[2] = 0;
+					put_pixel_to_img(x, y, ft_get_color_hexa(save), data);
+				}
 			y += 1;
 		}
 		x += 1;
@@ -170,6 +191,8 @@ int		main(int ac, char **av)
 		x++;
 	}
 */	ft_put_sphere(data->sphere, data);
+//	data->sphere->coord[0] += 2 *data->sphere->diameter - 1;
+//	ft_put_sphere(data->sphere, data);
 //	ft_put_losange(data->sphere, data);
 	mlx_put_image_to_window(g_mlx.mlx_ptr, g_mlx.win_ptr, data->img->image, 0, 0);
 	mlx_key_hook(g_mlx.win_ptr, esc_key, 0);
