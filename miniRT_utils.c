@@ -6,13 +6,13 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:22:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 17:02:21 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/22 13:13:08 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minirt.h"
 
-int		ft_get_color_hexa(int color[])
+long		ft_get_color_hexa(int color[])
 {
 	return ((((color[0] << 8) + color[1]) << 8) + color[2]);
 }

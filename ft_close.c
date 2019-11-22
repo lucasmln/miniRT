@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:20:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 22:37:31 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/22 12:26:12 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int		esc_key(int key, void *p)
 {
 	if (key == 0x35)
 		exit (0);
+}
+
+int		red_cross()
+{
+	exit(0);
 }
 
 int		close_window(int button,int x,int y, void *p)

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 17:09:30 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/22 15:33:14 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ void	ft_put_losange(t_sphere *sp, t_data *data)
 		y = 0;
 		while (y < data->render[1])
 		{
-			if (fabs(x - sp->coord[1]) + fabs(y - sp->coord[0]) == 20)
+			if (fabs(x - sp->coord[0]) + fabs(y - sp->coord[1]) == 50)
 				put_pixel_to_img(x, y, color, data);
-			y += 1.0;;
+			y += 1.0;
 		}
-		x += 1.0;;
+		x += 1.0;
 	}
 }
 
@@ -78,10 +78,42 @@ void	ft_put_sphere(t_sphere *sp, t_data *data)
 {
 	double		x;
 	double		y;
+	int			k;
+	int			check;
 	int		color;
 
-	printf("%lf = coord 0\n", sp->coord[0]);
-	printf("%lf = coord 0\n", sp->coord[1]);
+	x = sp->coord[0] - sp->diameter;
+	color = ft_get_color_hexa(sp->color);
+	while (x <= sp->coord[0] + sp->diameter)
+	{
+		y = sp->coord[1] - sp->diameter;
+		check = 4;
+		while (y <= sp->coord[1] + sp->diameter)
+		{
+			k = -1;
+			while (++k <= data->sphere->diameter)
+			{
+					if (pow(x - sp->coord[0], 2) + pow(y - sp->coord[1], 2) == k)
+					{
+						put_pixel_to_img(x, y, color, data);
+						k = 0;
+						break;
+					}
+			}
+		//	if (fabs(sp->coord[1] - y)
+			y += 1;
+		}
+		x += 1;
+	}
+}
+
+void	ft_put_square(t_sphere *sp, t_data *data)
+{
+	double		x;
+	double		y;
+	int			k;
+	int		color;
+
 	x = sp->coord[0] - 50;
 	color = ft_get_color_hexa(sp->color);
 	while (x <= sp->coord[0] + 50)
@@ -89,10 +121,12 @@ void	ft_put_sphere(t_sphere *sp, t_data *data)
 		y = sp->coord[1] - 50;
 		while (y <= sp->coord[1] + 50)
 		{
-			if (pow(x - sp->coord[0], 2) + pow(y - sp->coord[1], 2) == 50 * 50)
+			k = -1;
+			while (++k * 10 < data->sphere->diameter)
 			{
-				printf("x = %lf, y = %lf\n", x, y);
-				put_pixel_to_img(x, y, color, data);
+				if (sqrt(pow(x - sp->coord[0], 2) + pow(y - sp->coord[1], 2)) / 10 <= k)
+					put_pixel_to_img(x, y, color, data);
+				k++;
 			}
 			y++;
 		}
@@ -110,7 +144,6 @@ int		main(int ac, char **av)
 	char	*file;
 	int		*render;
 	t_data	*data;
-	int		color;
 
 	if (!(data = malloc(sizeof(struct s_data) * 1)))
 		return (0);
@@ -128,24 +161,26 @@ int		main(int ac, char **av)
 	}
 //	ft_print_param(data);
 	int	x = 0, y = 0;
+	long	color = 0;
 
 	if ((g_mlx.mlx_ptr = mlx_init()) == NULL)
 		return (-1);
 	if ((g_mlx.win_ptr = mlx_new_window(g_mlx.mlx_ptr, data->render[0], data->render[1], "miniRT")) == NULL)
 		return (-1);
 	ft_new_img(g_mlx, data);
-/*	while (x < data->render[1])
+	color = ft_get_color_hexa(data->square->color);
+/*	while (x < data->render[0])
 	{
 		y = 0;
-		while (y < data->render[0])
+		while (y < data->render[1])
 		{
-			if (y == x)
-				put_pixel_to_img(x, y, ft_get_color_hexa(data->sphere->color), data);
+			put_pixel_to_img(x, y, color, data);
 			y++;
 		}
 		x++;
-	}*/
-	ft_put_sphere(data->sphere, data);
+	}
+*/	ft_put_sphere(data->sphere, data);
+//	ft_put_losange(data->sphere, data);
 	mlx_put_image_to_window(g_mlx.mlx_ptr, g_mlx.win_ptr, data->img->image, 0, 0);
 	mlx_key_hook(g_mlx.win_ptr, esc_key, 0);
 	mlx_hook(g_mlx.win_ptr, 17, 0, &red_cross, g_mlx.mlx_ptr);
