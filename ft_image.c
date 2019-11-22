@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:44:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/22 15:43:23 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/22 17:36:55 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ void	put_pixel_to_img(int x, int y, long color, t_data *data)
 {
 	if (x < 0 || x >= data->render[0] || y < 0 || y >= data->render[1])
 		return ;
+	printf("%lx = color\n", color);
 	*(int *)(data->img->ptr + ((x + y * data->render[0]) * data->img->bpp)) = color;
 }
