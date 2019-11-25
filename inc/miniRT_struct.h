@@ -6,29 +6,30 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 17:03:17 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/25 14:52:37 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_STRUCT_H
 # define MINIRT_STRUCT_H
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <math.h>
-#include <stdio.h>
+typedef struct		s_vect3
+{
+	double			x;
+	double			y;
+	double			z;
+}					t_vect3;
 
 typedef struct		s_ambience
 {
 	double				ratio;
-	int					color[3];
+	t_vect3				color;
 }					t_ambience;
 
 typedef struct		s_camera
 {
-	double				coord[3];
-	double				dir[3];
+	t_vect3				coord;
+	t_vect3				dir;
 	int					fov;
 	struct s_camera		*next;
 	struct s_camera		*start;
@@ -36,90 +37,66 @@ typedef struct		s_camera
 
 typedef struct		s_light
 {
-	double				coord[3];
+	t_vect3				coord;
 	double				ratio;
-	int					color[3];
+	t_vect3				color;
 	struct s_light		*next;
 	struct s_light		*start;
 }					t_light;
 
 typedef struct		s_sphere
 {
-	double				coord[3];
+	t_vect3				coord;
 	double				diameter;
-	int					color[3];
+	t_vect3				color;
 	struct s_sphere		*next;
 	struct s_sphere		*start;
 }					t_sphere;
 
 typedef struct		s_plane
 {
-	double				coord[3];
-	double				dir[3];
-	int					color[3];
+	t_vect3				coord;
+	t_vect3				dir;
+	t_vect3				color;
 	struct s_plane		*next;
 	struct s_plane		*start;
 }					t_plane;
 
 typedef struct		s_square
 {
-	double				coord[3];
-	double				dir[3];
+	t_vect3				coord;
+	t_vect3				dir;
 	double				height;
-	int					color[3];
+	t_vect3				color;
 	struct s_square		*next;
 	struct s_square		*start;
 }					t_square;
 
 typedef struct		s_cylinder
 {
-	double				coord[3];
-	double				dir[3];
+	t_vect3				coord;
+	t_vect3				dir;
 	double				diameter;
 	double				height;
-	int					color[3];
+	t_vect3				color;
 	struct s_cylinder	*next;
 	struct s_cylinder	*start;
 }					t_cylinder;
 
 typedef struct		s_triangle
 {
-	double				coord_one[3];
-	double				coord_two[3];
-	double				coord_three[3];
-	int					color[3];
+	t_vect3				p_1;
+	t_vect3				p_2;
+	t_vect3				p_3;
+	t_vect3				color;
 	struct s_triangle	*next;
 	struct s_triangle	*start;
 }					t_triangle;
 
-typedef struct		s_image
+typedef struct		s_ray
 {
-	void		*image;
-	char		*ptr;
-	int			bpp;
-	int			stride;
-	int			endian;
-}					t_img;
+	t_vect3				origine;
+	t_vect3				dir;
+}					t_ray;
 
-typedef struct		s_data
-{
-	int			render[2];
-	t_ambience	ambience;
-	t_cam		*cam;
-	t_light		*light;
-	t_sphere	*sphere;
-	t_plane		*plane;
-	t_square	*square;
-	t_cylinder	*cylinder;
-	t_triangle	*triangle;
-	t_img		*img;
-
-}					t_data;
-
-typedef struct		s_mlx
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-}					t_mlx;
-t_mlx		g_mlx;
 #endif

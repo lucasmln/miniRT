@@ -6,15 +6,16 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:22:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/22 13:13:08 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/25 15:33:57 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minirt.h"
 
-long		ft_get_color_hexa(int color[])
+int		ft_set_color(t_vect3 c)
 {
-	return ((((color[0] << 8) + color[1]) << 8) + color[2]);
+	return (((((int)c.x << 8) + (int)c.y) << 8) + (int)c.z);
+
 }
 
 char	*ft_read_file(char *av)

@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_close.c                                         :+:      :+:    :+:   */
+/*   ft_maths.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/20 15:20:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/25 15:37:09 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/11/25 15:16:29 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/11/25 15:21:39 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/minirt.h"
 
-int		esc_key(int key, void *p)
+double		ft_to_radian(double degre)
 {
-	if (key == ESC_KEY)
-	{
-		mlx_destroy_window(g_mlx.ptr, g_mlx.win);
-		exit (0);
-	}
-	return (0);
-}
-
-int		close_window(int button,int x,int y, void *p)
-{
-	mlx_destroy_window(g_mlx.ptr, g_mlx.win);
-	exit(0);
+	return (degre * M_PI / 180.0);
 }
