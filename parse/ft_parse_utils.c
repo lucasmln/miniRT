@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:14:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 17:47:00 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/25 12:38:01 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int		ft_get_coord(double coord[], char *s, int i)
 
 	while (k <= 2)
 	{
-		if ((s[i] < '0' || s[i] > '9') && (s[i] == '-' && (s[i] < '0' && s[i] > '9')))
+		if ((s[i] < '0' || s[i] > '9') && 
+			(s[i] == '-' && (s[i] < '0' && s[i] > '9')))
 			return (-1);
 		coord[k] = ft_atod(&s[i]);
 		if (coord[k] < 0.0)
@@ -39,7 +40,7 @@ int		ft_get_coord(double coord[], char *s, int i)
 	return (i);
 }
 
-int		ft_get_color(int color[], char *s, int i)
+int		ft_get_color(double color[], char *s, int i)
 {
 	int		k;
 
@@ -51,9 +52,7 @@ int		ft_get_color(int color[], char *s, int i)
 		color[k] = ft_atoi(&s[i]);
 		i += ft_strlen_nb(color[k]);
 		if (s[i] != ',' && k < 2)
-		{
 			return (-1);
-			}
 		i++;
 		k++;
 	}
@@ -120,4 +119,11 @@ int		ft_pass_double(char *s, int i)
 	while (s[i] >= '0' && s[i] <= '9')
 		i++;
 	return (i);
+}
+
+void	ft_set_ori(t_vect3 *pos, double aux[3])
+{
+	pos->x = aux[0];
+	pos->y = aux[1];
+	pos->z = aux[2];
 }

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:03:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 17:10:30 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/25 13:57:38 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,19 @@ int		ft_check_valid_obj(char *s, int i)
 
 int		ft_obj_is_sphere(t_data *data, char *s, int i)
 {
+	double	aux[3];
+
 	while (s[i] == ' ')
 		i++;
-	if ((i = ft_get_coord(data->sphere->coord, s, i)) == -1)
+	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
+	ft_set_ori(&data->sp->coord, aux);
 	while (s[i] == ' ')
 		i++;
-	data->sphere->diameter = ft_atod(&s[i]);
-	while (s[i] >= '0' && s[i] <= '9')
-		i++;
-	if (s[i] == '.')
-		i++;
-	while (s[i] >= '0' && s[i] <= '9')
-		i++;
-	while (s[i] == ' ')
-		i++;
-	i = ft_get_color(data->sphere->color, s, i);
+	data->sp->diameter = ft_atod(&s[i]);
+	i = ft_pass_double(s, i);
+	i = ft_get_color(aux, s, i);
+	ft_set_ori(&data->sp->color, aux);
 	if (i == -1 || s[i] != '\n')
 		return (-1);
 	return (i);
@@ -47,14 +44,19 @@ int		ft_obj_is_sphere(t_data *data, char *s, int i)
 
 int		ft_obj_is_plane(t_data *data, char *s, int i)
 {
+	double	aux[3];
+
 	while (s[i] == ' ')
 		i++;
-	if ((i = ft_get_coord(data->plane->coord, s, i)) == -1)
+	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
-	if ((i = ft_get_dir(data->plane->dir, s, i)) == -1)
+	ft_set_ori(&data->pl->coord, aux);
+	if ((i = ft_get_dir(aux, s, i)) == -1)
 		return (-1);
-	if ((i = ft_get_color(data->plane->color, s, i)) == -1)
+		ft_set_ori(&data->pl->dir, aux);
+	if ((i = ft_get_color(aux, s, i)) == -1)
 		return (-1);
+	ft_set_ori(&data->pl->color, aux);
 	if (s[i] != '\n')
 		return (-1);
 	return (i);
@@ -91,25 +93,16 @@ int		ft_check_file(t_data *data, char *s)
 	i = 0;
 	if (s[i] == 'R' || s[i] == 'A')
 		if ((i = ft_ambience_and_res(data, s, i)) == -1)
-		{
-			write(1, "error ambience or render\n", ft_strlen("error ambience or render\n"));
 			return (-1);
-		}
 	while (s[i] == '\n')
 		i++;
 	if (s[i] == 'c' || s[i] == 'l')
 		if ((i = ft_cam_and_light(data, s, i)) == -1)
-		{
-			write(1, "error cam or light\n", ft_strlen("error cam or light\n"));
 			return (-1);
-		}
 	while (s[i] == '\n')
 		i++;
 	if (ft_check_valid_obj(s, i) == 1)
 		if ((i = ft_objet(data, s, i)) == -1)
-		{
-			write(1, "error obj\n", ft_strlen("error obj\n"));
 			return (-1);
-		}
 	return (0);
 }

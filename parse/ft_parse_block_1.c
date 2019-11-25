@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:06:11 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/21 17:09:50 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/25 12:40:10 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		ft_get_render(t_data *data, char *s, int i)
 int		ft_get_ambience(t_data *data, char *s, int i)
 {
 	int		k;
+	double	aux[3];
 
 	while (s[i] == ' ')
 		i++;
@@ -46,26 +47,12 @@ int		ft_get_ambience(t_data *data, char *s, int i)
 	data->ambience.ratio = ft_atod(&s[i]);
 	if (data->ambience.ratio < 0.0 || data->ambience.ratio > 1.0)
 		return (-1);
-	while (s[i] <= '9' && s[i] >= '0')
-		i++;
-	if (s[i] == '.')
-		i++;
-	while (s[i] <= '9' && s[i] >= '0')
-		i++;
+	i = ft_pass_double(s, i);
 	k = -1;
 	while (s[i] == ' ')
 		i++;
-	while (++k <= 2)
-	{
-	if (s[i] < '0' || s[i] > '9')
-			return (-1);
-		data->ambience.color[k] = ft_atoi(&s[i]);
-		i += ft_strlen_nb(data->ambience.color[k]);
-		if (k != 2 && s[i] == ',')
-			i++;
-		if (data->ambience.color[k] < 0 || data->ambience.color[k] > 255)
-			return (-1);
-	}
+	i = ft_get_color(aux, s, i);
+	ft_set_ori(&data->ambience.color, aux);
 	return ((s[i++] == '\n' ? i : -1));
 }
 
