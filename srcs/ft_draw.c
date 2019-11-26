@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/26 15:01:41 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/26 20:35:22 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 		ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 		ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 	if (data->sp->color.y)
-		data->pix.y = (data->sp->color.y / 255)* (intensite *
+		data->pix.y = (data->sp->color.y / 255) * (intensite *
 		ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 		ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 	if (data->sp->color.z)
-		data->pix.z = (data->sp->color.z / 255)* (intensite *
+		data->pix.z = (data->sp->color.z / 255) * (intensite *
 		ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 		ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 	ft_check_abs_value(&data->pix);
@@ -65,7 +65,7 @@ void		ft_draw(t_data *data)
 {
 	int x;
 	int y;
-	double valid_pixel;
+	int valid_pixel;
 	t_vect3 p;
 	t_vect3 n;
 
@@ -76,11 +76,17 @@ void		ft_draw(t_data *data)
 		while (y < data->render[1])
 		{
 			ft_create_ray(data, x, y);
+//			valid_pixel = ft_pixel_ray_pl(data->ray, data->pl);
 			valid_pixel = ft_pixel_ray_sp(data->ray, data->sp, &p, &n);
 			if (valid_pixel)
 			{
+		//		printf("%d valid, rank %d\n", valid_pixel, data->sp->rank);
+				while (data->sp->rank != valid_pixel)
+					data->sp = data->sp->next;
 				data->pix = ft_get_pixel_color(data, p, n);
 				ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
+				while (data->sp->rank != 1)
+					data->sp = data->sp->next;
 			}
 			else
 				ft_put_pixel_to_img(x, y, 0, data);

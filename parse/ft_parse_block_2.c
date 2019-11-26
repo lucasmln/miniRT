@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:07:30 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/26 16:13:11 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/26 19:46:20 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,10 @@ int		ft_cam_and_light(t_data *data, char *s, int i)
 		}
 	}
 	data->light->next = save_light;
+	data->light->rank = -1;
 	data->light = save_light;
 	data->cam->next = save_cam;
+	data->cam->rank = -1;
 	data->cam = save_cam;
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/26 15:12:21 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/26 20:33:05 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,5 @@ t_vect3		ft_sub_vector(t_vect3 a, t_vect3 b);
 void		ft_init(t_data *data);
 int			ft_malloc_data(t_data *data);
 void		ft_draw(t_data *data);
+double		ft_pixel_ray_pl(t_ray ray, t_plane *pl);
 #endif
