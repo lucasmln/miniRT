@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:03:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/25 13:57:38 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/26 16:15:35 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,15 @@ int		ft_check_valid_obj(char *s, int i)
 int		ft_obj_is_sphere(t_data *data, char *s, int i)
 {
 	double	aux[3];
+	static t_sphere *save_sp;
 
+	if (data->sp->rank != 0)
+	{
+		if (!(data->sp->next = malloc(sizeof(t_sphere))))
+			return (-1);
+		data->sp->next->rank = data->sp->rank;
+		data->sp = data->sp->next;
+	}
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
@@ -39,13 +47,25 @@ int		ft_obj_is_sphere(t_data *data, char *s, int i)
 	ft_set_ori(&data->sp->color, aux);
 	if (i == -1 || s[i] != '\n')
 		return (-1);
+	if (data->sp->rank == 0)
+		save_sp = data->sp;
+	data->sp->rank++;
+	data->sp->next = save_sp;
 	return (i);
 }
 
 int		ft_obj_is_plane(t_data *data, char *s, int i)
 {
 	double	aux[3];
+	static t_plane *save_pl;
 
+	if (data->pl->rank != 0)
+	{
+		if (!(data->pl->next = malloc(sizeof(t_plane))))
+			return (-1);
+		data->pl->next->rank = data->pl->rank;
+		data->pl = data->pl->next;
+	}
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
@@ -59,6 +79,10 @@ int		ft_obj_is_plane(t_data *data, char *s, int i)
 	ft_set_ori(&data->pl->color, aux);
 	if (s[i] != '\n')
 		return (-1);
+	if (data->pl->rank == 0)
+		save_pl = data->pl;
+	data->pl->rank++;
+	data->pl->next = save_pl;
 	return (i);
 }
 

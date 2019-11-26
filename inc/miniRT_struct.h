@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/25 14:52:37 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/26 15:13:29 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct		s_camera
 	t_vect3				dir;
 	int					fov;
 	struct s_camera		*next;
-	struct s_camera		*start;
+	int					rank;
 }					t_cam;
 
 typedef struct		s_light
@@ -41,7 +41,7 @@ typedef struct		s_light
 	double				ratio;
 	t_vect3				color;
 	struct s_light		*next;
-	struct s_light		*start;
+	int					rank;
 }					t_light;
 
 typedef struct		s_sphere
@@ -50,7 +50,7 @@ typedef struct		s_sphere
 	double				diameter;
 	t_vect3				color;
 	struct s_sphere		*next;
-	struct s_sphere		*start;
+	int					rank;
 }					t_sphere;
 
 typedef struct		s_plane
@@ -59,7 +59,7 @@ typedef struct		s_plane
 	t_vect3				dir;
 	t_vect3				color;
 	struct s_plane		*next;
-	struct s_plane		*start;
+	int					rank;
 }					t_plane;
 
 typedef struct		s_square
@@ -69,7 +69,7 @@ typedef struct		s_square
 	double				height;
 	t_vect3				color;
 	struct s_square		*next;
-	struct s_square		*start;
+	int					rank;
 }					t_square;
 
 typedef struct		s_cylinder
@@ -80,7 +80,7 @@ typedef struct		s_cylinder
 	double				height;
 	t_vect3				color;
 	struct s_cylinder	*next;
-	struct s_cylinder	*start;
+	int					rank;
 }					t_cylinder;
 
 typedef struct		s_triangle
@@ -90,7 +90,7 @@ typedef struct		s_triangle
 	t_vect3				p_3;
 	t_vect3				color;
 	struct s_triangle	*next;
-	struct s_triangle	*start;
+	int					rank;
 }					t_triangle;
 
 typedef struct		s_ray

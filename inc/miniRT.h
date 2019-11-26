@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/25 15:59:06 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/26 15:12:21 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct		s_mlx
 
 t_mlx			g_mlx;
 
+void		ft_print_param(t_data *data);
+
 int			ft_strlen_nb(int nb);
 int			ft_get_coord(double coord[], char *s, int i);
 int			ft_get_color(double color[], char *s, int i);
@@ -66,7 +68,7 @@ int			ft_pass_double(char *s, int i);
 int			ft_get_render(t_data *data, char *s, int i);
 int			ft_get_ambience(t_data *data, char *s, int i);
 int			ft_ambience_and_res(t_data *data, char *s, int i);
-int			ft_get_cam(t_data *data, char *s, int i);
+int			ft_get_cam(t_data *dat, char *s, int i);
 int			ft_get_light(t_data *data, char *s, int i);
 int			ft_cam_and_light(t_data *data, char *s, int i);
 int			ft_check_valid_obj(char *s, int i);
