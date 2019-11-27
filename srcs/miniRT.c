@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/26 19:49:29 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/27 11:10:29 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int		main(int ac, char **av)
 	printf("cam 1 x = %lf, y = %lf, z = %lf, rank = %d\n\n", data->cam->coord.x, data->cam->coord.y, data->cam->coord.z, data->cam->rank);
 //	ft_print_param(data);*/
 	data->sp = data->sp->next;
-	printf("%d\n", data->sp->rank);
 	if (!(g_mlx.ptr = mlx_init()))
 		return (0);
 	if (!(g_mlx.win = mlx_new_window(g_mlx.ptr, data->render[0], data->render[1], "miniRT")))

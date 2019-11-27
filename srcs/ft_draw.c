@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/26 20:35:22 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/27 11:17:18 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void		ft_draw(t_data *data)
 			valid_pixel = ft_pixel_ray_sp(data->ray, data->sp, &p, &n);
 			if (valid_pixel)
 			{
-		//		printf("%d valid, rank %d\n", valid_pixel, data->sp->rank);
 				while (data->sp->rank != valid_pixel)
 					data->sp = data->sp->next;
 				data->pix = ft_get_pixel_color(data, p, n);
