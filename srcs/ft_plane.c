@@ -6,25 +6,22 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:51:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/27 12:51:47 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/27 17:03:48 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-double		ft_pixel_ray_pl(t_ray r, t_plane *pl)
+double		ft_pixel_ray_pl(t_ray ray, t_plane *pl, t_vect3 *n, t_vect3 *p)
 {
-	double	a;
-	double	b;
-	t_vect3	d;
-	t_vect3	norm;
-	double	angle;
-	double res;
-/*
-	norm = ft_normal_vector(pl->coord);
-	d = ft_vect_multiplication(pl->dir, norm);
-	res = ft_ft_vect_diff(d, ft_vect_multiplication(r.origine, norm))), (ft_vect_multiplication(r.dir, norm));
-	angle = acos((pow(c, 2) - pow(a, 2) - pow(b, 2)) / (2 * a * b));
-*/	return (1);
+	double	res;
+
+	res = ft_dot_product(ft_normal_vector(pl->coord), ray.dir);
+	if (res <= 0)
+		return (0);
+	*p = ft_vec_diff(pl->coord, ray.origine);
+	*n = ft_normal_vector(*p);
+	printf("1\n");
+	return (1);
 }
 

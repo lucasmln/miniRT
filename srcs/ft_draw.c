@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/27 12:51:04 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/27 16:02:42 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,17 @@ void		ft_draw(t_data *data)
 		while (y < data->render[1])
 		{
 			ft_create_ray(data, x, y);
-//			valid_pixel = ft_pixel_ray_pl(data->ray, data->pl);
-//			valid_pixel = ft_pixel_ray_sp(data->ray, data->sp, &p, &n);
-			valid_pixel = ft_for_each_sp(data->ray, data->sp, &p, &n);
+			valid_pixel = ft_pixel_ray_pl(data->ray, data->pl, &n, &p);
+//			valid_pixel = ft_for_each_sp(data->ray, data->sp, &p, &n);
+
 			if (valid_pixel)
 			{
-				while (data->sp->rank != valid_pixel)
-					data->sp = data->sp->next;
+//				while (data->sp->rank != valid_pixel)
+//					data->sp = data->sp->next;
 				data->pix = ft_get_pixel_color(data, p, n);
 				ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
-				while (data->sp->rank != 1)
-					data->sp = data->sp->next;
+//				while (data->sp->rank != 1)
+//					data->sp = data->sp->next;
 			}
 			else
 				ft_put_pixel_to_img(x, y, 0, data);
