@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 18:01:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/12 16:04:51 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/25 17:17:38 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void			ft_lstadd_back(t_list **alst, t_list *now);
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstdelone(t_list *lst, void (*del)(void *));
 t_list			*ft_lstlast(t_list *lst);
-int				ft_lstsize(t_list *lst);
+int				ft_lstsize(void *lst);
 char			**ft_split(const char *s, char c);
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
