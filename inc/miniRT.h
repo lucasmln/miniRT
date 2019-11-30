@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/29 12:58:33 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/30 20:12:34 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct		s_data
 	t_image			*image;
 	t_ray			ray;
 	t_vect3			pix;
+	t_vect3			color;
 }					t_data;
 
 typedef struct		s_mlx
@@ -107,7 +108,10 @@ int			ft_malloc_data(t_data *data);
 void		ft_draw(t_data *data);
 double		ft_pixel_ray_pl(t_ray ray, t_plane *pl, t_vect3 *n, t_vect3 *p);
 double		ft_intersection_ray_sp(t_ray ray, t_sphere *sp, t_vect3 *p, t_vect3 *n);
-int			ft_for_each_sp(t_ray ray, t_sphere *sp, t_vect3 *v, t_vect3 *n);
-int		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n);
-
+int			ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n);
+int			ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n);
+t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n);
+t_vect3		ft_reset_vect(t_vect3 v);
+double		ft_intersection_ray_pl(t_ray ray, t_plane *pl,
+			t_vect3 *p, t_vect3 *n);
 #endif

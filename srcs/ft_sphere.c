@@ -6,36 +6,41 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:05:22 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/29 12:58:04 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/11/30 19:53:57 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-int		ft_for_each_sp(t_ray ray, t_sphere *sp, t_vect3 *v, t_vect3 *n)
+int		ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n)
 {
 	double	inter;
 	double	min;
 	int		pos;
+	int		check;
 
 	min = -1;
-	while (1)
+	check = 1;
+	pos = 1;
+	while (check)
 	{
-		inter = ft_intersection_ray_sp(ray, sp, v, n);
+		inter = ft_intersection_ray_sp(ray, data->sp, v, n);
 		if (inter)
 		{
 			if (inter < min || min == -1)
 			{
 				min = inter;
-				pos = sp->rank;
+				pos = data->sp->rank;
 			}
 		}
-		if (sp->rank == -1)
-			break ;
-		sp = sp->next;
+		if (data->sp->rank == -1)
+			check = 0;
+		data->sp = data->sp->next;
 	}
-	sp = sp->next;
-	return (pos);
+	if (min > 0)
+		while (data->sp->rank != pos)
+			data->sp = data->sp->next;
+	return (min);
 }
 
 double	ft_intersection_ray_sp(t_ray ray, t_sphere *sp, t_vect3 *p, t_vect3 *n)
