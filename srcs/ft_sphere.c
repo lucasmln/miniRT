@@ -6,13 +6,13 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:05:22 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/30 19:53:57 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/02 12:15:50 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-int		ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n)
+int		ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 {
 	double	inter;
 	double	min;
@@ -21,18 +21,16 @@ int		ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n)
 
 	min = -1;
 	check = 1;
-	pos = 1;
+	pos = 2;
 	while (check)
 	{
-		inter = ft_intersection_ray_sp(ray, data->sp, v, n);
+		inter = ft_intersection_ray_sp(ray, data->sp, p, n);
 		if (inter)
-		{
 			if (inter < min || min == -1)
 			{
 				min = inter;
 				pos = data->sp->rank;
 			}
-		}
 		if (data->sp->rank == -1)
 			check = 0;
 		data->sp = data->sp->next;

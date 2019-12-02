@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/30 19:18:51 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/30 20:08:35 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/02 12:09:18 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@ int		ft_pix_cmp(t_vect3 pix1, t_vect3 pix2)
 	return (0);
 }
 
-t_vect3		ft_reset_vect(t_vect3 v)
+void	ft_reset_vect(t_data *data)
 {
-	v.x = 0;
-	v.y = 0;
-	v.z = 0;
-	return (v);
+	data->pix.x = 0;
+	data->pix.y = 0;
+	data->pix.z = 0;
 }
 
 t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
@@ -54,28 +53,29 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 //	check = -1;
 //	while (check)
 //	{
+	printf("r = %lf,g = %lf, b = %lf\n", data->color.x, data->color.y, data->color.z);
 		intensite = 1000000 * data->light->ratio;
-		if (data->sp->color.x)
-			data->pix.x = (data->sp->color.x / 255) * (intensite *
+		if (data->color.x)
+			data->pix.x = (data->color.x / 255) * (intensite *
 			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 			ft_get_norm2(ft_vec_diff(data->light->coord, p)));
-		if (data->sp->color.y)
-			data->pix.y = (data->sp->color.y / 255) * (intensite *
+		if (data->color.y)
+			data->pix.y = (data->color.y / 255) * (intensite *
 			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 			ft_get_norm2(ft_vec_diff(data->light->coord, p)));
-		if (data->sp->color.z)
-			data->pix.z = (data->sp->color.z / 255) * (intensite *
+		if (data->color.z)
+			data->pix.z = (data->color.z / 255) * (intensite *
 			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 			ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		ft_check_abs_value(&data->pix);
-//		if (check == -1 || ft_pix_cmp(max_pixel, data->pix) == 1)
-//		{
-//			check = 1;
-//			max_pixel = data->pix;
-//		}
-//		if (data->light->rank == -1)
-//			check = 0;
-//		data->light = data->light->next;
-//	}
+	/*	if (check == -1 || ft_pix_cmp(max_pixel, data->pix) == 1)
+		{
+			check = 1;
+			max_pixel = data->pix;
+		}
+		if (data->light->rank == -1)
+			check = 0;
+		data->light = data->light->next;
+	}*/
 	return (data->pix);
 }
