@@ -6,23 +6,25 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/02 13:22:05 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/02 20:37:10 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-double		ft_for_each_obj(t_data *data, t_vect3 *p, t_vect3 *n)
+double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 {
 	double	res;
 	double	tmp;
 	t_vect3	tmp_p;
 	t_vect3	tmp_n;
 
-	res = ft_for_each_sp(data->ray, data, p, n);
+	res = ft_for_each_sp(ray, data, p, n);
 	data->color = data->sp->color;
-	tmp = ft_intersection_ray_pl(data->ray, data->pl, &tmp_p, &tmp_n);
-	if ((tmp > 0 && tmp <= res && res > 0) || (res <= 0 && tmp > 0))
+	tmp = ft_for_each_pl(ray, data, &tmp_p, &tmp_n);
+//	if (res)
+//		printf("%lf = x, %lf = y, %lf = z\n", data->color.x, data->color.y, data->color.z);
+	if ((tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
 	{
 		res = tmp;
 		*p = tmp_p;
@@ -30,7 +32,6 @@ double		ft_for_each_obj(t_data *data, t_vect3 *p, t_vect3 *n)
 		data->color = data->pl->color;
 	}
 	return (res);
-
 }
 
 void		ft_create_ray(t_data *data, int x, int y)
@@ -51,18 +52,27 @@ void		ft_raytrace(t_data *data, int x, int y)
 	t_vect3 p;
 	t_vect3 n;
 
+	data->check = 0;
+	if (x == 300 && y == 950)
+		data->check = 1;
 	ft_create_ray(data, x, y);
-	inter = ft_for_each_obj(data, &p, &n);
+	inter = ft_for_each_obj(data->ray, data, &p, &n);
 	if (inter > 0)
 	{
-		ft_reset_values(data);
+		if (x == 300 && y == 950)
+			printf("%lf = x, %lf = y, %lf = z, rank = %d, n.x = %lf, n.y = %lf, n.z = %lf, p.x = %lf, p.y = %lf, p.z = %lf\n",
+			data->color.x, data->color.y, data->color.z, data->pl->next->rank, n.x, n.y, n.z, p.x, p.y, p.z);
 		data->pix = ft_get_pixel_color(data, p, n);
 		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
-		while (data->sp->rank != 1)
-			data->sp = data->sp->next;
+		//while (data->sp->rank != -1)
+		//	data->sp = data->sp->next;
+		//while (data->pl->rank != -1)
+		//	data->pl = data->pl->next;
+		//data->pl = data->pl->next;
+		//data->sp = data->sp->next;
 	}
 	else
-		ft_put_pixel_to_img(x, y, 0, data);
+		ft_put_pixel_to_img(x, y, ft_set_color(data->ambience.color), data);
 }
 
 void		ft_draw(t_data *data)
@@ -76,6 +86,7 @@ void		ft_draw(t_data *data)
 		y = 0;
 		while (y < data->render[1])
 		{
+			ft_reset_values(data);
 			ft_raytrace(data, x, y);
 			y++;
 		}

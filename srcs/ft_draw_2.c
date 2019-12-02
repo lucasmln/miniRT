@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:34:21 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/02 13:20:54 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/02 21:07:36 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ void		ft_check_abs_value(t_vect3 *pixel)
 
 int		ft_pix_cmp(t_vect3 pix1, t_vect3 pix2)
 {
-	if (pix1.x <= pix2.x)
-		if (pix1.y <= pix2.y)
-			if (pix1.z <= pix2.z)
-				return (1);
+	if (pix1.x < pix2.x && pix1.y < pix2.y && pix1.z < pix2.y)
+		return (1);
 	return (0);
 }
 
@@ -51,6 +49,8 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 	int			check;
 
 	check = -1;
+	while (data->light->rank != 1)
+		data->light = data->light->next;
 	while (check)
 	{
 		intensite = 1000000 * data->light->ratio;
@@ -70,13 +70,13 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 		if (check == -1 || ft_pix_cmp(max_pixel, data->pix) == 1)
 		{
 			check = 1;
-			max_pixel.x = data->pix.x;
-			max_pixel.y = data->pix.y;
-			max_pixel.z = data->pix.z;
+			max_pixel = data->pix;
 		}
 		if (data->light->rank == -1)
 			check = 0;
 		data->light = data->light->next;
 	}
-	return (max_pixel);
+	while (data->light->rank != 1)
+		data->light = data->light->next;
+	return (data->pix);
 }
