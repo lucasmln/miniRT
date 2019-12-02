@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:34:21 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/02 12:50:11 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/02 13:20:54 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,3 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 	}
 	return (max_pixel);
 }
-
