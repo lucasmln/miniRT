@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/02 20:37:10 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/03 11:43:09 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,22 @@ void		ft_raytrace(t_data *data, int x, int y)
 	t_vect3 n;
 
 	data->check = 0;
-	if (x == 300 && y == 950)
+	if (x == 100 && y == 550)
 		data->check = 1;
 	ft_create_ray(data, x, y);
 	inter = ft_for_each_obj(data->ray, data, &p, &n);
 	if (inter > 0)
 	{
-		if (x == 300 && y == 950)
-			printf("%lf = x, %lf = y, %lf = z, rank = %d, n.x = %lf, n.y = %lf, n.z = %lf, p.x = %lf, p.y = %lf, p.z = %lf\n",
-			data->color.x, data->color.y, data->color.z, data->pl->next->rank, n.x, n.y, n.z, p.x, p.y, p.z);
+		//	printf("%lf = x, %lf = y, %lf = z, rank = %d, n.x = %lf, n.y = %lf, n.z = %lf, p.x = %lf, p.y = %lf, p.z = %lf\n",
+		//	data->color.x, data->color.y, data->color.z, data->pl->next->rank, n.x, n.y, n.z, p.x, p.y, p.z);
 		data->pix = ft_get_pixel_color(data, p, n);
 		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
-		//while (data->sp->rank != -1)
-		//	data->sp = data->sp->next;
-		//while (data->pl->rank != -1)
-		//	data->pl = data->pl->next;
-		//data->pl = data->pl->next;
-		//data->sp = data->sp->next;
+		while (data->sp->rank != -1)
+			data->sp = data->sp->next;
+		while (data->pl->rank != -1)
+			data->pl = data->pl->next;
+		data->pl = data->pl->next;
+		data->sp = data->sp->next;
 	}
 	else
 		ft_put_pixel_to_img(x, y, ft_set_color(data->ambience.color), data);
@@ -86,7 +85,7 @@ void		ft_draw(t_data *data)
 		y = 0;
 		while (y < data->render[1])
 		{
-			ft_reset_values(data);
+			ft_reset_values(&data->pix);
 			ft_raytrace(data, x, y);
 			y++;
 		}

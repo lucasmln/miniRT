@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:51:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/02 21:00:30 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/03 11:15:35 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ double		ft_for_each_pl(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	check = 1;
 	pos = data->pl->rank;
 	min = -1;
+	while (data->pl->rank != 1)
+		data->pl = data->pl->next;
 	while (check)
 	{
 		inter = ft_intersection_ray_pl(ray, data->pl, p, n);
@@ -64,6 +66,6 @@ double		ft_intersection_ray_pl(t_ray ray, t_plane *pl, t_vect3 *p, t_vect3 *n)
 	if (ft_dot_product(ray.dir, norm) < 0)
 		*n = norm;
 	else
-		*n = ft_vec_mult_scalar(norm, -1);*n = norm;
+		*n = ft_vec_mult_scalar(norm, -1);
 	return (t);
 }

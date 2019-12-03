@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:34:21 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/02 21:07:36 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/03 15:07:11 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,50 +28,50 @@ void		ft_check_abs_value(t_vect3 *pixel)
 	}
 }
 
-int		ft_pix_cmp(t_vect3 pix1, t_vect3 pix2)
+void		ft_pix_cmp(t_vect3 *max_pix, t_vect3 *pix)
 {
-	if (pix1.x < pix2.x && pix1.y < pix2.y && pix1.z < pix2.y)
-		return (1);
-	return (0);
+	if (max_pix->x > pix->x)
+		pix->x = max_pix->x;
+	if (max_pix->y > pix->y)
+		pix->y = max_pix->y;
+	if (max_pix->z > pix->z)
+		pix->z = max_pix->z;
 }
 
-void	ft_reset_values(t_data *data)
+void	ft_reset_values(t_vect3 *pix)
 {
-	data->pix.x = 0;
-	data->pix.y = 0;
-	data->pix.z = 0;
+	pix->x = 0;
+	pix->y = 0;
+	pix->z = 0;
 }
 
 t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 {
-	double		intensite;
+	t_vect3		intensite;
 	t_vect3		max_pixel;
 	int			check;
 
 	check = -1;
-	while (data->light->rank != 1)
-		data->light = data->light->next;
+	ft_reset_values(&max_pixel);
 	while (check)
 	{
-		intensite = 1000000 * data->light->ratio;
+		intensite.x = 1000000 * data->light->ratio * (data->light->color.x / 255);
+		intensite.y = 1000000 * data->light->ratio * (data->light->color.y / 255);
+		intensite.z = 1000000 * data->light->ratio * (data->light->color.z / 255);
 		if (data->color.x)
-			data->pix.x = (data->color.x / 255) * (intensite *
+			max_pixel.x = (data->color.x / 255) * (intensite.x *
 			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 			ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		if (data->color.y)
-			data->pix.y = (data->color.y / 255) * (intensite *
+			max_pixel.y = (data->color.y / 255) * (intensite.y *
 			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 			ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		if (data->color.z)
-			data->pix.z = (data->color.z / 255) * (intensite *
+			max_pixel.z = (data->color.z / 255) * (intensite.z *
 			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
 			ft_get_norm2(ft_vec_diff(data->light->coord, p)));
-		ft_check_abs_value(&data->pix);
-		if (check == -1 || ft_pix_cmp(max_pixel, data->pix) == 1)
-		{
-			check = 1;
-			max_pixel = data->pix;
-		}
+		ft_check_abs_value(&max_pixel);
+		ft_pix_cmp(&max_pixel, &data->pix);
 		if (data->light->rank == -1)
 			check = 0;
 		data->light = data->light->next;
