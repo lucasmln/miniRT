@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/03 18:28:54 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/04 18:46:28 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,16 @@ void		ft_raytrace(t_data *data, int x, int y)
 	inter = ft_for_each_obj(data->ray, data, &p, &n);
 	if (inter > 0)
 	{
+		data->pix = ft_get_pixel_color(data, p, n);
+		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
 		if (ft_inter_light(data, &p, &n))
 			ft_put_pixel_to_img(x, y, 0, data);
-		else
-		{
-			data->pix = ft_get_pixel_color(data, p, n);
-			ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
-		}
-		while (data->sp->rank != -1)
-			data->sp = data->sp->next;
-		while (data->pl->rank != -1)
-			data->pl = data->pl->next;
-		data->pl = data->pl->next;
-		data->sp = data->sp->next;
+	//	while (data->sp->rank != -1)
+	//		data->sp = data->sp->next;
+	//	while (data->pl->rank != -1)
+	//		data->pl = data->pl->next;
+	//	data->pl = data->pl->next;
+	//	data->sp = data->sp->next;
 	}
 	else
 	{
