@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/04 18:46:28 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/04 20:10:54 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	res = ft_for_each_sp(ray, data, p, n);
 	data->color = data->sp->color;
 	tmp = ft_for_each_pl(ray, data, &tmp_p, &tmp_n);
-//	if (res)
-//		printf("%lf = x, %lf = y, %lf = z\n", data->color.x, data->color.y, data->color.z);
 	if ((tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
 	{
 		res = tmp;
@@ -53,11 +51,18 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 	t_vect3		tmp_p;
 	t_vect3		tmp_n;
 
-	ray_light.origine = ft_vec_add(*p, ft_vec_mult_scalar(*n, EPS));
-	ray_light.dir = ft_normal_vector(ft_vec_diff(data->light->coord, *p));
-	inter = ft_for_each_obj(ray_light, data, &tmp_p, &tmp_n);
-	if (inter > EPS && inter * inter < ft_get_norm2(ft_vec_diff(data->light->coord, *p)))
-		return (1);
+	while (data->light->rank != -1)
+		data->light = data->light->next;
+	data->light = data->light->next;
+//	while (data->light->rank != -1)
+//	{
+		ray_light.origine = ft_vec_add(*p, ft_vec_mult_scalar(*n, EPS));
+		ray_light.dir = ft_normal_vector(ft_vec_diff(data->light->coord, *p));
+		inter = ft_for_each_obj(ray_light, data, &tmp_p, &tmp_n);
+		if (inter > EPS && inter * inter < ft_get_norm2(ft_vec_diff(data->light->coord, *p)))
+			return (1);
+//		data->light = data->light->next;
+//	}
 	return (0);
 }
 
@@ -75,9 +80,10 @@ void		ft_raytrace(t_data *data, int x, int y)
 	if (inter > 0)
 	{
 		data->pix = ft_get_pixel_color(data, p, n);
-		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
 		if (ft_inter_light(data, &p, &n))
-			ft_put_pixel_to_img(x, y, 0, data);
+			ft_reset_values(&data->pix);
+		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
+		//	ft_put_pixel_to_img(x, y, 0, data);
 	//	while (data->sp->rank != -1)
 	//		data->sp = data->sp->next;
 	//	while (data->pl->rank != -1)

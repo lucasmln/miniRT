@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/03 11:32:18 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/04 20:09:43 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct		s_mlx
 }				t_mlx;
 
 t_mlx			g_mlx;
+t_data			*data;
 
 void		ft_print_param(t_data *data);
 
@@ -116,5 +117,7 @@ void		ft_reset_values(t_vect3 *pix);
 t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n);
 void		ft_raytrace(t_data *data, int x, int y);
 double		ft_for_each_pl(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
+int		get_key(int key, void *p);
+void	ft_put_scene(void);
 
 #endif

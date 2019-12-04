@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:20:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/26 15:01:47 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/04 20:12:45 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,34 @@ int		close_window(int button,int x,int y, void *p)
 {
 	mlx_destroy_window(g_mlx.ptr, g_mlx.win);
 	exit(0);
+}
+
+int		get_key(int key, void *p)
+{
+	if (key == ESC_KEY)
+	{
+		mlx_destroy_window(g_mlx.ptr, g_mlx.win);
+		exit (0);
+	}
+	if (key == 0x7e)
+	{
+		data->sp->coord.z -= 5;
+		ft_put_scene();
+	}
+	if (key == 0x7d)
+	{
+		data->sp->coord.z += 5;
+		ft_put_scene();
+	}
+	if (key == 0x7c)
+	{
+		data->sp->coord.x += 5;
+		ft_put_scene();
+	}
+	if (key == 0x7b)
+	{
+		data->sp->coord.x -= 5;
+		ft_put_scene();
+	}
+	return (0);
 }
