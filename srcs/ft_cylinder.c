@@ -14,7 +14,35 @@
 
 int		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n)
 {
-	double	a;
+	t_vect3		l;
+	t_vect3		w1;
+	double		k;
+	double		a;
+	t_vect3		v;
+	t_vect3		D;
+	double		d;
+
+	l = ft_vec_diff(ray.origine, cy->dir);
+	w1 = ft_cross_product(ray.dir, cy->dir);
+	k = ft_dot_product(w1, w1);
+	if (k * k == 0)
+	{
+		v = ft_vect_multiplication(cy->coord, cy->dir);
+		a = ft_dot_product(l, v);
+		D = ft_vec_diff(l, ft_vec_mult_scalar(v, a));
+		d = ft_dot_product(D, D);
+		if (d > cy->diameter / 2)
+			return (0);
+		
+		return (1);
+	}
+
+
+
+
+
+
+/*	double	a;
 	double	b;
 	double	c;
 	double	d;
@@ -33,5 +61,5 @@ int		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n)
 	*n = ft_normal_vector(ft_vec_diff(ft_vec_diff(*p, cy->coord), ft_vec_mult_scalar(cy->dir, m)));
 	if (ft_dot_product(ray.dir, *n) > 0)
 		*n = ft_vec_mult_scalar(*n, -1);
-	return (1);
+*/	return (1);
 }

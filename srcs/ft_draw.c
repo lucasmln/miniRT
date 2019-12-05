@@ -19,9 +19,11 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	t_vect3	tmp_p;
 	t_vect3	tmp_n;
 
-	res = ft_for_each_sp(ray, data, p, n);
+	if (data->sp->next)
+		res = ft_for_each_sp(ray, data, p, n);
 	data->color = data->sp->color;
-	tmp = ft_for_each_pl(ray, data, &tmp_p, &tmp_n);
+	if (data->pl->next)
+		tmp = ft_for_each_pl(ray, data, &tmp_p, &tmp_n);
 	if ((tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
 	{
 		res = tmp;
@@ -50,20 +52,24 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 	double		inter;
 	t_vect3		tmp_p;
 	t_vect3		tmp_n;
+	int			ret;
 
-	while (data->light->rank != -1)
-		data->light = data->light->next;
-	data->light = data->light->next;
-//	while (data->light->rank != -1)
-//	{
+	ret = 0;
+	ft_go_start_lst(data, "light");
+	while (1)
+	{
 		ray_light.origine = ft_vec_add(*p, ft_vec_mult_scalar(*n, EPS));
 		ray_light.dir = ft_normal_vector(ft_vec_diff(data->light->coord, *p));
 		inter = ft_for_each_obj(ray_light, data, &tmp_p, &tmp_n);
-		if (inter > EPS && inter * inter < ft_get_norm2(ft_vec_diff(data->light->coord, *p)))
-			return (1);
-//		data->light = data->light->next;
-//	}
-	return (0);
+		if (inter > EPS && inter * inter <
+				ft_get_norm2(ft_vec_diff(data->light->coord, *p)))
+			ret = 1;
+		if (data->light->rank == -1 || ret == 1)
+			break;
+		data->light = data->light->next;
+	}
+	ft_go_start_lst(data, "light");
+	return (ret);
 }
 
 void		ft_raytrace(t_data *data, int x, int y)
@@ -83,13 +89,6 @@ void		ft_raytrace(t_data *data, int x, int y)
 		if (ft_inter_light(data, &p, &n))
 			ft_reset_values(&data->pix);
 		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
-		//	ft_put_pixel_to_img(x, y, 0, data);
-	//	while (data->sp->rank != -1)
-	//		data->sp = data->sp->next;
-	//	while (data->pl->rank != -1)
-	//		data->pl = data->pl->next;
-	//	data->pl = data->pl->next;
-	//	data->sp = data->sp->next;
 	}
 	else
 	{

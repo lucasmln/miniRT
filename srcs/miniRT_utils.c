@@ -38,3 +38,62 @@ char	*ft_read_file(char *av)
 	param[size] = '\0';
 	return (param);
 }
+
+void		ft_go_start_lst(t_data *data, char *lst)
+{
+	if (ft_strncmp(lst, "light", 5) == 0 && data->light->next)
+	{
+		while (data->light->rank != -1)
+			data->light = data->light->next;
+		data->light = data->light->next;
+	}
+	else if (ft_strncmp(lst, "camera", 6) == 0 && data->cam->next)
+	{
+		while (data->cam->rank != -1)
+			data->cam = data->cam->next;
+		data->cam = data->cam->next;
+	}
+	else if (ft_strncmp(lst, "sphere", 6) == 0 && data->sp->next)
+	{
+		while (data->sp->rank != -1)
+			data->sp = data->sp->next;
+		data->sp = data->sp->next;
+	}
+	else if (ft_strncmp(lst, "plane", 5) == 0 && data->pl->next)
+	{
+		while (data->pl->rank != -1)
+			data->pl = data->pl->next;
+		data->pl = data->pl->next;
+	}
+	ft_go_start_2(data, lst);
+}
+
+void	ft_go_start_2(t_data *data, char *lst)
+{
+	if (ft_strncmp(lst, "square", 6) == 0 && data->sq->next)
+	{
+		while (data->sq->rank != -1)
+			data->sq = data->sq->next;
+		data->sq = data->sq->next;
+	}
+	else if (ft_strncmp(lst, "cylinder", 8) == 0 && data->cy->next)
+	{
+		while (data->cy->rank != -1)
+			data->cy = data->cy->next;
+		data->cy = data->cy->next;
+	}
+	else if (ft_strncmp(lst, "triangle", 8) == 0 && data->tr->next)
+	{
+		while (data->tr->rank != -1)
+			data->tr = data->tr->next;
+		data->tr = data->tr->next;
+	}
+	else if (ft_strncmp(lst, "all obj", 7) == 0)
+	{
+		ft_go_start_lst(data, "sphere");
+		ft_go_start_lst(data, "plane");
+		ft_go_start_2(data, "square");
+		ft_go_start_2(data, "cylinder");
+		ft_go_start_2(data, "triangle");
+	}
+}

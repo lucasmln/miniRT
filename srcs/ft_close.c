@@ -30,6 +30,8 @@ int		close_window(int button,int x,int y, void *p)
 
 int		get_key(int key, void *p)
 {
+	int	up = 1;
+
 	if (key == ESC_KEY)
 	{
 		mlx_destroy_window(g_mlx.ptr, g_mlx.win);
@@ -37,8 +39,14 @@ int		get_key(int key, void *p)
 	}
 	if (key == 0x7e)
 	{
-		data->sp->coord.z -= 5;
-		ft_put_scene();
+		while (data->light->coord.y <= 0)
+		{
+			if (data->light->coord.z < data->sp->coord.z)
+				up = -1;
+			data->light->coord.z -= 1;
+			data->light->coord.y -= up;
+			ft_put_scene();
+		}
 	}
 	if (key == 0x7d)
 	{

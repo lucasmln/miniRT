@@ -119,5 +119,6 @@ void		ft_raytrace(t_data *data, int x, int y);
 double		ft_for_each_pl(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
 int		get_key(int key, void *p);
 void	ft_put_scene(void);
-
+void		ft_go_start_2(t_data *data, char *lst);
+void		ft_go_start_lst(t_data *data, char *lst);
 #endif

@@ -52,6 +52,9 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 	t_vect3		ambiente;
 	int			check;
 
+	while (data->light->rank != -1)
+		data->light = data->light->next;
+	data->light = data->light->next;
 	check = -1;
 	ft_reset_values(&max_pixel);
 	while (check)
@@ -80,7 +83,8 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 			check = 0;
 		data->light = data->light->next;
 	}
-	while (data->light->rank != 1)
+	while (data->light->rank != -1)
 		data->light = data->light->next;
+	data->light = data->light->next;
 	return (data->pix);
 }

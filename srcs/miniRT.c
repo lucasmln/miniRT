@@ -72,6 +72,12 @@ int		get_coord_mouse(int button,int x,int y, void *p)
 	return (0);
 }
 
+void	ft_put_interface(void)
+{
+	
+}
+
+
 void	ft_put_scene(void)
 {
 	ft_new_img(data);

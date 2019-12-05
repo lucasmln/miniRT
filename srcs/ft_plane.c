@@ -22,8 +22,9 @@ double		ft_for_each_pl(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	check = 1;
 	pos = data->pl->rank;
 	min = -1;
-	while (data->pl->rank != 1)
+	while (data->pl->rank != -1)
 		data->pl = data->pl->next;
+	data->pl = data->pl->next;
 	while (check)
 	{
 		inter = ft_intersection_ray_pl(ray, data->pl, p, n);
