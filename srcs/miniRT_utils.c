@@ -68,7 +68,7 @@ void		ft_go_start_lst(t_data *data, char *lst)
 	ft_go_start_2(data, lst);
 }
 
-void	ft_go_start_2(t_data *data, char *lst)
+void		ft_go_start_2(t_data *data, char *lst)
 {
 	if (ft_strncmp(lst, "square", 6) == 0 && data->sq->next)
 	{
@@ -83,11 +83,10 @@ void	ft_go_start_2(t_data *data, char *lst)
 		data->cy = data->cy->next;
 	}
 	else if (ft_strncmp(lst, "triangle", 8) == 0 && data->tr->next)
-	{
 		while (data->tr->rank != -1)
 			data->tr = data->tr->next;
+	else if (ft_strncmp(lst, "triangle", 8) == 0 && data->tr->next)
 		data->tr = data->tr->next;
-	}
 	else if (ft_strncmp(lst, "all obj", 7) == 0)
 	{
 		ft_go_start_lst(data, "sphere");
