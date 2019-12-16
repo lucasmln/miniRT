@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:34:21 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 17:14:39 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 17:55:22 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 	data->light = data->light->next;
 	check = -1;
 	ft_reset_values(&max_pixel);
+	if (data->check == 2)
+			printf("color r= %lf, g = %lf, b = %lf\n", data->color.x, data->color.y, data->color.z);
 	while (check)
 	{
 		ambiente.x = (data->ambience.color.x / 255) * data->ambience.ratio;
@@ -82,11 +84,6 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 			* ambiente.z / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		ft_check_abs_value(&max_pixel);
 		ft_pix_cmp(&max_pixel, &data->pix);
-		if (data->check == 2)
-		{
-			data->pix.x = 255;
-			printf("r= %lf, g = %lf, b = %lf\n", data->pix.x, data->pix.y, data->pix.z);
-		}
 		if (data->light->rank == -1)
 			check = 0;
 		data->light = data->light->next;

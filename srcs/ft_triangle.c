@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 12:59:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 17:06:04 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 19:21:49 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,44 +46,43 @@ double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	return (ft_intersection_ray_tr(ray, data->tr, p, n));
 }
 
-double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr,
-								t_vect3 *p, t_vect3 *n)
+double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n)
 {
-	t_vect3	pvec;
-	t_vect3	tvec;
-	t_vect3	qvec;
-	t_vect3	e1;
-	t_vect3	e2;
-	t_vect3	norm;
-	t_vect3 center;
-	double	det;
-	double	inv;
-	double	u;
-	double	v;
-	double	t;
+	double		t;
 
-	e1 = ft_vec_diff(tr->p_2, tr->p_1);
-	e2 = ft_vec_diff(tr->p_3, tr->p_1);
-	pvec = ft_cross_product(ray.dir, e2);
-	det = ft_dot_product(e1, pvec);
-	if (det < EPS)
+	t_vect3		u;
+	t_vect3		v;
+	t_vect3		w;
+	double		m[4];
+	double		b[4];
+	double		g[4];
+	double		alpha;
+
+	*n = ft_normal_vector(ft_cross_product(ft_vec_diff(tr->p_2, tr->p_1), ft_vec_diff(tr->p_3, tr->p_1)));
+	t = ft_dot_product(ft_vec_diff(tr->p_3, ray.origine), *n) / ft_dot_product(ray.dir, *n);
+	if (t < 0)
 		return (0);
-	inv = 1.0 / det;
-	tvec = ft_vec_diff(ray.origine, tr->p_1);
-	u = ft_dot_product(tvec, pvec) * inv;
-	if (u < 0.0 || u > 1.0)
+	*p = ft_vec_add(ray.origine, ft_vec_mult_scalar(ray.dir, t));
+	u = ft_vec_diff(tr->p_2, tr->p_1);
+	v = ft_vec_diff(tr->p_3, tr->p_1);
+	w = ft_vec_diff(*p, tr->p_1);
+	m[0] = ft_get_norm2(u);
+	m[1] = ft_dot_product(u, v);
+	m[2] = ft_get_norm2(v);
+	m[3] = m[0] * m[2] - m[1] * m[1];
+
+	b[0] = ft_dot_product(w, u);
+	b[1] = ft_dot_product(w, v);
+	b[2] = b[0] * m[2] - b[1] * m[1];
+	b[3] = b[2] / m[3];
+
+	g[0] = b[0];
+	g[1] = b[1];
+	g[2] = m[0] * g[1] - m[1] * g[0];
+	g[3] = g[2] / m[3];
+
+	alpha = 1 - b[3] - g[3];
+	if (alpha < 0 || alpha > 1 || b[3] < 0 || b[3] > 1 || g[3] < 0 || g[3] > 1)
 		return (0);
-	qvec = ft_cross_product(tvec, e1);
-	v = ft_dot_product(ray.dir, qvec) * inv;
-	if (v < 0.0 || u + v > 1.0)
-		return (0);
-	t = ft_dot_product(e2, qvec) * inv;
-	*p = ft_vec_add(ray.origine, ft_vec_mult_scalar(ray.origine, t));
-	norm = ft_normal_vector(ft_cross_product(e1, e2));
-	*n = ft_normal_vector(norm);
-	if (ft_dot_product(ray.dir, norm) > 0)
-		*n = norm;
-	else
-		*n = ft_vec_mult_scalar(norm, -1);
 	return (t);
 }

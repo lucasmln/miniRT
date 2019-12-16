@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 17:11:17 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 19:25:00 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	t_vect3	tmp_p;
 	t_vect3	tmp_n;
 
+	ft_go_start_lst(data, "all obj");
 	if (data->sp->next)
 		res = ft_for_each_sp(ray, data, p, n);
 	data->color = data->sp->color;
@@ -39,8 +40,6 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 		*p = tmp_p;
 		*n = tmp_n;
 		data->color = data->tr->color;
-//		if (data->check == 2)
-//		printf(" inter r= %lf, g = %lf, b = %lf\n", data->color.x, data->color.y, data->color.z);
 	}
 	return (res);
 }
@@ -63,9 +62,7 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 	double		inter;
 	t_vect3		tmp_p;
 	t_vect3		tmp_n;
-	t_vect3		save_color;
 
-	save_color = data->color;
 	ft_go_start_lst(data, "light");
 	while (1)
 	{
@@ -79,7 +76,6 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 			break;
 		data->light = data->light->next;
 	}
-	data->color = save_color;
 	ft_go_start_lst(data, "light");
 	return (1);
 }
@@ -95,6 +91,9 @@ void		ft_raytrace(t_data *data, int x, int y)
 	if (inter > 0)
 	{
 		data->pix = ft_get_pixel_color(data, p, n);
+		if (data->check == 2)
+			printf(" inter r= %lf, g = %lf, b = %lf\n", data->pix.x, data->pix.y, data->pix.z);
+
 		if (ft_inter_light(data, &p, &n))
 			ft_reset_values(&data->pix);
 		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
@@ -121,7 +120,7 @@ void		ft_draw(t_data *data)
 		while (y < data->render[1])
 		{
 			data->check = 0;
-			if (x == 941 && y == 434)
+			if (x == 840 && y == 434)
 				data->check = 2;
 			ft_reset_values(&data->pix);
 			ft_raytrace(data, x, y);
