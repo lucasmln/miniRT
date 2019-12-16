@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/04 20:49:19 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 15:00:33 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int		main(int ac, char **av)
 		printf("erreur file\n");
 		return (-1);
 	}
-	data->sp = data->sp->next;
-//	data->pl = data->pl->next;
-	printf("%d\n", data->pl->rank);
 	if (!(g_mlx.ptr = mlx_init()))
 		return (0);
 	if (!(g_mlx.win = mlx_new_window(g_mlx.ptr, data->render[0], data->render[1], "miniRT")))

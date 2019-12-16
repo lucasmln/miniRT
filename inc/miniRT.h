@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/04 20:09:43 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 13:08:49 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,7 @@ int		get_key(int key, void *p);
 void	ft_put_scene(void);
 void		ft_go_start_2(t_data *data, char *lst);
 void		ft_go_start_lst(t_data *data, char *lst);
+double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n);
+double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
+
 #endif

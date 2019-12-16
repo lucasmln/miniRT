@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 12:34:21 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/03 17:39:00 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 17:14:39 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void		ft_check_abs_value(t_vect3 *pixel)
 {
+	pixel->x = pow(pixel->x, 1 / 2.2);
+	pixel->y = pow(pixel->y, 1 / 2.2);
+	pixel->z = pow(pixel->z, 1 / 2.2);
 	if (pixel->x > 255 || pixel->y > 255 || pixel->z > 255)
 	{
 		pixel->x = pixel->x > 255 ? 255 : pixel->x;
@@ -59,26 +62,31 @@ t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 	ft_reset_values(&max_pixel);
 	while (check)
 	{
-		ambiente.x = data->ambience.color.x * data->ambience.ratio * 0.8;
-		ambiente.y = data->ambience.color.y * data->ambience.ratio * 0.8;
-		ambiente.z = data->ambience.color.z * data->ambience.ratio * 0.8;
-		intensite.x = 1000000 * data->light->ratio * (data->light->color.x / 255);
-		intensite.y = 1000000 * data->light->ratio * (data->light->color.y / 255);
-		intensite.z = 1000000 * data->light->ratio * (data->light->color.z / 255);
+		ambiente.x = (data->ambience.color.x / 255) * data->ambience.ratio;
+		ambiente.y = (data->ambience.color.y / 255) * data->ambience.ratio;
+		ambiente.z = (data->ambience.color.z / 255) * data->ambience.ratio;
+		intensite.x = 100000000 * data->light->ratio * (data->light->color.x / 255);
+		intensite.y = 100000000 * data->light->ratio * (data->light->color.y / 255);
+		intensite.z = 100000000 * data->light->ratio * (data->light->color.z / 255);
 		if (data->color.x)
 			max_pixel.x = (data->color.x / 255) * (intensite.x *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
-			ft_get_norm2(ft_vec_diff(data->light->coord, p))) + ambiente.x;
+			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n)
+			* ambiente.x / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		if (data->color.y)
 			max_pixel.y = (data->color.y / 255) * (intensite.y *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
-			ft_get_norm2(ft_vec_diff(data->light->coord, p))) + ambiente.y;
+			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n)
+			*ambiente.y / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		if (data->color.z)
 			max_pixel.z = (data->color.z / 255) * (intensite.z *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n) /
-			ft_get_norm2(ft_vec_diff(data->light->coord, p))) + ambiente.z;
+			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n)
+			* ambiente.z / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		ft_check_abs_value(&max_pixel);
 		ft_pix_cmp(&max_pixel, &data->pix);
+		if (data->check == 2)
+		{
+			data->pix.x = 255;
+			printf("r= %lf, g = %lf, b = %lf\n", data->pix.x, data->pix.y, data->pix.z);
+		}
 		if (data->light->rank == -1)
 			check = 0;
 		data->light = data->light->next;

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:03:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/03 15:22:57 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 14:56:47 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int		ft_objet(t_data *data, char *s, int i)
 	data->sq->rank = -1;
 	data->cy->rank = -1;
 	data->cy->rank = -1;
+	data->tr->rank = -1;
 	return (i);
 }
 

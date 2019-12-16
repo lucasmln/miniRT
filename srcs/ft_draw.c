@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 15:36:37 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 17:11:17 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 		*p = tmp_p;
 		*n = tmp_n;
 		data->color = data->tr->color;
+//		if (data->check == 2)
+//		printf(" inter r= %lf, g = %lf, b = %lf\n", data->color.x, data->color.y, data->color.z);
 	}
 	return (res);
 }
@@ -61,7 +63,9 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 	double		inter;
 	t_vect3		tmp_p;
 	t_vect3		tmp_n;
+	t_vect3		save_color;
 
+	save_color = data->color;
 	ft_go_start_lst(data, "light");
 	while (1)
 	{
@@ -75,6 +79,7 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 			break;
 		data->light = data->light->next;
 	}
+	data->color = save_color;
 	ft_go_start_lst(data, "light");
 	return (1);
 }
@@ -85,9 +90,6 @@ void		ft_raytrace(t_data *data, int x, int y)
 	t_vect3 p;
 	t_vect3 n;
 
-	data->check = 0;
-	if (x == 100 && y == 550)
-		data->check = 1;
 	ft_create_ray(data, x, y);
 	inter = ft_for_each_obj(data->ray, data, &p, &n);
 	if (inter > 0)
@@ -118,6 +120,9 @@ void		ft_draw(t_data *data)
 		y = 0;
 		while (y < data->render[1])
 		{
+			data->check = 0;
+			if (x == 941 && y == 434)
+				data->check = 2;
 			ft_reset_values(&data->pix);
 			ft_raytrace(data, x, y);
 			y++;
