@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/04 20:10:54 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 15:27:14 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 		*p = tmp_p;
 		*n = tmp_n;
 		data->color = data->pl->color;
+	}
+	if (data->tr->next)
+		tmp = ft_for_each_tr(ray, data, &tmp_p, &tmp_n);
+	if ((tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
+	{
+		res = tmp;
+		*p = tmp_p;
+		*n = tmp_n;
+		data->color = data->tr->color;
 	}
 	return (res);
 }
@@ -63,13 +72,20 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 		inter = ft_for_each_obj(ray_light, data, &tmp_p, &tmp_n);
 		if (inter > EPS && inter * inter <
 				ft_get_norm2(ft_vec_diff(data->light->coord, *p)))
-			ret = 1;
-		if (data->light->rank == -1 || ret == 1)
+			ret++;
+		if (data->light->rank == -1)
 			break;
 		data->light = data->light->next;
 	}
 	ft_go_start_lst(data, "light");
-	return (ret);
+	while (data->light->rank != -1)
+	{
+		data->light = data->light->next;
+		ret--;
+	}
+	if (ret == 1)
+		return (1);
+	return (0);
 }
 
 void		ft_raytrace(t_data *data, int x, int y)
