@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 15:27:14 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/16 15:36:37 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,22 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 	double		inter;
 	t_vect3		tmp_p;
 	t_vect3		tmp_n;
-	int			ret;
 
-	ret = 0;
 	ft_go_start_lst(data, "light");
 	while (1)
 	{
 		ray_light.origine = ft_vec_add(*p, ft_vec_mult_scalar(*n, EPS));
 		ray_light.dir = ft_normal_vector(ft_vec_diff(data->light->coord, *p));
 		inter = ft_for_each_obj(ray_light, data, &tmp_p, &tmp_n);
-		if (inter > EPS && inter * inter <
+		if (inter < EPS || inter * inter >
 				ft_get_norm2(ft_vec_diff(data->light->coord, *p)))
-			ret++;
+			return (0);
 		if (data->light->rank == -1)
 			break;
 		data->light = data->light->next;
 	}
 	ft_go_start_lst(data, "light");
-	while (data->light->rank != -1)
-	{
-		data->light = data->light->next;
-		ret--;
-	}
-	if (ret == 1)
-		return (1);
-	return (0);
+	return (1);
 }
 
 void		ft_raytrace(t_data *data, int x, int y)
