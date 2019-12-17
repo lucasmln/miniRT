@@ -6,19 +6,18 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:22:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/26 15:03:44 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 20:09:50 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-int		ft_set_color(t_vect3 c)
+int			ft_set_color(t_vect3 c)
 {
 	return (((((int)c.x << 8) + (int)c.y) << 8) + (int)c.z);
-
 }
 
-char	*ft_read_file(char *av)
+char		*ft_read_file(char *av)
 {
 	int		ret;
 	int		fd;

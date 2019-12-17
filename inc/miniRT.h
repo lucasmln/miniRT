@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 15:10:20 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 20:19:50 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct		s_data
 	t_vect3			color;
 	t_inter			inter;
 	t_ray			ray_mir;
+	char			*obj;
 	int				check;
 }					t_data;
 
@@ -117,7 +118,7 @@ int			ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n);
 double		ft_intersection_ray_pl(t_ray ray, t_plane *pl, t_vect3 *p, t_vect3 *n);
 void		ft_reset_values(t_vect3 *pix);
 t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n);
-t_vect3		ft_raytrace(t_ray ray, t_data *data, int coord[], int rebond);
+t_vect3		ft_raytrace(t_ray ray, t_data *data, int coord[], int nb);
 double		ft_for_each_pl(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
 int		get_key(int key, void *p);
 void	ft_put_scene(void);
@@ -125,5 +126,6 @@ void		ft_go_start_2(t_data *data, char *lst);
 void		ft_go_start_lst(t_data *data, char *lst);
 double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n);
 double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
+double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
 
 #endif

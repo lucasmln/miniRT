@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/26 16:24:15 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 16:01:18 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,13 @@ int		ft_obj_is_triangle(t_data *data, char *s, int i)
 	ft_set_ori(&data->tr->p_3, aux);
 	i = ft_get_color(aux, s, i);
 	ft_set_ori(&data->tr->color, aux);
+	while (s[i] == ' ')
+		i++;
+	if (s[i] == 'm')
+	{
+		i++;
+		data->tr->spec = 1;
+	}
 	if (i == -1 || s[i] != '\n')
 		return (-1);
 	if (data->tr->rank == 0)

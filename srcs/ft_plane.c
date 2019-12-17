@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 16:51:04 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/03 15:20:07 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 21:03:22 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,22 @@ double		ft_for_each_pl(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 {
 	double	inter;
 	double	min;
-	int		check;
 	int		pos;
 
-	check = 1;
 	pos = data->pl->rank;
 	min = -1;
-	while (data->pl->rank != -1)
-		data->pl = data->pl->next;
-	data->pl = data->pl->next;
-	while (check)
+	ft_go_start_lst(data, "plane");
+	while (1)
 	{
 		inter = ft_intersection_ray_pl(ray, data->pl, p, n);
 		if (inter != 0)
-		{
 			if (min == -1 || fmin(inter, min) == inter)
 			{
 				min = inter;
 				pos = data->pl->rank;
 			}
-		}
 		if (data->pl->rank == -1)
-			check = 0;
+			break ;
 		data->pl = data->pl->next;
 	}
 	if (min > 0)
@@ -46,7 +40,8 @@ double		ft_for_each_pl(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	return (ft_intersection_ray_pl(ray, data->pl, p, n));
 }
 
-double		ft_intersection_ray_pl(t_ray ray, t_plane *pl, t_vect3 *p, t_vect3 *n)
+double		ft_intersection_ray_pl(t_ray ray, t_plane *pl, t_vect3 *p,
+					t_vect3 *n)
 {
 	double	t;
 	double	a;

@@ -6,13 +6,13 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:05:22 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/03 15:17:19 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 21:03:44 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-double		ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n)
+double	ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n)
 {
 	double	inter;
 	double	min;

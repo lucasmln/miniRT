@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:03:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 15:35:48 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 16:01:05 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ int		ft_obj_is_sphere(t_data *data, char *s, int i)
 	while (s[i] == ' ')
 		i++;
 	if (s[i] == 'm')
+	{
+		i++;
 		data->sp->spec = 1;
-	i++;
+	}
 	if (i == -1 || s[i] != '\n')
 		return (-1);
 	if (data->sp->rank == 0)
@@ -82,6 +84,13 @@ int		ft_obj_is_plane(t_data *data, char *s, int i)
 	if ((i = ft_get_color(aux, s, i)) == -1)
 		return (-1);
 	ft_set_ori(&data->pl->color, aux);
+	while (s[i] == ' ')
+		i++;
+	if (s[i] == 'm')
+	{
+		data->pl->spec = 1;
+		i++;
+	}
 	if (s[i] != '\n')
 		return (-1);
 	if (data->pl->rank == 0)

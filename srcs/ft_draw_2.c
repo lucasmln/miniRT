@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 12:34:21 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 17:55:22 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/12/17 20:20:20 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/12/17 20:55:54 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,55 +41,49 @@ void		ft_pix_cmp(t_vect3 *max_pix, t_vect3 *pix)
 		pix->z = max_pix->z;
 }
 
-void	ft_reset_values(t_vect3 *pix)
+void		ft_reset_values(t_vect3 *pix)
 {
 	pix->x = 0;
 	pix->y = 0;
 	pix->z = 0;
 }
 
+int			ft_set_ambience_intensity(t_vect3 *ambiente, t_vect3 *intense)
+{
+	ambiente->x = (data->ambience.color.x / 255) * data->ambience.ratio;
+	ambiente->y = (data->ambience.color.y / 255) * data->ambience.ratio;
+	ambiente->z = (data->ambience.color.z / 255) * data->ambience.ratio;
+	intense->x = 100000000 * data->light->ratio * (data->light->color.x / 255);
+	intense->y = 100000000 * data->light->ratio * (data->light->color.y / 255);
+	intense->z = 100000000 * data->light->ratio * (data->light->color.z / 255);
+	return (1);
+}
+
 t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
 {
-	t_vect3		intensite;
-	t_vect3		max_pixel;
-	t_vect3		ambiente;
-	int			check;
+	t_vect3		param[3];
 
-	while (data->light->rank != -1)
-		data->light = data->light->next;
-	data->light = data->light->next;
-	check = -1;
-	ft_reset_values(&max_pixel);
-	if (data->check == 2)
-			printf("color r= %lf, g = %lf, b = %lf\n", data->color.x, data->color.y, data->color.z);
-	while (check)
+	ft_go_start_lst(data, "light");
+	ft_reset_values(&param[2]);
+	while (ft_set_ambience_intensity(&param[1], &param[0]))
 	{
-		ambiente.x = (data->ambience.color.x / 255) * data->ambience.ratio;
-		ambiente.y = (data->ambience.color.y / 255) * data->ambience.ratio;
-		ambiente.z = (data->ambience.color.z / 255) * data->ambience.ratio;
-		intensite.x = 100000000 * data->light->ratio * (data->light->color.x / 255);
-		intensite.y = 100000000 * data->light->ratio * (data->light->color.y / 255);
-		intensite.z = 100000000 * data->light->ratio * (data->light->color.z / 255);
 		if (data->color.x)
-			max_pixel.x = (data->color.x / 255) * (intensite.x *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n)
-			* ambiente.x / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
+			param[2].x = (data->color.x / 255) * (param[0].x *
+			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)),
+			n) * param[1].x / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		if (data->color.y)
-			max_pixel.y = (data->color.y / 255) * (intensite.y *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n)
-			*ambiente.y / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
+			param[2].y = (data->color.y / 255) * (param[0].y *
+			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)),
+			n) * param[1].y / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
 		if (data->color.z)
-			max_pixel.z = (data->color.z / 255) * (intensite.z *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)), n)
-			* ambiente.z / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
-		ft_check_abs_value(&max_pixel);
-		ft_pix_cmp(&max_pixel, &data->pix);
-		if (data->light->rank == -1)
-			check = 0;
-		data->light = data->light->next;
+			param[2].z = (data->color.z / 255) * (param[0].z *
+			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)),
+			n) * param[1].z / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
+		ft_check_abs_value(&param[2]);
+		ft_pix_cmp(&param[2], &data->pix);
+		if (data->light->rank == -1 || !(data->light = data->light->next))
+			break ;
 	}
-	while (data->light->rank != -1)
-		data->light = data->light->next;
-	data->light = data->light->next;
+	ft_go_start_lst(data, "light");
 	return (data->pix);
 }

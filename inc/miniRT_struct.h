@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 15:35:30 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 15:51:55 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct		s_plane
 	t_vect3				color;
 	struct s_plane		*next;
 	int					rank;
+	int					spec;
 }					t_plane;
 
 typedef struct		s_square
@@ -92,6 +93,7 @@ typedef struct		s_triangle
 	t_vect3				color;
 	struct s_triangle	*next;
 	int					rank;
+	int					spec;
 }					t_triangle;
 
 typedef struct		s_ray
