@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 15:00:33 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 15:33:34 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,13 @@ int		main(int ac, char **av)
 		printf("erreur file\n");
 		return (-1);
 	}
+	printf("c = %c\n", data->sp->spec);
 	if (!(g_mlx.ptr = mlx_init()))
 		return (0);
 	if (!(g_mlx.win = mlx_new_window(g_mlx.ptr, data->render[0], data->render[1], "miniRT")))
 		return (0);
 	ft_put_scene();
-/*	ft_new_img(data);
-	ft_draw(data);
-	mlx_put_image_to_window(g_mlx.ptr, g_mlx.win, data->image->img, 0, 0);
-//	mlx_key_hook(g_mlx.win, esc_key, 0);
-	mlx_key_hook(g_mlx.win, get_key, 0);
-	mlx_hook(g_mlx.win, 17, 0, close_window, g_mlx.win);
-	mlx_loop(g_mlx.ptr);
-*/	return (0);
+	return (0);
 }
 
 int		get_coord_mouse(int button,int x,int y, void *p)

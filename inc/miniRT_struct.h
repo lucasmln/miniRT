@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/03 15:31:31 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 15:35:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct		s_sphere
 	t_vect3				color;
 	struct s_sphere		*next;
 	int					rank;
+	int					spec;
 }					t_sphere;
 
 typedef struct		s_plane
@@ -98,5 +99,12 @@ typedef struct		s_ray
 	t_vect3				origine;
 	t_vect3				dir;
 }					t_ray;
+
+typedef struct		s_inter
+{
+	t_vect3		p;
+	t_vect3		n;
+	double		pos;
+}					t_inter;
 
 #endif

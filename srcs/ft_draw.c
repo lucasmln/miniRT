@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 19:25:00 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 15:44:04 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	if ((tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
 	{
 		res = tmp;
-		*p = tmp_p;
-		*n = tmp_n;
+		data->inter.p = tmp_p;
+		data->inter.n = tmp_n;
 		data->color = data->pl->color;
 	}
 	if (data->tr->next)
@@ -37,8 +37,8 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 	if ((tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
 	{
 		res = tmp;
-		*p = tmp_p;
-		*n = tmp_n;
+		data->inter.p = tmp_p;
+		data->inter.n = tmp_n;
 		data->color = data->tr->color;
 	}
 	return (res);
@@ -80,52 +80,69 @@ int			ft_inter_light(t_data *data, t_vect3 *p, t_vect3 *n)
 	return (1);
 }
 
-void		ft_raytrace(t_data *data, int x, int y)
+int			ft_check_mirroir(t_ray ray, t_data *data, int coord[2], int nb)
+{
+	t_vect3		tmp;
+
+	if (data->sp->spec == 1)
+	{
+		data->ray_mir.origine = ft_vec_add(data->inter.p,
+					ft_vec_mult_scalar(data->inter.n, EPS));
+		tmp = ft_vec_mult_scalar(data->inter.n,
+				ft_dot_product(data->inter.n, ray.dir));
+		data->ray_mir.dir = ft_vec_diff(ray.dir, ft_vec_mult_scalar(tmp, 2));
+		return (1);
+	}
+	else
+		return (0);
+}
+
+t_vect3		ft_raytrace(t_ray ray, t_data *data, int coord[], int nb)
 {
 	int	inter;
-	t_vect3 p;
-	t_vect3 n;
 
-	ft_create_ray(data, x, y);
-	inter = ft_for_each_obj(data->ray, data, &p, &n);
+	ft_create_ray(data, coord[0], coord[1]);
+	inter = ft_for_each_obj(data->ray, data, &data->inter.p, &data->inter.n);
 	if (inter > 0)
 	{
-		data->pix = ft_get_pixel_color(data, p, n);
-		if (data->check == 2)
-			printf(" inter r= %lf, g = %lf, b = %lf\n", data->pix.x, data->pix.y, data->pix.z);
-
-		if (ft_inter_light(data, &p, &n))
-			ft_reset_values(&data->pix);
-		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
+		if (ft_check_mirroir(ray, data, coord, nb))
+			data->pix = ft_raytrace(data->ray_mir, data, coord, nb - 1);
+		else
+		{
+			data->pix = ft_get_pixel_color(data, data->inter.p, data->inter.n);
+			if (ft_inter_light(data, &data->inter.p, &data->inter.n))
+				ft_reset_values(&data->pix);
+			ft_put_pixel_to_img(coord[0], coord[1], ft_set_color(data->pix), data);
+		}
 	}
 	else
 	{
 		data->pix.x = data->ambience.color.x * data->ambience.ratio * 0.8;
 		data->pix.y = data->ambience.color.y * data->ambience.ratio * 0.8;
 		data->pix.z = data->ambience.color.z * data->ambience.ratio * 0.8;
-		ft_put_pixel_to_img(x, y, ft_set_color(data->pix), data);
-		ft_put_pixel_to_img(x, y, 0, data);
+		ft_put_pixel_to_img(coord[0], coord[1], ft_set_color(data->pix), data);
+		ft_put_pixel_to_img(coord[0], coord[1], 0, data);
 	}
+	return (data->pix);
 }
 
 void		ft_draw(t_data *data)
 {
-	int		x;
-	int		y;
+	int		coord[2];
 
-	x = 0;
-	while (x < data->render[0])
+	coord[0] = 0;
+	while (coord[0] < data->render[0])
 	{
-		y = 0;
-		while (y < data->render[1])
+		coord[1] = 0;
+		while (coord[1] < data->render[1])
 		{
 			data->check = 0;
-			if (x == 840 && y == 434)
+			if (coord[0] == 840 && coord[1] == 434)
 				data->check = 2;
 			ft_reset_values(&data->pix);
-			ft_raytrace(data, x, y);
-			y++;
+			data->pix = ft_raytrace(data->ray, data, coord, 5);
+			coord[1]++;
 		}
-		x++;
+		coord[0]++;
 	}
 }

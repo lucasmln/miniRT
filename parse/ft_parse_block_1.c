@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:06:11 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/03 15:58:27 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 11:33:09 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int		ft_ambience_and_res(t_data *data, char *s, int i)
 		return (-1);
 	i = (check == 1) ? ft_get_ambience(data, s, i + 1) : ft_get_render(data, s, i + 1);
 	check += 2;
+	data->render[0] = data->render[0] > 2560 ? 2560 : data->render[0];
+	data->render[1] = data->render[1] > 1395 ? 1395 : data->render[1];
 	return (i);
 }
 

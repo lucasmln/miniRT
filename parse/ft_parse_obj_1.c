@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:03:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 14:56:47 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/17 15:35:48 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ int		ft_obj_is_sphere(t_data *data, char *s, int i)
 	i = ft_pass_double(s, i);
 	i = ft_get_color(aux, s, i);
 	ft_set_ori(&data->sp->color, aux);
+	while (s[i] == ' ')
+		i++;
+	if (s[i] == 'm')
+		data->sp->spec = 1;
+	i++;
 	if (i == -1 || s[i] != '\n')
 		return (-1);
 	if (data->sp->rank == 0)
