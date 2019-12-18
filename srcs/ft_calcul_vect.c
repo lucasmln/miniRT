@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:42:05 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/16 20:37:30 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 12:26:13 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,13 @@ t_vect3		ft_vnegative(t_vect3 v)
 	v.y = -v.y;
 	v.z = -v.z;
 	return (v);
+}
+
+void		ft_vect_swap(t_vect3 *a, t_vect3 *b)
+{
+	t_vect3	temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }

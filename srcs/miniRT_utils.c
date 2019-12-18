@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:22:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 20:09:50 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 12:18:13 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ void		ft_go_start_2(t_data *data, char *lst)
 		data->cy = data->cy->next;
 	}
 	else if (ft_strncmp(lst, "triangle", 8) == 0 && data->tr->next)
+	{
 		while (data->tr->rank != -1)
 			data->tr = data->tr->next;
-	else if (ft_strncmp(lst, "triangle", 8) == 0 && data->tr->next)
 		data->tr = data->tr->next;
+	}
 	else if (ft_strncmp(lst, "all obj", 7) == 0)
 	{
 		ft_go_start_lst(data, "sphere");

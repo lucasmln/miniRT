@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 16:01:18 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:20:58 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int		ft_obj_is_square(t_data *data, char *s, int i)
 	if ((i = ft_get_color(aux, s, i)) == -1)
 		return (-1);
 	ft_set_ori(&data->sq->color, aux);
-	if (s[i] != '\n')
+	if (s[i] != '\n' || ft_init_tr_in_sq(data->sq) == -1)
 		return (-1);
+	ft_create_square_point(data->sq);
 	if (data->sq->rank == 0)
 		save_sq = data->sq;
 	data->sq->rank++;
@@ -136,6 +137,7 @@ int		ft_obj_is_triangle(t_data *data, char *s, int i)
 	}
 	if (i == -1 || s[i] != '\n')
 		return (-1);
+	ft_check_point(&data->tr->p_1, &data->tr->p_2, &data->tr->p_3);
 	if (data->tr->rank == 0)
 		save_tr = data->tr;
 	data->tr->rank++;

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 20:19:50 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:09:08 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,10 @@ void		ft_go_start_lst(t_data *data, char *lst);
 double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n);
 double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
 double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
+void		ft_vect_swap(t_vect3 *a, t_vect3 *b);
+void		ft_check_point(t_vect3 *p1, t_vect3 *p2, t_vect3 *p3);
+int			ft_init_tr_in_sq(t_square *sq);
+void		ft_create_square_point(t_square *sq);
+double		ft_for_each_square(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
 
 #endif

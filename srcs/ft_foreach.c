@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 20:18:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 20:19:21 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:50:47 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 		*n = tmp_n;
 		data->obj = "tr";
 		data->color = data->tr->color;
+	}
+	if (data->sq->next)
+		tmp = ft_for_each_square(ray, data, &tmp_p, &tmp_n);
+	if ((tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
+	{
+		printf("tmp = %lf\n", tmp);
+		res = tmp;
+		*p = tmp_p;
+		*n = tmp_n;
+		data->obj = "tr";
+		data->color = data->sq->color;
 	}
 	if (res > EPS)
 		return (res);

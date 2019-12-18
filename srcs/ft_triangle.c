@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 12:59:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 21:12:32 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:02:13 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,16 @@ double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 
 	pos = data->tr->rank;
 	min = -1;
-	while (data->tr->rank != -1)
-		data->tr = data->tr->next;
-	data->tr = data->tr->next;
+	ft_go_start_lst(data, "triangle");
 	while (1)
 	{
 		inter = ft_intersection_ray_tr(ray, data->tr, p, n);
 		if (inter != 0)
-		{
 			if (min == -1 || fmin(inter, min) == inter)
 			{
 				min = inter;
 				pos = data->tr->rank;
 			}
-		}
 		if (data->tr->rank == -1)
 			break ;
 		data->tr = data->tr->next;
@@ -42,6 +38,14 @@ double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 		while (data->tr->rank != pos)
 			data->tr = data->tr->next;
 	return (ft_intersection_ray_tr(ray, data->tr, p, n));
+}
+
+void		ft_check_point(t_vect3 *p1, t_vect3 *p2, t_vect3 *p3)
+{
+	if (p2->y > p1->y)
+		ft_vect_swap(p2, p1);
+	else if (p2->y > p3->y)
+		ft_vect_swap(p2, p3);
 }
 
 double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n)

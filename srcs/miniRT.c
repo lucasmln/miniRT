@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 20:13:50 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:57:05 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,17 @@ int		main(int ac, char **av)
 		printf("erreur file\n");
 		return (-1);
 	}
-	printf("c = %d\n", data->sp->spec);
+	printf("rank sq = %d, rank tr1 = %d, rank tr2 = %d\n", data->sq->rank, data->sq->tr->rank, data->sq->tr->next->rank);
+	printf("tr1 p_1: x = %lf, y = %lf, z = %lf\n", data->sq->tr->p_1.x, data->sq->tr->p_1.y, data->sq->tr->p_1.z);
+	printf("tr1 p_2: x = %lf, y = %lf, z = %lf\n", data->sq->tr->p_2.x, data->sq->tr->p_2.y, data->sq->tr->p_2.z);
+	printf("tr1 p_3: x = %lf, y = %lf, z = %lf\n\n", data->sq->tr->p_3.x, data->sq->tr->p_3.y, data->sq->tr->p_3.z);
+	data->sq->tr = data->sq->tr->next;
+	printf("tr1 p_1: x = %lf, y = %lf, z = %lf\n", data->sq->tr->p_1.x, data->sq->tr->p_1.y, data->sq->tr->p_1.z);
+	printf("tr1 p_2: x = %lf, y = %lf, z = %lf\n", data->sq->tr->p_2.x, data->sq->tr->p_2.y, data->sq->tr->p_2.z);
+	printf("tr1 p_3: x = %lf, y = %lf, z = %lf\n", data->sq->tr->p_3.x, data->sq->tr->p_3.y, data->sq->tr->p_3.z);
+
+
+
 	if (!(g_mlx.ptr = mlx_init()))
 		return (0);
 	if (!(g_mlx.win = mlx_new_window(g_mlx.ptr, data->render[0],

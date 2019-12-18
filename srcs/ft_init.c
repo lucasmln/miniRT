@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:34:05 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 21:01:28 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 15:20:49 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,18 @@ int		ft_malloc_data(t_data *data)
 	if (!(data->tr = malloc(sizeof(t_triangle) * 1)))
 		return (-1);
 	return (0);
+}
+
+int		ft_init_tr_in_sq(t_square *sq)
+{
+	if (!(sq->tr = malloc(sizeof(t_triangle))))
+		return (-1);
+	if (!(sq->tr->next = malloc(sizeof(t_triangle))))
+		return (-1);
+	sq->tr->rank = 1;
+	sq->tr->next->next = sq->tr;
+	sq->tr->next->rank = -1;
+	sq->tr->color = sq->color;
+	sq->tr->next->color = sq->color;
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 15:51:55 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 14:37:47 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,6 @@ typedef struct		s_plane
 	int					spec;
 }					t_plane;
 
-typedef struct		s_square
-{
-	t_vect3				coord;
-	t_vect3				dir;
-	double				height;
-	t_vect3				color;
-	struct s_square		*next;
-	int					rank;
-}					t_square;
-
 typedef struct		s_cylinder
 {
 	t_vect3				coord;
@@ -95,6 +85,17 @@ typedef struct		s_triangle
 	int					rank;
 	int					spec;
 }					t_triangle;
+
+typedef struct		s_square
+{
+	t_vect3				coord;
+	t_vect3				dir;
+	double				height;
+	t_vect3				color;
+	t_triangle			*tr;
+	struct s_square		*next;
+	int					rank;
+}					t_square;
 
 typedef struct		s_ray
 {
