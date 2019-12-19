@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 14:37:47 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 17:45:20 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct		s_square
 	t_triangle			*tr;
 	struct s_square		*next;
 	int					rank;
+	int					spec;
 }					t_square;
 
 typedef struct		s_ray

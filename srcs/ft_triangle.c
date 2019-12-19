@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/16 12:59:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 15:02:13 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/19 12:04:59 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 			data->tr = data->tr->next;
 	return (ft_intersection_ray_tr(ray, data->tr, p, n));
 }
-
+//Non necessaire en theorie
 void		ft_check_point(t_vect3 *p1, t_vect3 *p2, t_vect3 *p3)
 {
 	if (p2->y > p1->y)
 		ft_vect_swap(p2, p1);
-	else if (p2->y > p3->y)
+	if (p2->y < p3->y)
 		ft_vect_swap(p2, p3);
 }
 
@@ -58,6 +58,8 @@ double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n
 
 	*n = ft_normal_vector(ft_cross_product(ft_vec_diff(tr->p_2, tr->p_1),
 			ft_vec_diff(tr->p_3, tr->p_1)));
+	if (n->z < 0)
+		*n = ft_vec_mult_scalar(*n, -1);
 	t_alpha[0] = ft_dot_product(ft_vec_diff(tr->p_3, ray.origine), *n) /
 			ft_dot_product(ray.dir, *n);
 	if (t_alpha[0] < 0)
@@ -81,5 +83,7 @@ double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n
 	t_alpha[1] = 1 - b[3] - g[3];
 	if (t_alpha[1] < 0 || t_alpha[1] > 1 || b[3] < 0 || b[3] > 1 || g[3] < 0 || g[3] > 1)
 		return (0);
+	if (data->check == 2)
+		printf("x = %lf, y = %lf, z = %lf\n", n->x, n->y, n->z);
 	return (t_alpha[0]);
 }

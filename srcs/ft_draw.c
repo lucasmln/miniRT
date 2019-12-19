@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 20:19:32 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/18 20:40:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int			ft_check_mirroir(t_ray ray, t_data *data, int coord[2], int nb)
 
 	if ((data->sp->spec == 1 && ft_strncmp(data->obj, "sp", 2) == 0) ||
 		(data->pl->spec == 1 && ft_strncmp(data->obj, "pl", 2) == 0) ||
-		(data->tr->spec == 1 && ft_strncmp(data->obj, "tr", 2) == 0))
+		(data->tr->spec == 1 && ft_strncmp(data->obj, "tr", 2) == 0) ||
+		(data->sq->spec == 1 && ft_strncmp(data->obj, "sq", 2) == 0))
 	{
 		data->ray_mir.origine = ft_vec_add(data->inter.p,
 					ft_vec_mult_scalar(data->inter.n, EPS));
@@ -102,7 +103,7 @@ void		ft_draw(t_data *data)
 		while (coord[1] < data->render[1])
 		{
 			data->check = 0;
-			if (coord[0] == 22 && coord[1] == 888)
+			if (coord[0] == 913 && coord[1] == 578)
 				data->check = 2;
 			ft_reset_values(&data->pix);
 			ft_create_ray(data, coord[0], coord[1]);
