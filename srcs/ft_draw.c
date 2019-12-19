@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 20:40:30 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/19 16:46:08 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,50 @@ int			ft_check_mirroir(t_ray ray, t_data *data, int coord[2], int nb)
 		return (0);
 }
 
+int		ft_check_transparence(t_ray ray, t_data *data, int coord[2], int nb)
+{
+	t_vect3		tmp;
+	t_vect3		aux_dir;
+
+	if ((data->sp->trans == 1 && ft_strncmp(data->obj, "sp", 2) == 0) ||
+		(data->pl->trans == 1 && ft_strncmp(data->obj, "pl", 2) == 0) ||
+		(data->tr->trans == 1 && ft_strncmp(data->obj, "tr", 2) == 0) ||
+		(data->sq->trans == 1 && ft_strncmp(data->obj, "sq", 2) == 0))
+	{
+		data->ray_mir.origine = ft_vec_add(data->inter.p,
+					ft_vec_mult_scalar(data->inter.n, EPS));
+
+		double		n1;
+		double		n2;
+		double		radical;
+		t_vect3		n_trans;
+
+		if (ft_dot_product(ray.dir, data->inter.n) > 0)
+		{
+			n1 = 1.3;
+			n2 = 1;
+			n_trans = ft_vec_mult_scalar(data->inter.n, -1);
+		}
+		radical = 1 - pow(ft_dot_product(n_trans, ray.dir), 2);
+		if (radical > 0)
+		{
+			n_trans = data->inter.n;
+			tmp = ft_vec_mult_scalar(ft_vec_diff(ray.dir, ft_vec_mult_scalar(n_trans, ft_dot_product(ray.dir, n_trans))), (n1 / n2));
+			aux_dir = ft_vec_diff(tmp, ft_vec_mult_scalar(n_trans, sqrt(pow(n1 / n2, 2) * radical)));
+		} 
+
+//		tmp = ft_vec_mult_scalar(data->inter.n,
+//				ft_dot_product(data->inter.n, ray.dir));
+//		aux_dir = ft_vec_diff(ray.dir, ft_vec_mult_scalar(tmp, 2));
+		data->ray_mir.dir = aux_dir;
+		return (1);
+	}
+	else
+		return (0);
+
+
+}
+
 t_vect3		ft_raytrace(t_ray ray, t_data *data, int coord[], int nb)
 {
 	double	inter;
@@ -79,6 +123,8 @@ t_vect3		ft_raytrace(t_ray ray, t_data *data, int coord[], int nb)
 	{
 		if (nb >= 0 && ft_check_mirroir(ray, data, coord, nb))
 			data->pix = ft_raytrace(data->ray_mir, data, coord, nb - 1);
+		else if (nb >= 0 && ft_check_transparence(ray, data, coord, nb))
+			data->pix = ft_raytrace(data->ray_mir, data, coord, nb);
 		else
 		{
 			data->pix = ft_get_pixel_color(data, data->inter.p, data->inter.n);

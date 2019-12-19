@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:56:46 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 16:24:16 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/19 13:54:02 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ void		ft_create_square_point(t_square *sq)
 	sq->tr = sq->tr->next;
 	ft_check_point(&sq->tr->p_1, &sq->tr->p_2, &sq->tr->p_3);
 	sq->tr = sq->tr->next;
-	ft_check_point(&sq->tr->p_1, &sq->tr->p_2, &sq->tr->p_3);
+//	ft_check_point(&sq->tr->p_1, &sq->tr->p_2, &sq->tr->p_3);
 	sq->tr = sq->tr->next;
 }

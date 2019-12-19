@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 15:09:08 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/19 14:47:12 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int			ft_malloc_data(t_data *data);
 void		ft_draw(t_data *data);
 double		ft_intersection_ray_sp(t_ray ray, t_sphere *sp, t_vect3 *p, t_vect3 *n);
 double		ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n);
-int			ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n);
+double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n);
 double		ft_intersection_ray_pl(t_ray ray, t_plane *pl, t_vect3 *p, t_vect3 *n);
 void		ft_reset_values(t_vect3 *pix);
 t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n);
@@ -127,6 +127,7 @@ void		ft_go_start_lst(t_data *data, char *lst);
 double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n);
 double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
 double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
+double		ft_for_each_cy(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n);
 void		ft_vect_swap(t_vect3 *a, t_vect3 *b);
 void		ft_check_point(t_vect3 *p1, t_vect3 *p2, t_vect3 *p3);
 int			ft_init_tr_in_sq(t_square *sq);

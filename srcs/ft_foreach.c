@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 20:18:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 17:44:05 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/19 15:01:52 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,16 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 		*n = tmp_n;
 		data->obj = "sq";
 		data->color = data->sq->color;
+	}
+	if (data->cy->next)
+		tmp = ft_for_each_cy(ray, data, &tmp_p, &tmp_n);
+	if (!res || (tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
+	{
+		res = tmp;
+		*p = tmp_p;
+		*n = tmp_n;
+		data->obj = "cy";
+		data->color = data->cy->color;
 	}
 	if (res > EPS)
 		return (res);
