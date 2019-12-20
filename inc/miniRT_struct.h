@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/19 16:22:56 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/20 17:28:20 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct		s_sphere
 	int					rank;
 	int					spec;
 	int					trans;
+	double			ratio_trans;
 }					t_sphere;
 
 typedef struct		s_plane
@@ -63,6 +64,7 @@ typedef struct		s_plane
 	struct s_plane		*next;
 	int					rank;
 	int					spec;
+	double			ratio_trans;
 	int					trans;
 }					t_plane;
 
@@ -85,6 +87,7 @@ typedef struct		s_triangle
 	t_vect3				color;
 	struct s_triangle	*next;
 	int					rank;
+	double			ratio_trans;
 	int					spec;
 	int					trans;
 }					t_triangle;
@@ -99,6 +102,7 @@ typedef struct		s_square
 	struct s_square		*next;
 	int					rank;
 	int					spec;
+	double			ratio_trans;
 	int					trans;
 }					t_square;
 

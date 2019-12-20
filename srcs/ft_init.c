@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:34:05 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 15:20:49 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/20 19:08:57 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ft_init(t_data *data)
 	data->tr->next = NULL;
 	data->cy->rank = 0;
 	data->obj = "";
+	data->check_trans = 0;
+	data->check_mir = 0;
 }
 
 int		ft_malloc_data(t_data *data)

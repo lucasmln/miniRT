@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:03:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 15:18:32 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/20 18:07:48 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		ft_obj_is_sphere(t_data *data, char *s, int i)
 		data->sp->next->rank = data->sp->rank;
 		data->sp = data->sp->next;
 	}
+	data->sp->ratio_trans = 0;
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
@@ -47,10 +48,25 @@ int		ft_obj_is_sphere(t_data *data, char *s, int i)
 	ft_set_ori(&data->sp->color, aux);
 	while (s[i] == ' ')
 		i++;
-	if (s[i] == 'm')
+	if (s[i] == 'm' || s[i] == 't')
 	{
+		if (s[i] == 'm')
+			data->sp->spec = 1;
+		if (s[i] == 't')
+			data->sp->trans = 1;
 		i++;
-		data->sp->spec = 1;
+	}
+	if (s[i] == 't')
+	{
+		data->sp->trans = 1;
+		i++;
+		while (s[i] == ' ')
+			i++;
+		if (!(s[i] <= '9' && s[i] >= '0') && s[i] != ' ' && s[i] != '\n')
+			return (-1);
+		data->sp->ratio_trans = ft_atod(&s[i]);
+		i = ft_pass_double(s, i);
+		data->sp->ratio_trans = (data->sp->ratio_trans == 0) ? 1 : data->sp->ratio_trans;
 	}
 	if (i == -1 || s[i] != '\n')
 		return (-1);
@@ -73,6 +89,7 @@ int		ft_obj_is_plane(t_data *data, char *s, int i)
 		data->pl->next->rank = data->pl->rank;
 		data->pl = data->pl->next;
 	}
+	data->pl->ratio_trans = 0;
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
@@ -90,6 +107,18 @@ int		ft_obj_is_plane(t_data *data, char *s, int i)
 	{
 		data->pl->spec = 1;
 		i++;
+	}
+	else if (s[i] == 't')
+	{
+		data->pl->trans = 1;
+		i++;
+		while (s[i] == ' ')
+			i++;
+		if (!(s[i] <= '9' && s[i] >= '0') && s[i] != ' ')
+			return (-1);
+		data->pl->ratio_trans = ft_atod(&s[i]);
+		i = ft_pass_double(s, i);
+		data->pl->ratio_trans = (data->pl->ratio_trans == 0) ? 1 : data->pl->ratio_trans;
 	}
 	if (s[i] != '\n')
 		return (-1);

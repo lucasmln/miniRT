@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:16:29 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/30 19:43:00 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/20 15:30:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,9 @@ double		ft_distance(t_vect3 v1, t_vect3 v2)
 {
 	return (sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y, 2) +
 			pow(v1.z - v2.z, 2)));
+}
+
+double		ft_sqr(double a)
+{
+	return (a * a);
 }

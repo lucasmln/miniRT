@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/19 12:10:59 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/20 18:08:25 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int		ft_obj_is_square(t_data *data, char *s, int i)
 		data->sq->next->rank = data->sq->rank;
 		data->sq = data->sq->next;
 	}
+	data->sq->ratio_trans = 0;
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
@@ -54,6 +55,18 @@ int		ft_obj_is_square(t_data *data, char *s, int i)
 	{
 		i++;
 		data->sq->spec = 1;
+	}
+	else if (s[i] == 't')
+	{
+		data->sq->trans = 1;
+		i++;
+		while (s[i] == ' ')
+			i++;
+		if (!(s[i] < '9' && s[i] > '0') && s[i] != ' ' && s[i] != '\n')
+			return (-1);
+		data->sq->ratio_trans = ft_atod(&s[i]);
+		i = ft_pass_double(s, i);
+		data->sq->ratio_trans = (data->sq->ratio_trans == 0) ? 1 : data->sq->ratio_trans;
 	}
 	if (s[i] != '\n' || ft_init_tr_in_sq(data->sq) == -1)
 		return (-1);
@@ -118,6 +131,7 @@ int		ft_obj_is_triangle(t_data *data, char *s, int i)
 		data->tr->next->rank = data->tr->rank;
 		data->tr = data->tr->next;
 	}
+	data->tr->ratio_trans = 0;
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
@@ -142,9 +156,20 @@ int		ft_obj_is_triangle(t_data *data, char *s, int i)
 		i++;
 		data->tr->spec = 1;
 	}
+	else if (s[i] == 't')
+	{
+		data->tr->trans = 1;
+		i++;
+		while (s[i] == ' ')
+			i++;
+		if ((s[i] > '9' || s[i] < '0') && s[i] != ' ')
+			return (-1);
+		data->tr->ratio_trans = ft_atod(&s[i]);
+		i = ft_pass_double(s, i);
+		data->tr->ratio_trans = (data->tr->ratio_trans == 0) ? 1 : data->tr->ratio_trans;
+	}
 	if (i == -1 || s[i] != '\n')
 		return (-1);
-//	ft_check_point(&data->tr->p_1, &data->tr->p_2, &data->tr->p_3);
 	if (data->tr->rank == 0)
 		save_tr = data->tr;
 	data->tr->rank++;
