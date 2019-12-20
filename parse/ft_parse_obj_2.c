@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 13:08:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/20 18:08:25 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/20 19:28:09 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		ft_obj_is_square(t_data *data, char *s, int i)
 		i++;
 		while (s[i] == ' ')
 			i++;
-		if (!(s[i] < '9' && s[i] > '0') && s[i] != ' ' && s[i] != '\n')
+		if (!(s[i] <= '9' && s[i] >= '0') && s[i] != ' ' && s[i] != '\n')
 			return (-1);
 		data->sq->ratio_trans = ft_atod(&s[i]);
 		i = ft_pass_double(s, i);
