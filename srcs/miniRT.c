@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/22 13:21:51 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/22 18:47:06 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		main(int ac, char **av)
 		printf("erreur file\n");
 		return (-1);
 	}
-	printf("rank sq = %d, rank tr1 = %d, rank tr2 = %d\n", data->sq->rank, data->sq->tr->rank, data->sq->tr->next->rank);
+/*	printf("rank sq = %d, rank tr1 = %d, rank tr2 = %d\n", data->sq->rank, data->sq->tr->rank, data->sq->tr->next->rank);
 	printf("tr1 p_1: x = %lf, y = %lf, z = %lf\n", data->sq->tr->p_1.x, data->sq->tr->p_1.y, data->sq->tr->p_1.z);
 	printf("tr1 p_2: x = %lf, y = %lf, z = %lf\n", data->sq->tr->p_2.x, data->sq->tr->p_2.y, data->sq->tr->p_2.z);
 	printf("tr1 p_3: x = %lf, y = %lf, z = %lf\n\n", data->sq->tr->p_3.x, data->sq->tr->p_3.y, data->sq->tr->p_3.z);
@@ -48,11 +48,12 @@ int		main(int ac, char **av)
 
 	printf("%lf = ratio_trans\n", data->sq->ratio_trans);
 	printf("%d = trans\n", data->sp->next->trans);
-	if (!(g_mlx.ptr = mlx_init()))
+*/	if (!(g_mlx.ptr = mlx_init()))
 		return (0);
 	if (!(g_mlx.win = mlx_new_window(g_mlx.ptr, data->render[0],
 		data->render[1], "miniRT")))
 		return (0);
+	ft_set_obj_coord(data);
 	ft_new_img(data);
 	ft_draw(data);
 	if (ac == 2)

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:14:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/11/25 12:38:01 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/22 19:16:46 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,19 @@ int		ft_get_color(double color[], char *s, int i)
 int		ft_get_dir(double dir[], const char *s, int i)
 {
 	int		k;
+	int		neg;
 
 	k = 0;
+	neg = 1;
 	while (k <= 2)
 	{
 		while (s[i] == ' ')
 			i++;
 		if (s[i] == '-')
+		{
+			neg = -1;
 			i++;
+		}
 		if (s[i] < '0' || s[i] > '9')
 			return (-1);
 		dir[k] = ft_atod((char *)&s[i]);
@@ -88,6 +93,7 @@ int		ft_get_dir(double dir[], const char *s, int i)
 			i++;
 		if (s[i] == ',' && k != 2)
 			i++;
+		dir[k] = dir[k] * neg;
 		k++;
 	}
 	return (i);
