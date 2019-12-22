@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 12:56:02 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/19 15:42:11 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/22 13:13:28 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ double		ft_for_each_cy(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 }
 
 
+/*
+double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n)
+{
+	double		a;
+	double		b;
+	double		c;
+
+	a = 
+}
+
+*/
 
 double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n)
 {
@@ -92,6 +103,6 @@ double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n
 	b = ft_vec_diff(ft_vec_add(ray.origine, scaled), cy->coord);
 	a = ft_vec_mult_scalar(cy->dir, ft_dot_product(b, cy->dir));
 	rv = ft_vec_diff(b, a);
-	*n = ft_vec_mult_scalar(ft_normal_vector(rv), -1);
+	*n = ft_normal_vector(rv);
 	return (t);
 }

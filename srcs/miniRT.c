@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/20 18:02:12 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/22 13:21:51 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int		main(int ac, char **av)
 {
 	char	*file;
+	int		len_name;
 
 	if (!(data = malloc(sizeof(struct s_data) * 1)))
 		return (0);
@@ -23,6 +24,11 @@ int		main(int ac, char **av)
 	if (!(g_mlx.win = malloc(sizeof(void*) * 1)))
 		return (0);
 	if (ft_malloc_data(data) == -1)
+		return (0);
+	len_name = 0;
+	while (av[1][len_name] && av[1][len_name] != '.')
+		len_name++;
+	if (ft_strcmp(&av[1][len_name], ".rt"))
 		return (0);
 	file = ft_read_file(av[1]);
 	ft_init(data);
@@ -47,7 +53,12 @@ int		main(int ac, char **av)
 	if (!(g_mlx.win = mlx_new_window(g_mlx.ptr, data->render[0],
 		data->render[1], "miniRT")))
 		return (0);
-	ft_put_scene();
+	ft_new_img(data);
+	ft_draw(data);
+	if (ac == 2)
+		ft_put_scene();
+	else if (ac == 3 && !(ft_strcmp(av[2], "-save")))
+		ft_create_bmp(av[1], len_name, data);
 	return (0);
 }
 
@@ -75,8 +86,7 @@ int		get_coord_mouse(int button, int x, int y, void *p)
 
 void	ft_put_scene(void)
 {
-	ft_new_img(data);
-	ft_draw(data);
+
 	mlx_put_image_to_window(g_mlx.ptr, g_mlx.win, data->image->img, 0, 0);
 //	mlx_string_put(g_mlx.ptr, g_mlx.win, data->render[0] - 100, 50, 0xff0000, "<== camera ==>");
 	mlx_key_hook(g_mlx.win, get_key, 0);
