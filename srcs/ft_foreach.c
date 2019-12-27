@@ -55,7 +55,7 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 		data->obj = "sq";
 		data->color = data->sq->color;
 	}
-/*	if (data->cy->next)
+	if (data->cy->next)
 		tmp = ft_for_each_cy(ray, data, &tmp_p, &tmp_n);
 	if (!res || (tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
 	{
@@ -64,7 +64,7 @@ double		ft_for_each_obj(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 		*n = tmp_n;
 		data->obj = "cy";
 		data->color = data->cy->color;
-	}*/
+	}
 	if (res > EPS)
 		return (res);
 	return (0);
