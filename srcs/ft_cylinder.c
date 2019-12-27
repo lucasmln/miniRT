@@ -41,18 +41,41 @@ double		ft_for_each_cy(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
 }
 
 
-/*
-double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n)
+int			ft_check_inter(t_ray ray, t_cylinder *cy, double t)
 {
-	double		a;
-	double		b;
-	double		c;
+	t_vect3		s1;
+	t_vect3		s2;
+	t_vect3		tmp;
 
-	a = 
+	if (t == -1)
+		return (0);
+	tmp = ft_vect_add(cy->coord, ft_vec_mult_scalar(ft_normal_vector(cy->dir), cy->height));
 }
 
-*/
+double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n)
+{
+	double		a[7];
+	t_vect3		vec[3];
 
+	vec[0] = ft_vec_diff(ray.dir, ft_vec_mult_scalar(ft_normal_vector(cy->dir), ft_dot_product(ray.dir, ft_normal_vector(cy->dir))));
+	vec[2] = ft_vec_diff(ray.origine, cy->coord);
+	vec[1] = ft_vec_diff(vec[2], ft_vec_mult_scalar(ft_normal_vector(cy->dir), ft_dot_product(vec[2], ft_normal_vector(cy->dir))));
+	a[0] = ft_dot_product(vec[0], vec[0]);
+	a[1] = ft_dot_product(vec[1], vec[1]) * 2;
+	a[2] = ft_dot_product(vec[1], vec[1] - cy->diameter * cy->diameter;
+	a[5] = a[1] * a[1] - 4 * a[0] * a[2];
+	a[6] = check_circle(ray, cy);
+	if (a[5] > 0)
+	{
+		a[2] = sqrt(a[5]);
+		a[3] = (-a[1] + a[2]) / (2 * a[0]);
+		a[4] = (-a[1] - a[2]) / (2 * a[0]);
+
+	}
+
+
+
+/*
 double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n)
 {
 
