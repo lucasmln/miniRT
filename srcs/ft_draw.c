@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/20 19:22:03 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/28 23:31:05 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ void		ft_draw(t_data *data)
 		while (coord[1] < data->render[1])
 		{
 			data->check = 0;
-			if (coord[0] == 789 && coord[1] == 435)
+			if (coord[0] == 939 && coord[1] == 536)
 				data->check = 2;
 			ft_reset_values(&data->pix);
 			ft_create_ray(data, coord[0], coord[1]);
