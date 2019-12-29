@@ -84,6 +84,6 @@ double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n
 	if (t_alpha[1] < 0 || t_alpha[1] > 1 || b[3] < 0 || b[3] > 1 || g[3] < 0 || g[3] > 1)
 		return (0);
 	if (data->check == 2)
-		printf("x = %lf, y = %lf, z = %lf\n", n->x, n->y, n->z);
+		printf("la x = %lf, y = %lf, z = %lf\n", n->x, n->y, n->z);
 	return (t_alpha[0]);
 }

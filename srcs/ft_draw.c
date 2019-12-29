@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/28 23:31:05 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/29 01:07:03 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int			ft_check_mirroir(t_ray ray, t_data *data, int coord[2], int nb)
 	return (0);
 }
 
-int		ft_check_transparence(t_ray ray, t_data *data, int coord[2], int nb)
+t_vect3		ft_check_transparence(t_ray ray, t_data *data, int coord[2], int nb)
 {
 	t_vect3		tmp;
 	t_vect3		aux_dir;
@@ -87,15 +87,29 @@ int		ft_check_transparence(t_ray ray, t_data *data, int coord[2], int nb)
 	double		n2;
 	double		radical;
 	t_vect3		n_trans;
+	t_vect3		color;
 
+	color.x = -1;
 	if (data->sp->trans == 1 && ft_strncmp(data->obj, "sp", 2) == 0)
+	{
 		data->check_trans = data->sp->ratio_trans;
+		color = data->sp->color;
+	}
 	if (data->pl->trans == 1 && ft_strncmp(data->obj, "pl", 2) == 0)
+	{
 		data->check_trans = data->pl->ratio_trans;
+		color = data->pl->color;
+	}
 	if (data->sq->trans == 1 && ft_strncmp(data->obj, "sq", 2) == 0)
+	{
 		data->check_trans = data->sq->ratio_trans;
+		color = data->sq->color;
+	}
 	if (data->tr->trans == 1 && ft_strncmp(data->obj, "tr", 2) == 0)
+	{
 		data->check_trans = data->tr->ratio_trans;
+		color = data->tr->color;
+	}
 	if (data->check_trans)
 	{
 		n1 = 1;
@@ -116,24 +130,34 @@ int		ft_check_transparence(t_ray ray, t_data *data, int coord[2], int nb)
 					ft_dot_product(ray.dir, n_trans))), (n1 / n2));
 			aux_dir = ft_vec_mult_scalar(n_trans, sqrt(radical));
 			data->ray_trans.dir = ft_vec_diff(tmp,aux_dir);
-			return (1);
+			return (color);
 		}
 	}
-	return (0);
+	return (color);
 }
 
 t_vect3		ft_raytrace(t_ray ray, t_data *data, int coord[], int nb)
 {
 	double	inter;
+	t_vect3	tmp_pix;
 
 	data->check_trans = 0;
 	inter = ft_for_each_obj(ray, data, &data->inter.p, &data->inter.n);
 	if (inter)
 	{
+		tmp_pix = ft_check_transparence(ray, data, coord, nb);
 		if (nb >= 0 && ft_check_mirroir(ray, data, coord, nb))
 			data->pix = ft_raytrace(data->ray_mir, data, coord, nb - 1);
-		else if (nb >= 0 && ft_check_transparence(ray, data, coord, nb))
-			data->pix = ft_raytrace(data->ray_trans, data, coord, nb - 1);
+		else if (nb >= 0 && tmp_pix.x != -1)
+		{
+			data->pix = ft_vec_add(ft_vec_mult_scalar(tmp_pix, 0.2), ft_raytrace(data->ray_trans, data, coord, nb - 1));
+			if (data->pix.x > 255)
+				data->pix.x = 255;
+			if (data->pix.y > 255)
+				data->pix.y = 255;
+			if (data->pix.z > 255)
+				data->pix.z = 255;
+		}
 		else
 		{
 			data->pix = ft_get_pixel_color(data, data->inter.p, data->inter.n);
@@ -158,7 +182,7 @@ void		ft_draw(t_data *data)
 		while (coord[1] < data->render[1])
 		{
 			data->check = 0;
-			if (coord[0] == 939 && coord[1] == 536)
+			if (coord[0] == 946 && coord[1] == 460)
 				data->check = 2;
 			ft_reset_values(&data->pix);
 			ft_create_ray(data, coord[0], coord[1]);
