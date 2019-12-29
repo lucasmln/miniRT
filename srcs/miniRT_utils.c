@@ -32,67 +32,67 @@ char		*ft_read_file(char *av)
 	close(fd);
 	fd = open(av, O_RDONLY);
 	if (!(param = malloc(sizeof(char) * (size + 1))))
-		return (NULL);
+		ft_print_error(-1);
 	ret = read(fd, param, size);
 	param[size] = '\0';
 	return (param);
 }
 
-void		ft_go_start_lst(t_data *data, char *lst)
+void		ft_go_start_lst(char *lst)
 {
-	if (ft_strncmp(lst, "light", 5) == 0 && data->light->next)
+	if (ft_strncmp(lst, "light", 5) == 0 && g_data->light->next)
 	{
-		while (data->light->rank != -1)
-			data->light = data->light->next;
-		data->light = data->light->next;
+		while (g_data->light->rank != -1)
+			g_data->light = g_data->light->next;
+		g_data->light = g_data->light->next;
 	}
-	else if (ft_strncmp(lst, "camera", 6) == 0 && data->cam->next)
+	else if (ft_strncmp(lst, "camera", 6) == 0 && g_data->cam->next)
 	{
-		while (data->cam->rank != -1)
-			data->cam = data->cam->next;
-		data->cam = data->cam->next;
+		while (g_data->cam->rank != -1)
+			g_data->cam = g_data->cam->next;
+		g_data->cam = g_data->cam->next;
 	}
-	else if (ft_strncmp(lst, "sphere", 6) == 0 && data->sp->next)
+	else if (ft_strncmp(lst, "sphere", 6) == 0 && g_data->sp->next)
 	{
-		while (data->sp->rank != -1)
-			data->sp = data->sp->next;
-		data->sp = data->sp->next;
+		while (g_data->sp->rank != -1)
+			g_data->sp = g_data->sp->next;
+		g_data->sp = g_data->sp->next;
 	}
-	else if (ft_strncmp(lst, "plane", 5) == 0 && data->pl->next)
+	else if (ft_strncmp(lst, "plane", 5) == 0 && g_data->pl->next)
 	{
-		while (data->pl->rank != -1)
-			data->pl = data->pl->next;
-		data->pl = data->pl->next;
+		while (g_data->pl->rank != -1)
+			g_data->pl = g_data->pl->next;
+		g_data->pl = g_data->pl->next;
 	}
-	ft_go_start_2(data, lst);
+	ft_go_start_2(lst);
 }
 
-void		ft_go_start_2(t_data *data, char *lst)
+void		ft_go_start_2(char *lst)
 {
-	if (ft_strncmp(lst, "square", 6) == 0 && data->sq->next)
+	if (ft_strncmp(lst, "square", 6) == 0 && g_data->sq->next)
 	{
-		while (data->sq->rank != -1)
-			data->sq = data->sq->next;
-		data->sq = data->sq->next;
+		while (g_data->sq->rank != -1)
+			g_data->sq = g_data->sq->next;
+		g_data->sq = g_data->sq->next;
 	}
-	else if (ft_strncmp(lst, "cylinder", 8) == 0 && data->cy->next)
+	else if (ft_strncmp(lst, "cylinder", 8) == 0 && g_data->cy->next)
 	{
-		while (data->cy->rank != -1)
-			data->cy = data->cy->next;
-		data->cy = data->cy->next;
+		while (g_data->cy->rank != -1)
+			g_data->cy = g_data->cy->next;
+		g_data->cy = g_data->cy->next;
 	}
-	else if (ft_strncmp(lst, "triangle", 8) == 0 && data->tr->next)
+	else if (ft_strncmp(lst, "triangle", 8) == 0 && g_data->tr->next)
 	{
-		while (data->tr->rank != -1)
-			data->tr = data->tr->next;
-		data->tr = data->tr->next;
+		while (g_data->tr->rank != -1)
+			g_data->tr = g_data->tr->next;
+		g_data->tr = g_data->tr->next;
 	}
 	else if (ft_strncmp(lst, "all obj", 7) == 0)
 	{
-		ft_go_start_lst(data, "sphere");
-		ft_go_start_lst(data, "plane");
-		ft_go_start_2(data, "square");
-		ft_go_start_2(data, "cylinder");
-		ft_go_start_2(data, "triangle");
+		ft_go_start_lst("sphere");
+		ft_go_start_lst("plane");
+		ft_go_start_2("square");
+		ft_go_start_2("cylinder");
+		ft_go_start_2("triangle");
 	}
 }

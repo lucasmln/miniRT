@@ -54,47 +54,39 @@ t_vect3		ft_get_norm_cylinder2(t_cylinder *cy, t_vect3 *p)
 	return (tmp_n);
 }
 
-double		ft_for_each_cy(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
+double		ft_for_each_cy(t_ray ray, t_vect3 *p, t_vect3 *n)
 {
 	double	inter;
 	double	min;
 	int		pos;
 	t_vect3	temp;
 
-	pos = data->cy->rank;
+	pos = g_data->cy->rank;
 	min = -1;
-	ft_go_start_lst(data, "cylinder");
+	ft_go_start_lst("cylinder");
 	while (1)
 	{
-		inter = ft_intersection_ray_cy(ray, data->cy, p, n);
+		inter = ft_intersection_ray_cy(ray, g_data->cy, p, n);
 		if (inter > 0)
 			if (min == -1 || fmin(inter, min) == inter)
 			{
-	//			*p = ft_vec_add(ft_vec_mult_scalar(ray.dir, inter), ray.origine);
-	//			*n = ft_normal_vector(ft_get_norm_cylinder(data->cy, p));
-			//		*n = ft_get_norm_cylinder(data->cy, p);
-				*n = ft_vec_diff(ray.origine, data->cy->coord);
-				temp = ft_vec_mult_scalar(*n, ft_dot_product(*n, data->cy->coord));
-				*n = ft_vec_diff(ray.origine, ft_vec_add(temp, data->cy->coord));
+				*n = ft_vec_diff(ray.origine, g_data->cy->coord);
+				temp = ft_vec_mult_scalar(*n, ft_dot_product(*n, g_data->cy->coord));
+				*n = ft_vec_diff(ray.origine, ft_vec_add(temp, g_data->cy->coord));
 				*n = ft_normal_vector(*n);
 				if (ft_dot_product(*n, ray.dir) > 0)
 					*n = ft_vec_mult_scalar(*n, -1);
-				if (data->check == 2)
-				{
-					printf("n.x = %lf, n.y = %lf, n.z = %lf, inter  = %lf\n", n->x, n->y, n->z, inter);
-					printf("p.x = %lf, p.y = %lf, p.z = %lf, inter  = %lf\n", p->x, p->y, p->z, inter);
-				}
 				min = inter;
-				pos = data->cy->rank;
+				pos = g_data->cy->rank;
 			}
-		if (data->cy->rank == -1)
+		if (g_data->cy->rank == -1)
 			break ;
-		data->cy= data->cy->next;
+		g_data->cy = g_data->cy->next;
 	}
 	if (min > 0)
-		while (data->cy->rank != pos)
-			data->cy = data->cy->next;
-	return (ft_intersection_ray_cy(ray, data->cy, p, n));
+		while (g_data->cy->rank != pos)
+			g_data->cy = g_data->cy->next;
+	return (ft_intersection_ray_cy(ray, g_data->cy, p, n));
 }
 
 double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n)
@@ -125,7 +117,6 @@ double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n
 	if (hty.z > 0 && hty.z < cardoc.x)
 	{
 		*p = ft_vec_add(ft_vec_mult_scalar(ray.dir, hty.y), ray.origine);
-//		*n = ft_normal_vector(ft_get_norm_cylinder2(data->cy, p));
 		return (hty.y);
 	}
 	hty.y = (((hty.z < 0) ? 0 : cardoc.x) - cardoc.z) / cardoc.y;
@@ -133,9 +124,7 @@ double		ft_intersection_ray_cy(t_ray ray, t_cylinder *cy, t_vect3 *p, t_vect3 *n
 	if (hty.y != 0)
 	{
 		*p = ft_vec_add(ft_vec_mult_scalar(ray.dir, hty.y), ray.origine);
-//		*n = ft_normal_vector(ft_get_norm_cylinder2(data->cy, p));
 		return (hty.y);
 	}
 	return (hty.y);
 }
-

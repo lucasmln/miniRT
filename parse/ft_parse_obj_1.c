@@ -22,160 +22,160 @@ int		ft_check_valid_obj(char *s, int i)
 	return (0);
 }
 
-int		ft_obj_is_sphere(t_data *data, char *s, int i)
+int		ft_obj_is_sphere(char *s, int i)
 {
 	double	aux[3];
 	static t_sphere *save_sp;
 
-	if (data->sp->rank != 0)
+	if (g_data->sp->rank != 0)
 	{
-		if (!(data->sp->next = malloc(sizeof(t_sphere))))
-			return (-1);
-		data->sp->next->rank = data->sp->rank;
-		data->sp = data->sp->next;
+		if (!(g_data->sp->next = malloc(sizeof(t_sphere))))
+			ft_print_error(-1);
+		g_data->sp->next->rank = g_data->sp->rank;
+		g_data->sp = g_data->sp->next;
 	}
-	data->sp->ratio_trans = 0;
+	g_data->sp->ratio_trans = 0;
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->sp->coord, aux);
+	ft_set_ori(&g_data->sp->coord, aux);
 	while (s[i] == ' ')
 		i++;
-	data->sp->diameter = ft_atod(&s[i]);
+	g_data->sp->diameter = ft_atod(&s[i]);
 	i = ft_pass_double(s, i);
 	i = ft_get_color(aux, s, i);
-	ft_set_ori(&data->sp->color, aux);
+	ft_set_ori(&g_data->sp->color, aux);
 	while (s[i] == ' ')
 		i++;
 	if (s[i] == 'm' || s[i] == 't')
 	{
 		if (s[i] == 'm')
-			data->sp->spec = 1;
+			g_data->sp->spec = 1;
 		if (s[i] == 't')
-			data->sp->trans = 1;
+			g_data->sp->trans = 1;
 		i++;
 	}
 	if (s[i] == 't')
 	{
-		data->sp->trans = 1;
+		g_data->sp->trans = 1;
 		i++;
 		while (s[i] == ' ')
 			i++;
 		if (!(s[i] <= '9' && s[i] >= '0') && s[i] != ' ' && s[i] != '\n')
 			return (-1);
-		data->sp->ratio_trans = ft_atod(&s[i]);
+		g_data->sp->ratio_trans = ft_atod(&s[i]);
 		i = ft_pass_double(s, i);
-		data->sp->ratio_trans = (data->sp->ratio_trans == 0) ? 1 : data->sp->ratio_trans;
+		g_data->sp->ratio_trans = (g_data->sp->ratio_trans == 0) ? 1 : g_data->sp->ratio_trans;
 	}
 	if (i == -1 || s[i] != '\n')
 		return (-1);
-	if (data->sp->rank == 0)
-		save_sp = data->sp;
-	data->sp->rank++;
-	data->sp->next = save_sp;
+	if (g_data->sp->rank == 0)
+		save_sp = g_data->sp;
+	g_data->sp->rank++;
+	g_data->sp->next = save_sp;
 	return (i);
 }
 
-int		ft_obj_is_plane(t_data *data, char *s, int i)
+int		ft_obj_is_plane(char *s, int i)
 {
 	double	aux[3];
 	static t_plane *save_pl;
 
-	if (data->pl->rank != 0)
+	if (g_data->pl->rank != 0)
 	{
-		if (!(data->pl->next = malloc(sizeof(t_plane))))
-			return (-1);
-		data->pl->next->rank = data->pl->rank;
-		data->pl = data->pl->next;
+		if (!(g_data->pl->next = malloc(sizeof(t_plane))))
+			ft_print_error(-1);
+		g_data->pl->next->rank = g_data->pl->rank;
+		g_data->pl = g_data->pl->next;
 	}
-	data->pl->ratio_trans = 0;
+	g_data->pl->ratio_trans = 0;
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->pl->coord, aux);
+	ft_set_ori(&g_data->pl->coord, aux);
 	if ((i = ft_get_dir(aux, s, i)) == -1)
 		return (-1);
-		ft_set_ori(&data->pl->dir, aux);
+		ft_set_ori(&g_data->pl->dir, aux);
 	if ((i = ft_get_color(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->pl->color, aux);
+	ft_set_ori(&g_data->pl->color, aux);
 	while (s[i] == ' ')
 		i++;
 	if (s[i] == 'm')
 	{
-		data->pl->spec = 1;
+		g_data->pl->spec = 1;
 		i++;
 	}
 	else if (s[i] == 't')
 	{
-		data->pl->trans = 1;
+		g_data->pl->trans = 1;
 		i++;
 		while (s[i] == ' ')
 			i++;
 		if (!(s[i] <= '9' && s[i] >= '0') && s[i] != ' ')
 			return (-1);
-		data->pl->ratio_trans = ft_atod(&s[i]);
+		g_data->pl->ratio_trans = ft_atod(&s[i]);
 		i = ft_pass_double(s, i);
-		data->pl->ratio_trans = (data->pl->ratio_trans == 0) ? 1 : data->pl->ratio_trans;
+		g_data->pl->ratio_trans = (g_data->pl->ratio_trans == 0) ? 1 : g_data->pl->ratio_trans;
 	}
 	if (s[i] != '\n')
 		return (-1);
-	if (data->pl->rank == 0)
-		save_pl = data->pl;
-	data->pl->rank++;
-	data->pl->next = save_pl;
+	if (g_data->pl->rank == 0)
+		save_pl = g_data->pl;
+	g_data->pl->rank++;
+	g_data->pl->next = save_pl;
 	return (i);
 }
 
-int		ft_objet(t_data *data, char *s, int i)
+int		ft_objet(char *s, int i)
 {
 	while (s[i] && ft_check_valid_obj(s, i))
 	{
 		if (ft_strncmp(&s[i], "sp", 2) == 0)
-			i = ft_obj_is_sphere(data, s, i + 2);
+			i = ft_obj_is_sphere(s, i + 2);
 		else if (ft_strncmp(&s[i], "pl", 2) == 0)
-			i = ft_obj_is_plane(data, s, i + 2);
+			i = ft_obj_is_plane(s, i + 2);
 		else if (ft_strncmp(&s[i], "sq", 2) == 0)
-			i = ft_obj_is_square(data, s, i + 2);
+			i = ft_obj_is_square(s, i + 2);
 		else if (ft_strncmp(&s[i], "cy", 2) == 0)
-			i = ft_obj_is_cylinder(data, s, i + 2);
+			i = ft_obj_is_cylinder(s, i + 2);
 		else if (ft_strncmp(&s[i], "tr", 2) == 0)
-			i = ft_obj_is_triangle(data, s, i + 2);
+			i = ft_obj_is_triangle(s, i + 2);
 		if (i == -1 || s[i] == '\0')
 			break;
 		i++;
 	}
 	if (i == -1)
 		return (-1);
-	data->sp->rank = -1;
-	data->pl->rank = -1;
-	data->sq->rank = -1;
-	data->cy->rank = -1;
-	data->cy->rank = -1;
-	data->tr->rank = -1;
+	g_data->sp->rank = -1;
+	g_data->pl->rank = -1;
+	g_data->sq->rank = -1;
+	g_data->cy->rank = -1;
+	g_data->cy->rank = -1;
+	g_data->tr->rank = -1;
 	return (i);
 }
 
 
-int		ft_check_file(t_data *data, char *s)
+int		ft_check_file(char *s)
 {
 	int		i;
 
 	i = 0;
 	if (s[i] == 'R' || s[i] == 'A')
-		if ((i = ft_ambience_and_res(data, s, i)) == -1)
+		if ((i = ft_ambience_and_res(s, i)) == -1)
 			return (-1);
 	while (s[i] == '\n')
 		i++;
 	if (s[i] == 'c' || s[i] == 'l')
-		if ((i = ft_cam_and_light(data, s, i)) == -1)
+		if ((i = ft_cam_and_light(s, i)) == -1)
 			return (-1);
 	while (s[i] == '\n')
 		i++;
 	if (ft_check_valid_obj(s, i) == 1)
-		if ((i = ft_objet(data, s, i)) == -1)
+		if ((i = ft_objet(s, i)) == -1)
 			return (-1);
 	return (0);
 }

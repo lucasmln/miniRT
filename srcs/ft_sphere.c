@@ -12,7 +12,7 @@
 
 #include "../inc/minirt.h"
 
-double	ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n)
+double	ft_for_each_sp(t_ray ray, t_vect3 *v, t_vect3 *n)
 {
 	double	inter;
 	double	min;
@@ -24,20 +24,20 @@ double	ft_for_each_sp(t_ray ray, t_data *data, t_vect3 *v, t_vect3 *n)
 	pos = 2;
 	while (check)
 	{
-		inter = ft_intersection_ray_sp(ray, data->sp, v, n);
+		inter = ft_intersection_ray_sp(ray, g_data->sp, v, n);
 		if (inter)
 			if (inter < min || min == -1)
 			{
 				min = inter;
-				pos = data->sp->rank;
+				pos = g_data->sp->rank;
 			}
-		if (data->sp->rank == -1)
+		if (g_data->sp->rank == -1)
 			check = 0;
-		data->sp = data->sp->next;
+		g_data->sp = g_data->sp->next;
 	}
 	if (min > 0)
-		while (data->sp->rank != pos)
-			data->sp = data->sp->next;
+		while (g_data->sp->rank != pos)
+			g_data->sp = g_data->sp->next;
 	return (min);
 }
 

@@ -14,32 +14,32 @@
 #include "../libft/libft.h"
 #include "../inc/minirt.h"
 
-int		ft_obj_is_square(t_data *data, char *s, int i)
+int		ft_obj_is_square(char *s, int i)
 {
 	double	aux[3];
 	static t_square *save_sq;
 
-	if (data->sq->rank != 0)
+	if (g_data->sq->rank != 0)
 	{
-		if (!(data->sq->next = malloc(sizeof(t_square))))
-			return (-1);
-		data->sq->next->rank = data->sq->rank;
-		data->sq = data->sq->next;
+		if (!(g_data->sq->next = malloc(sizeof(t_square))))
+			ft_print_error(-1);
+		g_data->sq->next->rank = g_data->sq->rank;
+		g_data->sq = g_data->sq->next;
 	}
-	data->sq->ratio_trans = 0;
+	g_data->sq->ratio_trans = 0;
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->sq->coord, aux);
+	ft_set_ori(&g_data->sq->coord, aux);
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_dir(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->sq->dir, aux);
+	ft_set_ori(&g_data->sq->dir, aux);
 	while (s[i] == ' ')
 		i++;
-	data->sq->height = ft_atod(&s[i]);
+	g_data->sq->height = ft_atod(&s[i]);
 	while (s[i] <= '9' && s[i] >= '0')
 		i++;
 	if (s[i] == '.')
@@ -48,131 +48,131 @@ int		ft_obj_is_square(t_data *data, char *s, int i)
 		i++;
 	if ((i = ft_get_color(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->sq->color, aux);
+	ft_set_ori(&g_data->sq->color, aux);
 	while (s[i] == ' ')
 		i++;
 	if (s[i] == 'm')
 	{
 		i++;
-		data->sq->spec = 1;
+		g_data->sq->spec = 1;
 	}
 	else if (s[i] == 't')
 	{
-		data->sq->trans = 1;
+		g_data->sq->trans = 1;
 		i++;
 		while (s[i] == ' ')
 			i++;
 		if (!(s[i] <= '9' && s[i] >= '0') && s[i] != ' ' && s[i] != '\n')
 			return (-1);
-		data->sq->ratio_trans = ft_atod(&s[i]);
+		g_data->sq->ratio_trans = ft_atod(&s[i]);
 		i = ft_pass_double(s, i);
-		data->sq->ratio_trans = (data->sq->ratio_trans == 0) ? 1 : data->sq->ratio_trans;
+		g_data->sq->ratio_trans = (g_data->sq->ratio_trans == 0) ? 1 : g_data->sq->ratio_trans;
 	}
-	if (s[i] != '\n' || ft_init_tr_in_sq(data->sq) == -1)
+	if (s[i] != '\n' || ft_init_tr_in_sq(g_data->sq) == -1)
 		return (-1);
-	ft_create_square_point(data->sq);
-	if (data->sq->rank == 0)
-		save_sq = data->sq;
-	data->sq->rank++;
-	data->sq->next = save_sq;
+	ft_create_square_point(g_data->sq);
+	if (g_data->sq->rank == 0)
+		save_sq = g_data->sq;
+	g_data->sq->rank++;
+	g_data->sq->next = save_sq;
 	return (i);
 }
 
-int		ft_obj_is_cylinder(t_data *data, char *s, int i)
+int		ft_obj_is_cylinder(char *s, int i)
 {
 	double	aux[3];
 	static t_cylinder *save_cy;
 
-	if (data->cy->rank != 0)
+	if (g_data->cy->rank != 0)
 	{
-		if (!(data->cy->next = malloc(sizeof(t_cylinder))))
-			return (-1);
-		data->cy->next->rank = data->cy->rank;
-		data->cy = data->cy->next;
+		if (!(g_data->cy->next = malloc(sizeof(t_cylinder))))
+			ft_print_error(-1);
+		g_data->cy->next->rank = g_data->cy->rank;
+		g_data->cy = g_data->cy->next;
 	}
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->cy->coord, aux);
+	ft_set_ori(&g_data->cy->coord, aux);
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_dir(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->cy->dir, aux);
+	ft_set_ori(&g_data->cy->dir, aux);
 	while (s[i] == ' ')
 		i++;
-	data->cy->diameter = ft_atod(&s[i]);
+	g_data->cy->diameter = ft_atod(&s[i]);
 	i = ft_pass_double(s, i);
 	while (s[i] == ' ')
 		i++;
-	data->cy->height = ft_atod(&s[i]);
+	g_data->cy->height = ft_atod(&s[i]);
 	i = ft_pass_double(s, i);
 	i = ft_get_color(aux, s, i);
-	ft_set_ori(&data->cy->color, aux);
+	ft_set_ori(&g_data->cy->color, aux);
 	if (i == -1 || s[i] != '\n')
 		return (-1);
-	if (data->cy->rank == 0)
-		save_cy = data->cy;
-	data->cy->rank++;
-	data->cy->next = save_cy;
+	if (g_data->cy->rank == 0)
+		save_cy = g_data->cy;
+	g_data->cy->rank++;
+	g_data->cy->next = save_cy;
 	return (i);
 }
 
-int		ft_obj_is_triangle(t_data *data, char *s, int i)
+int		ft_obj_is_triangle(char *s, int i)
 {
 	double	aux[3];
 	static t_triangle *save_tr;
 
-	if (data->tr->rank != 0)
+	if (g_data->tr->rank != 0)
 	{
-		if (!(data->tr->next = malloc(sizeof(t_triangle))))
-			return (-1);
-		data->tr->next->rank = data->tr->rank;
-		data->tr = data->tr->next;
+		if (!(g_data->tr->next = malloc(sizeof(t_triangle))))
+			ft_print_error(-1);
+		g_data->tr->next->rank = g_data->tr->rank;
+		g_data->tr = g_data->tr->next;
 	}
-	data->tr->ratio_trans = 0;
+	g_data->tr->ratio_trans = 0;
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->tr->p_1, aux);
+	ft_set_ori(&g_data->tr->p_1, aux);
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->tr->p_2, aux);
+	ft_set_ori(&g_data->tr->p_2, aux);
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_coord(aux, s, i)) == -1)
 		return (-1);
-	ft_set_ori(&data->tr->p_3, aux);
+	ft_set_ori(&g_data->tr->p_3, aux);
 	i = ft_get_color(aux, s, i);
-	ft_set_ori(&data->tr->color, aux);
+	ft_set_ori(&g_data->tr->color, aux);
 	while (s[i] == ' ')
 		i++;
 	if (s[i] == 'm')
 	{
 		i++;
-		data->tr->spec = 1;
+		g_data->tr->spec = 1;
 	}
 	else if (s[i] == 't')
 	{
-		data->tr->trans = 1;
+		g_data->tr->trans = 1;
 		i++;
 		while (s[i] == ' ')
 			i++;
 		if ((s[i] > '9' || s[i] < '0') && s[i] != ' ')
 			return (-1);
-		data->tr->ratio_trans = ft_atod(&s[i]);
+		g_data->tr->ratio_trans = ft_atod(&s[i]);
 		i = ft_pass_double(s, i);
-		data->tr->ratio_trans = (data->tr->ratio_trans == 0) ? 1 : data->tr->ratio_trans;
+		g_data->tr->ratio_trans = (g_data->tr->ratio_trans == 0) ? 1 : g_data->tr->ratio_trans;
 	}
 	if (i == -1 || s[i] != '\n')
 		return (-1);
-	if (data->tr->rank == 0)
-		save_tr = data->tr;
-	data->tr->rank++;
-	data->tr->next = save_tr;
+	if (g_data->tr->rank == 0)
+		save_tr = g_data->tr;
+	g_data->tr->rank++;
+	g_data->tr->next = save_tr;
 	return (i);
 }

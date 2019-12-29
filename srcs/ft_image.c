@@ -12,25 +12,25 @@
 
 #include "../inc/minirt.h"
 
-void	ft_new_img(t_data *data)
+void	ft_new_img(void)
 {
 	t_image	*img;
 
 	if (!(img = malloc(sizeof(t_image))))
-		return ;
-	img->img = mlx_new_image(g_mlx.ptr, data->render[0], data->render[1]);
+		ft_print_error(-1);
+	img->img = mlx_new_image(g_mlx.ptr, g_data->render[0], g_data->render[1]);
 	if (img->img == NULL)
-		return ;
+		ft_print_error(-8);
 	img->ptr = mlx_get_data_addr(img->img, &img->bpp, &img->stride,
 				&img->endian);
 	img->bpp /= 8;
-	data->image = img;
+	g_data->image = img;
 }
 
-void	ft_put_pixel_to_img(int x, int y, long color, t_data *data)
+void	ft_put_pixel_to_img(int x, int y, long color)
 {
-	if (x < 0 || x >= data->render[0] || y < 0 || y >= data->render[1])
+	if (x < 0 || x >= g_data->render[0] || y < 0 || y >= g_data->render[1])
 		return ;
-	*(int *)(data->image->ptr + ((x + y * data->render[0]) *
-		data->image->bpp)) = color;
+	*(int *)(g_data->image->ptr + ((x + y * g_data->render[0]) *
+		g_data->image->bpp)) = color;
 }

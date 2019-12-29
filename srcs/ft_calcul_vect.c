@@ -56,12 +56,3 @@ t_vect3		ft_vnegative(t_vect3 v)
 	v.z = -v.z;
 	return (v);
 }
-
-void		ft_vect_swap(t_vect3 *a, t_vect3 *b)
-{
-	t_vect3	temp;
-
-	temp = *a;
-	*a = *b;
-	*b = temp;
-}

@@ -13,20 +13,20 @@
 #include "../inc/minirt.h"
 #include "../libft/libft.h"
 
-int		ft_get_render(t_data *data, char *s, int i)
+int		ft_get_render(char *s, int i)
 {
 	while (s[i] == ' ')
 		i++;
 	if (s[i] > '9' || s[i] < '0')
 		return (-1);
-	data->render[0] = ft_atoi(&s[i]);
+	g_data->render[0] = ft_atoi(&s[i]);
 	while (s[i] >= '0' && s[i] <= '9')
 		i++;
 	while (s[i] == ' ')
 		i++;
 	if (s[i] > '9' || s[i] < '0')
 		return (-1);
-	data->render[1] = ft_atoi(&s[i]);
+	g_data->render[1] = ft_atoi(&s[i]);
 	while (s[i] >= '0' && s[i] <= '9')
 		i++;
 	if (s[i] != '\n')
@@ -35,7 +35,7 @@ int		ft_get_render(t_data *data, char *s, int i)
 	return (i);
 }
 
-int		ft_get_ambience(t_data *data, char *s, int i)
+int		ft_get_ambience(char *s, int i)
 {
 	int		k;
 	double	aux[3];
@@ -44,20 +44,20 @@ int		ft_get_ambience(t_data *data, char *s, int i)
 		i++;
 	if (s[i] < '0' || s[i] > '9')
 		return (-1);
-	data->ambience.ratio = ft_atod(&s[i]);
-	if (data->ambience.ratio < 0.0 || data->ambience.ratio > 1.0)
+	g_data->ambience.ratio = ft_atod(&s[i]);
+	if (g_data->ambience.ratio < 0.0 || g_data->ambience.ratio > 1.0)
 		return (-1);
 	i = ft_pass_double(s, i);
 	k = -1;
 	while (s[i] == ' ')
 		i++;
 	i = ft_get_color(aux, s, i);
-	ft_set_ori(&data->ambience.color, aux);
+	ft_set_ori(&g_data->ambience.color, aux);
 	return ((s[i++] == '\n' ? i : -1));
 }
 
 
-int		ft_ambience_and_res(t_data *data, char *s, int i)
+int		ft_ambience_and_res(char *s, int i)
 {
 	static int		check;
 
@@ -67,16 +67,16 @@ int		ft_ambience_and_res(t_data *data, char *s, int i)
 	if (s[i] == 'R')
 	{
 		check = 1;
-		i = ft_get_render(data, s, i + 1);
+		i = ft_get_render(s, i + 1);
 	}
 	else
-		i = ft_get_ambience(data, s, i + 1);
+		i = ft_get_ambience(s, i + 1);
 	if (i == -1 || (s[i] == 'R' && check == 1) || (check == 0 && s[i] == 'A'))
 		return (-1);
-	i = (check == 1) ? ft_get_ambience(data, s, i + 1) : ft_get_render(data, s, i + 1);
+	i = (check == 1) ? ft_get_ambience(s, i + 1) : ft_get_render(s, i + 1);
 	check += 2;
-	data->render[0] = data->render[0] > 2560 ? 2560 : data->render[0];
-	data->render[1] = data->render[1] > 1395 ? 1395 : data->render[1];
+	g_data->render[0] = g_data->render[0] > 2560 ? 2560 : g_data->render[0];
+	g_data->render[1] = g_data->render[1] > 1395 ? 1395 : g_data->render[1];
 	return (i);
 }
 

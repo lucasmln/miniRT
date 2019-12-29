@@ -12,32 +12,32 @@
 
 #include "../inc/minirt.h"
 
-double		ft_for_each_pl(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
+double		ft_for_each_pl(t_ray ray, t_vect3 *p, t_vect3 *n)
 {
 	double	inter;
 	double	min;
 	int		pos;
 
-	pos = data->pl->rank;
+	pos = g_data->pl->rank;
 	min = -1;
-	ft_go_start_lst(data, "plane");
+	ft_go_start_lst("plane");
 	while (1)
 	{
-		inter = ft_intersection_ray_pl(ray, data->pl, p, n);
+		inter = ft_intersection_ray_pl(ray, g_data->pl, p, n);
 		if (inter != 0)
 			if (min == -1 || fmin(inter, min) == inter)
 			{
 				min = inter;
-				pos = data->pl->rank;
+				pos = g_data->pl->rank;
 			}
-		if (data->pl->rank == -1)
+		if (g_data->pl->rank == -1)
 			break ;
-		data->pl = data->pl->next;
+		g_data->pl = g_data->pl->next;
 	}
 	if (min > 0)
-		while (data->pl->rank != pos)
-			data->pl = data->pl->next;
-	return (ft_intersection_ray_pl(ray, data->pl, p, n));
+		while (g_data->pl->rank != pos)
+			g_data->pl = g_data->pl->next;
+	return (ft_intersection_ray_pl(ray, g_data->pl, p, n));
 }
 
 double		ft_intersection_ray_pl(t_ray ray, t_plane *pl, t_vect3 *p,

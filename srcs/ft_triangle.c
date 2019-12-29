@@ -12,40 +12,32 @@
 
 #include "../inc/minirt.h"
 
-double		ft_for_each_tr(t_ray ray, t_data *data, t_vect3 *p, t_vect3 *n)
+double		ft_for_each_tr(t_ray ray, t_vect3 *p, t_vect3 *n)
 {
 	double	inter;
 	double	min;
 	int		pos;
 
-	pos = data->tr->rank;
+	pos = g_data->tr->rank;
 	min = -1;
-	ft_go_start_lst(data, "triangle");
+	ft_go_start_lst("triangle");
 	while (1)
 	{
-		inter = ft_intersection_ray_tr(ray, data->tr, p, n);
+		inter = ft_intersection_ray_tr(ray, g_data->tr, p, n);
 		if (inter != 0)
 			if (min == -1 || fmin(inter, min) == inter)
 			{
 				min = inter;
-				pos = data->tr->rank;
+				pos = g_data->tr->rank;
 			}
-		if (data->tr->rank == -1)
+		if (g_data->tr->rank == -1)
 			break ;
-		data->tr = data->tr->next;
+		g_data->tr = g_data->tr->next;
 	}
 	if (min > 0)
-		while (data->tr->rank != pos)
-			data->tr = data->tr->next;
-	return (ft_intersection_ray_tr(ray, data->tr, p, n));
-}
-//Non necessaire en theorie
-void		ft_check_point(t_vect3 *p1, t_vect3 *p2, t_vect3 *p3)
-{
-	if (p2->y > p1->y)
-		ft_vect_swap(p2, p1);
-	if (p2->y < p3->y)
-		ft_vect_swap(p2, p3);
+		while (g_data->tr->rank != pos)
+			g_data->tr = g_data->tr->next;
+	return (ft_intersection_ray_tr(ray, g_data->tr, p, n));
 }
 
 double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n)
@@ -83,7 +75,5 @@ double		ft_intersection_ray_tr(t_ray ray, t_triangle *tr, t_vect3 *p, t_vect3 *n
 	t_alpha[1] = 1 - b[3] - g[3];
 	if (t_alpha[1] < 0 || t_alpha[1] > 1 || b[3] < 0 || b[3] > 1 || g[3] < 0 || g[3] > 1)
 		return (0);
-	if (data->check == 2)
-		printf("la x = %lf, y = %lf, z = %lf\n", n->x, n->y, n->z);
 	return (t_alpha[0]);
 }

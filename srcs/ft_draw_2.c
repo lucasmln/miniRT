@@ -50,40 +50,40 @@ void		ft_reset_values(t_vect3 *pix)
 
 int			ft_set_ambience_intensity(t_vect3 *ambiente, t_vect3 *intense)
 {
-	ambiente->x = (data->ambience.color.x / 255) * data->ambience.ratio;
-	ambiente->y = (data->ambience.color.y / 255) * data->ambience.ratio;
-	ambiente->z = (data->ambience.color.z / 255) * data->ambience.ratio;
-	intense->x = 100000000 * data->light->ratio * (data->light->color.x / 255);
-	intense->y = 100000000 * data->light->ratio * (data->light->color.y / 255);
-	intense->z = 100000000 * data->light->ratio * (data->light->color.z / 255);
+	ambiente->x = (g_data->ambience.color.x / 255) * g_data->ambience.ratio;
+	ambiente->y = (g_data->ambience.color.y / 255) * g_data->ambience.ratio;
+	ambiente->z = (g_data->ambience.color.z / 255) * g_data->ambience.ratio;
+	intense->x = 100000000 * g_data->light->ratio * (g_data->light->color.x / 255);
+	intense->y = 100000000 * g_data->light->ratio * (g_data->light->color.y / 255);
+	intense->z = 100000000 * g_data->light->ratio * (g_data->light->color.z / 255);
 	return (1);
 }
 
-t_vect3		ft_get_pixel_color(t_data *data, t_vect3 p, t_vect3 n)
+t_vect3		ft_get_pixel_color(t_vect3 p, t_vect3 n)
 {
 	t_vect3		param[3];
 
-	ft_go_start_lst(data, "light");
+	ft_go_start_lst("light");
 	ft_reset_values(&param[2]);
 	while (ft_set_ambience_intensity(&param[1], &param[0]))
 	{
-		if (data->color.x)
-			param[2].x = (data->color.x / 255) * (param[0].x *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)),
-			n) * param[1].x / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
-		if (data->color.y)
-			param[2].y = (data->color.y / 255) * (param[0].y *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)),
-			n) * param[1].y / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
-		if (data->color.z)
-			param[2].z = (data->color.z / 255) * (param[0].z *
-			ft_dot_product(ft_normal_vector(ft_vec_diff(data->light->coord, p)),
-			n) * param[1].z / ft_get_norm2(ft_vec_diff(data->light->coord, p)));
+		if (g_data->color.x)
+			param[2].x = (g_data->color.x / 255) * (param[0].x *
+			ft_dot_product(ft_normal_vector(ft_vec_diff(g_data->light->coord, p)),
+			n) * param[1].x / ft_get_norm2(ft_vec_diff(g_data->light->coord, p)));
+		if (g_data->color.y)
+			param[2].y = (g_data->color.y / 255) * (param[0].y *
+			ft_dot_product(ft_normal_vector(ft_vec_diff(g_data->light->coord, p)),
+			n) * param[1].y / ft_get_norm2(ft_vec_diff(g_data->light->coord, p)));
+		if (g_data->color.z)
+			param[2].z = (g_data->color.z / 255) * (param[0].z *
+			ft_dot_product(ft_normal_vector(ft_vec_diff(g_data->light->coord, p)),
+			n) * param[1].z / ft_get_norm2(ft_vec_diff(g_data->light->coord, p)));
 		ft_check_abs_value(&param[2]);
-		ft_pix_cmp(&param[2], &data->pix);
-		if (data->light->rank == -1 || !(data->light = data->light->next))
+		ft_pix_cmp(&param[2], &g_data->pix);
+		if (g_data->light->rank == -1 || !(g_data->light = g_data->light->next))
 			break ;
 	}
-	ft_go_start_lst(data, "light");
-	return (data->pix);
+	ft_go_start_lst("light");
+	return (g_data->pix);
 }
