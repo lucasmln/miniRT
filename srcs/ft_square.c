@@ -6,11 +6,31 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 12:56:46 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/19 13:54:02 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/30 20:37:01 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+
+void		ft_go_good_sq(double min, int pos[2])
+{
+	if (min > 0)
+		while (g_data->sq->rank != pos[0])
+			g_data->sq = g_data->sq->next;
+	if (min > 0)
+		while (g_data->sq->tr->rank != pos[1])
+			g_data->sq->tr = g_data->sq->tr->next;
+}
+
+void		ft_save_inter(double inter, int pos[2], double *min)
+{
+	if (*min == -1 || fmin(inter, *min) == inter)
+	{
+		*min = inter;
+		pos[0] = g_data->sq->rank;
+		pos[1] = g_data->sq->tr->rank;
+	}
+}
 
 double		ft_for_each_square(t_ray ray, t_vect3 *p, t_vect3 *n)
 {
@@ -25,12 +45,7 @@ double		ft_for_each_square(t_ray ray, t_vect3 *p, t_vect3 *n)
 		{
 			inter = ft_intersection_ray_tr(ray, g_data->sq->tr, p, n);
 			if (inter != 0)
-				if (min == -1 || fmin(inter, min) == inter)
-				{
-					min = inter;
-					pos[0] = g_data->sq->rank;
-					pos[1] = g_data->sq->tr->rank;
-				}
+				ft_save_inter(inter, pos, &min);
 			if (g_data->sq->tr->rank == -1)
 				break ;
 			g_data->sq->tr = g_data->sq->tr->next;
@@ -40,12 +55,7 @@ double		ft_for_each_square(t_ray ray, t_vect3 *p, t_vect3 *n)
 			break ;
 		g_data->sq = g_data->sq->next;
 	}
-	if (min > 0)
-		while (g_data->sq->rank != pos[0])
-			g_data->sq = g_data->sq->next;
-	if (min > 0)
-		while (g_data->sq->tr->rank != pos[1])
-			g_data->sq->tr = g_data->sq->tr->next;
+	ft_go_good_sq(min, pos);
 	return (ft_intersection_ray_tr(ray, g_data->sq->tr, p, n));
 }
 
