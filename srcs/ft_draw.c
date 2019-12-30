@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/29 01:07:03 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/30 19:09:15 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int			ft_inter_light(t_vect3 *p, t_vect3 *n)
 	if ((g_data->sp->trans == 1 && ft_strncmp(g_data->obj, "sp", 2) == 0) ||
 	(g_data->pl->trans == 1 && ft_strncmp(g_data->obj, "pl", 2) == 0) ||
 	(g_data->tr->trans == 1 && ft_strncmp(g_data->obj, "tr", 2) == 0) ||
-	(g_data->sq->trans == 1 && ft_strncmp(g_data->obj, "sq", 2) == 0))
+	(g_data->sq->trans == 1 && ft_strncmp(g_data->obj, "sq", 2) == 0) ||
+	(g_data->cy->trans == 1 && ft_strncmp(g_data->obj, "cy", 2) == 0))
 		return (0);
 	return (1);
 }
@@ -61,12 +62,14 @@ int			ft_check_mirroir(t_ray ray, int coord[2], int nb)
 	if ((g_data->sp->trans == 1 && ft_strncmp(g_data->obj, "sp", 2) == 0) ||
 	(g_data->pl->trans == 1 && ft_strncmp(g_data->obj, "pl", 2) == 0) ||
 	(g_data->tr->trans == 1 && ft_strncmp(g_data->obj, "tr", 2) == 0) ||
-	(g_data->sq->trans == 1 && ft_strncmp(g_data->obj, "sq", 2) == 0))
+	(g_data->sq->trans == 1 && ft_strncmp(g_data->obj, "sq", 2) == 0) ||
+	(g_data->cy->trans == 1 && ft_strncmp(g_data->obj, "cy", 2) == 0))
 		return (0);
 	if ((g_data->sp->spec == 1 && ft_strncmp(g_data->obj, "sp", 2) == 0) ||
 		(g_data->pl->spec == 1 && ft_strncmp(g_data->obj, "pl", 2) == 0) ||
 		(g_data->tr->spec == 1 && ft_strncmp(g_data->obj, "tr", 2) == 0) ||
-		(g_data->sq->spec == 1 && ft_strncmp(g_data->obj, "sq", 2) == 0))
+		(g_data->sq->spec == 1 && ft_strncmp(g_data->obj, "sq", 2) == 0) ||
+		(g_data->cy->spec == 1 && ft_strncmp(g_data->obj, "cy", 2) == 0))
 	{
 		g_data->ray_mir.origine = ft_vec_add(g_data->inter.p,
 					ft_vec_mult_scalar(g_data->inter.n, EPS));
@@ -109,6 +112,11 @@ t_vect3		ft_check_transparence(t_ray ray, int coord[2], int nb)
 	{
 		g_data->check_trans = g_data->tr->ratio_trans;
 		color = g_data->tr->color;
+	}
+	if (g_data->cy->trans == 1 && ft_strncmp(g_data->obj, "cy", 2) == 0)
+	{
+		g_data->check_trans = g_data->cy->ratio_trans;
+		color = g_data->cy->color;
 	}
 	if (g_data->check_trans)
 	{

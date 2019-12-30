@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:14:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/22 19:16:46 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/30 19:21:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@ int		ft_get_coord(double coord[], char *s, int i)
 	int		k;
 
 	k = 0;
-
+	if (i == -1)
+		return (-1);
 	while (k <= 2)
 	{
-		if ((s[i] < '0' || s[i] > '9') && 
+		if ((s[i] < '0' || s[i] > '9') &&
 			(s[i] == '-' && (s[i] < '0' && s[i] > '9')))
 			return (-1);
 		coord[k] = ft_atod(&s[i]);
@@ -73,11 +74,8 @@ int		ft_get_dir(double dir[], const char *s, int i)
 	{
 		while (s[i] == ' ')
 			i++;
-		if (s[i] == '-')
-		{
-			neg = -1;
-			i++;
-		}
+		neg = (s[i] == '-') ? -1 : 1;
+		i = (s[i] == '-') ? i + 1 : i;
 		if (s[i] < '0' || s[i] > '9')
 			return (-1);
 		dir[k] = ft_atod((char *)&s[i]);
@@ -85,12 +83,7 @@ int		ft_get_dir(double dir[], const char *s, int i)
 			return (-1);
 		if (dir[k] < 0.0)
 			i++;
-		while (s[i] >= '0' && s[i] <= '9')
-			i++;
-		if (s[i] == '.')
-			i++;
-		while (s[i] >= '0' && s[i] <= '9')
-			i++;
+		i = ft_pass_double((char *)s, i);
 		if (s[i] == ',' && k != 2)
 			i++;
 		dir[k] = dir[k] * neg;
@@ -105,7 +98,7 @@ int		ft_strlen_nb(int nb)
 	long	nbr;
 
 	nbr = (nb < 0) ? -nb : nb;
-	len = (nb == 0) ? 1: 0;
+	len = (nb == 0) ? 1 : 0;
 	while (nb > 0)
 	{
 		len++;
@@ -127,9 +120,21 @@ int		ft_pass_double(char *s, int i)
 	return (i);
 }
 
-void	ft_set_ori(t_vect3 *pos, double aux[3])
+int		ft_set_ori(t_vect3 *pos, double aux[3], int param)
 {
+	int		k;
+
+	k = 0;
+	while (k <= 2)
+	{
+		if (param == 1 && (aux[k] < -1.0 || aux[k] > 1.0))
+			return (-1);
+		if (param == 2 && (aux[k] < 0 || aux[k] > 255))
+			return (-1);
+		k++;
+	}
 	pos->x = aux[0];
 	pos->y = aux[1];
 	pos->z = aux[2];
+	return (0);
 }

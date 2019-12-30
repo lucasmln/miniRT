@@ -6,11 +6,12 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/22 18:47:06 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/30 16:38:40 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+void	ft_print_param(t_data *data);
 
 int		main(int ac, char **av)
 {

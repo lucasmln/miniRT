@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:07:30 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/22 19:14:29 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/30 16:48:25 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,15 @@ int		ft_get_cam(char *s, int i)
 		(s[i] == '-' && s[i + 1] > '9' && s[i + 1] < '0'))
 		return (-1);
 	i = ft_get_coord(aux, s, i);
-	ft_set_ori(&g_data->cam->coord, aux);
+	ft_set_ori(&g_data->cam->coord, aux, 0);
 	if (i == -1)
 		return (i);
 	while (s[i] == ' ')
 		i++;
 	if ((i = ft_get_dir(aux, (const char *)s, i)) == -1)
 		return (-1);
-	ft_set_ori(&g_data->cam->dir, aux);
-//	k = -1;
-//	while (++k <= 2)
-//		if ((data->cam->dir[k] < -1.0 || data->cam->dir[k] > 1.0) || i == -1)
-//			return (-1);
+	if (ft_set_ori(&g_data->cam->dir, aux, 1) == -1)
+		return (-1);
 	while (s[i] == ' ')
 		i++;
 	g_data->cam->fov = ft_atoi(&s[i]);
@@ -52,7 +49,7 @@ int		ft_get_light(char *s, int i)
 	while (s[i] == ' ')
 		i++;
 	i = ft_get_coord(aux, s, i);
-	ft_set_ori(&g_data->light->coord, aux);
+	ft_set_ori(&g_data->light->coord, aux, 0);
 	if (i == -1)
 		return (-1);
 	while (s[i] == ' ')
@@ -62,10 +59,43 @@ int		ft_get_light(char *s, int i)
 	if ((g_data->light->ratio > 1.0 && g_data->light->ratio < 0.0) || i == -1)
 		return (-1);
 	i = ft_get_color(aux, s, i);
-	ft_set_ori(&g_data->light->color, aux);
+	if (ft_set_ori(&g_data->light->color, aux, 2) == -1)
+		return (-1);
 	if (i == -1 || s[i] != '\n')
 		return (-1);
 	i++;
+	return (i);
+}
+
+int		ft_is_cam(char *s, int i, t_cam **save_cam)
+{
+	if (g_data->cam->rank != 0)
+	{
+		if (!(g_data->cam->next = malloc(sizeof(t_cam))))
+			ft_print_error(-1);
+		g_data->cam->next->rank = g_data->cam->rank;
+		g_data->cam = g_data->cam->next;
+	}
+	i = ft_get_cam(s, i + 1);
+	if (g_data->cam->rank == 0)
+		*save_cam = g_data->cam;
+	g_data->cam->rank++;
+	return (i);
+}
+
+int		ft_is_light(char *s, int i, t_light **save_light)
+{
+	if (g_data->light->rank != 0)
+	{
+		if (!(g_data->light->next = malloc(sizeof(t_cam))))
+			ft_print_error(-1);
+		g_data->light->next->rank = g_data->light->rank;
+		g_data->light = g_data->light->next;
+	}
+	i = ft_get_light(s, i + 1);
+	if (g_data->light->rank == 0)
+		*save_light = g_data->light;
+	g_data->light->rank++;
 	return (i);
 }
 
@@ -77,35 +107,9 @@ int		ft_cam_and_light(char *s, int i)
 	while (i != -1 && (s[i] == 'l' || s[i] == 'c'))
 	{
 		if (s[i] == 'c')
-		{
-			if (g_data->cam->rank != 0)
-			{
-				if (!(g_data->cam->next = malloc(sizeof(t_cam))))
-					ft_print_error(-1);
-				g_data->cam->next->rank = g_data->cam->rank;
-				g_data->cam = g_data->cam->next;
-		//		g_data->cam->next = save_cam;
-			}
-			i = ft_get_cam(s, i + 1);
-			if (g_data->cam->rank == 0)
-				save_cam = g_data->cam;
-			g_data->cam->rank++;
-		}
+			i = ft_is_cam(s, i, &save_cam);
 		else if (s[i] == 'l')
-		{
-			if (g_data->light->rank != 0)
-			{
-				if (!(g_data->light->next = malloc(sizeof(t_cam))))
-					ft_print_error(-1);
-				g_data->light->next->rank = g_data->light->rank;
-				g_data->light = g_data->light->next;
-		//		g_data->light->next = save_light;
-			}
-			i = ft_get_light(s, i + 1);
-			if (g_data->light->rank == 0)
-				save_light = g_data->light;
-			g_data->light->rank++;
-		}
+			i = ft_is_light(s, i, &save_light);
 	}
 	g_data->light->next = save_light;
 	g_data->light->rank = -1;

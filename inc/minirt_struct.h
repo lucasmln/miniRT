@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/20 17:28:20 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/30 18:48:42 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ typedef struct		s_cylinder
 	t_vect3				color;
 	struct s_cylinder	*next;
 	int					rank;
+	double				ratio_trans;
+	int					trans;
+	int					spec;
 }					t_cylinder;
 
 typedef struct		s_triangle

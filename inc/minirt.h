@@ -5,13 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/21 17:03:37 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/22 18:38:58 by lmoulin          ###   ########.fr       */
+/*   Created: 2019/12/30 15:59:15 by lmoulin           #+#    #+#             */
+/*   Updated: 2019/12/30 16:30:37 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
+# define BUF_SIZE 1024
+# define ESC_KEY 0x35
+# define EPS 0.000001
 
 # include "minirt_struct.h"
 # include "../libft/libft.h"
@@ -21,10 +24,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdio.h>
-
-# define BUF_SIZE 1024
-# define ESC_KEY 0x35
-# define EPS 0.000001
 
 typedef struct		s_image
 {
@@ -66,8 +65,8 @@ typedef struct		s_mlx
 	void	*win;
 }					t_mlx;
 
-t_mlx				g_mlx;
-t_data				*g_data;
+t_mlx		g_mlx;
+t_data		*g_data;
 
 void		ft_print_param(t_data *data);
 int			ft_strlen_nb(int nb);
@@ -96,7 +95,7 @@ int			ft_set_color(t_vect3 c);
 int			close_window(int button, int x, int y, void *p);
 void		ft_new_img();
 void		ft_put_pixel_to_img(int x, int y, long color);
-void		ft_set_ori(t_vect3 *pos, double aux[3]);
+int			ft_set_ori(t_vect3 *pos, double aux[3], int param);
 t_vect3		ft_vec_div_scalar(t_vect3 v1, double d);
 double		ft_get_norm2(t_vect3 v);
 t_vect3		ft_normal_vector(t_vect3 v);
@@ -143,5 +142,6 @@ double		ft_for_each_square(t_ray ray, t_vect3 *p, t_vect3 *n);
 double		ft_sqr(double a);
 void		ft_create_bmp(char *name, int len_name);
 void		ft_set_obj_coord();
-void	ft_print_error(int err_nb);
+void		ft_print_error(int err_nb);
+
 #endif

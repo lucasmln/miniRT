@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:06:11 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 11:33:09 by lmoulin          ###   ########.fr       */
+/*   Updated: 2019/12/30 16:41:14 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int		ft_get_ambience(char *s, int i)
 	while (s[i] == ' ')
 		i++;
 	i = ft_get_color(aux, s, i);
-	ft_set_ori(&g_data->ambience.color, aux);
+	if (ft_set_ori(&g_data->ambience.color, aux, 2) == -1)
+		return (-1);
 	return ((s[i++] == '\n' ? i : -1));
 }
-
 
 int		ft_ambience_and_res(char *s, int i)
 {
@@ -79,4 +79,3 @@ int		ft_ambience_and_res(char *s, int i)
 	g_data->render[1] = g_data->render[1] > 1395 ? 1395 : g_data->render[1];
 	return (i);
 }
-
