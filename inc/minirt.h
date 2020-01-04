@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:59:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/30 16:30:37 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/04 00:50:51 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_data
 	t_square		*sq;
 	t_cylinder		*cy;
 	t_triangle		*tr;
+	t_pyramide		*py;
 	t_image			*image;
 	t_ray			ray;
 	t_vect3			pix;

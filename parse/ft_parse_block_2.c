@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:07:30 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/30 16:48:25 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/04 00:14:23 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,17 @@ int		ft_cam_and_light(char *s, int i)
 		else if (s[i] == 'l')
 			i = ft_is_light(s, i, &save_light);
 	}
-	g_data->light->next = save_light;
-	g_data->light->rank = -1;
-	g_data->light = save_light;
-	g_data->cam->next = save_cam;
-	g_data->cam->rank = -1;
-	g_data->cam = save_cam;
+	if (g_data->light->rank != 0)
+	{
+		g_data->light->next = save_light;
+		g_data->light->rank = -1;
+		g_data->light = save_light;
+	}
+	if (g_data->cam->rank != 0)
+	{
+		g_data->cam->next = save_cam;
+		g_data->cam->rank = -1;
+		g_data->cam = save_cam;
+	}
 	return (i);
 }

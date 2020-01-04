@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:34:05 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/22 19:26:34 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/04 02:16:00 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_init(void)
 	g_data->cy->next = NULL;
 	g_data->cy->rank = 0;
 	g_data->tr->next = NULL;
-	g_data->cy->rank = 0;
+	g_data->tr->rank = 0;
 	g_data->obj = "";
 	g_data->check_trans = 0;
 	g_data->check_mir = 0;
@@ -73,7 +73,7 @@ void	ft_set_obj_coord(void)
 
 	ft_go_start_lst("all obj");
 	abs_cam = g_data->cam->coord;
-	while (1)
+	while (g_data->sp->rank != 0)
 	{
 		g_data->sp->coord = ft_vec_diff(g_data->sp->coord, abs_cam);
 		g_data->sp->coord = ft_vect_multiplication(g_data->sp->coord, g_data->cam->dir);
@@ -81,7 +81,7 @@ void	ft_set_obj_coord(void)
 			break ;
 		g_data->sp = g_data->sp->next;
 	}
-	while (1)
+	while (g_data->pl->rank != 0)
 	{
 		g_data->pl->coord = ft_vec_diff(g_data->pl->coord, abs_cam);
 		g_data->pl->coord = ft_vect_multiplication(g_data->pl->coord, g_data->cam->dir);
@@ -89,30 +89,31 @@ void	ft_set_obj_coord(void)
 			break ;
 		g_data->pl = g_data->pl->next;
 	}
-	while (1)
-	{
-		g_data->sq->coord = ft_vec_diff(g_data->sq->coord, abs_cam);
-		g_data->sq->coord = ft_vect_multiplication(g_data->sq->coord, g_data->cam->dir);
-		while (g_data->sq->tr->rank != -1)
-			g_data->sq->tr = g_data->sq->tr->next;
-		g_data->sq->tr = g_data->sq->tr->next;
-		cmp = 0;
-		while (cmp != 2)
+	if (g_data->sq->next != NULL)
+		while (g_data->sq->rank != 0)
 		{
-			g_data->sq->tr->p_1 = ft_vec_diff(g_data->sq->tr->p_1, abs_cam);
-			g_data->sq->tr->p_1 = ft_vect_multiplication(g_data->sq->tr->p_1, g_data->cam->dir);
-			g_data->sq->tr->p_2 = ft_vec_diff(g_data->sq->tr->p_2, abs_cam);
-			g_data->sq->tr->p_2 = ft_vect_multiplication(g_data->sq->tr->p_2, g_data->cam->dir);
-			g_data->sq->tr->p_3 = ft_vec_diff(g_data->sq->tr->p_3, abs_cam);
-			g_data->sq->tr->p_3 = ft_vect_multiplication(g_data->sq->tr->p_3, g_data->cam->dir);
+			g_data->sq->coord = ft_vec_diff(g_data->sq->coord, abs_cam);
+			g_data->sq->coord = ft_vect_multiplication(g_data->sq->coord, g_data->cam->dir);
+			while (g_data->sq->tr->rank != -1)
+				g_data->sq->tr = g_data->sq->tr->next;
 			g_data->sq->tr = g_data->sq->tr->next;
-			cmp++;
+			cmp = 0;
+			while (cmp != 2)
+			{
+				g_data->sq->tr->p_1 = ft_vec_diff(g_data->sq->tr->p_1, abs_cam);
+				g_data->sq->tr->p_1 = ft_vect_multiplication(g_data->sq->tr->p_1, g_data->cam->dir);
+				g_data->sq->tr->p_2 = ft_vec_diff(g_data->sq->tr->p_2, abs_cam);
+				g_data->sq->tr->p_2 = ft_vect_multiplication(g_data->sq->tr->p_2, g_data->cam->dir);
+				g_data->sq->tr->p_3 = ft_vec_diff(g_data->sq->tr->p_3, abs_cam);
+				g_data->sq->tr->p_3 = ft_vect_multiplication(g_data->sq->tr->p_3, g_data->cam->dir);
+				g_data->sq->tr = g_data->sq->tr->next;
+				cmp++;
+			}
+			if (g_data->sq->rank == -1)
+				break ;
+			g_data->sq = g_data->sq->next;
 		}
-		if (g_data->sq->rank == -1)
-			break ;
-		g_data->sq = g_data->sq->next;
-	}
-	while (1)
+	while (g_data->tr->rank != 0)
 	{
 		g_data->tr->p_1 = ft_vec_diff(g_data->tr->p_1, abs_cam);
 		g_data->tr->p_1 = ft_vect_multiplication(g_data->tr->p_1, g_data->cam->dir);
@@ -124,7 +125,7 @@ void	ft_set_obj_coord(void)
 			break ;
 		g_data->tr = g_data->tr->next;
 	}
-	while (1)
+	while (g_data->cy->rank != 0)
 	{
 		g_data->cy->coord = ft_vec_diff(g_data->cy->coord, abs_cam);
 		g_data->cy->coord = ft_vect_multiplication(g_data->cy->coord, g_data->cam->dir);
@@ -132,13 +133,21 @@ void	ft_set_obj_coord(void)
 			break ;
 		g_data->cy = g_data->cy->next;
 	}
-	while (1)
+	if (g_data->light->rank != 0)
 	{
-		g_data->light->coord = ft_vec_diff(g_data->light->coord, abs_cam);
-		g_data->light->coord = ft_vect_multiplication(g_data->light->coord, g_data->cam->dir);
-		if (g_data->cy->rank == -1)
-			break ;
-		g_data->light = g_data->light->next;
+		while (g_data->light->rank != 0)
+		{
+			g_data->light->coord = ft_vec_diff(g_data->light->coord, abs_cam);
+			g_data->light->coord = ft_vect_multiplication(g_data->light->coord, g_data->cam->dir);
+			if (g_data->cy->rank == -1)
+				break ;
+			g_data->light = g_data->light->next;
+		}
+	}
+	if (g_data->light->rank == 0)
+	{
+		g_data->light->color = g_data->ambience.color;
+		g_data->light->ratio = g_data->ambience.ratio;
 	}
 	g_data->cam->coord.x = 1;
 	g_data->cam->coord.y = 1;

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 09:03:50 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/30 17:38:48 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/04 02:06:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ft_check_valid_obj(char *s, int i)
 {
 	if (ft_strncmp(&s[i], "pl", 2) == 0 || ft_strncmp(&s[i], "sp", 2) == 0 ||
 	ft_strncmp(&s[i], "sq", 2) == 0 || ft_strncmp(&s[i], "cy", 2) == 0 ||
-	ft_strncmp(&s[i], "tr", 2) == 0)
+	ft_strncmp(&s[i], "tr", 2) == 0 || ft_strncmp(&s[i], "cu", 2) == 0)
 		return (1);
 	return (0);
 }
@@ -151,6 +151,8 @@ int		ft_objet(char *s, int i)
 			i = ft_obj_is_cylinder(s, i + 2);
 		else if (ft_strncmp(&s[i], "tr", 2) == 0)
 			i = ft_obj_is_triangle(s, i + 2);
+		else
+			return (-1);
 		if (i == -1 || s[i] == '\0')
 			break ;
 		i++;

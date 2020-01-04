@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/21 16:53:28 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/30 18:48:42 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/03 23:25:35 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,21 @@ typedef struct		s_square
 	double				ratio_trans;
 	int					trans;
 }					t_square;
+
+typedef struct		s_pyramide
+{
+	t_vect3				coord;
+	t_vect3				dir;
+	double				height;
+	double				base;
+	t_vect3				color;
+	t_square			*sq;
+	t_triangle			*tr;
+	struct s_pyramide	*next;
+	int					rank;
+	int					spec;
+	double				trans;
+}					t_pyramide;
 
 typedef struct		s_ray
 {

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:22:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/18 12:18:13 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/04 01:00:21 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ char		*ft_read_file(char *av)
 
 void		ft_go_start_lst(char *lst)
 {
-	if (ft_strncmp(lst, "light", 5) == 0 && g_data->light->next)
+	if (ft_strncmp(lst, "light", 5) == 0 && g_data->light->rank != 0)
 	{
+		if (g_data->light->rank == 0)
+			return ;
 		while (g_data->light->rank != -1)
 			g_data->light = g_data->light->next;
 		g_data->light = g_data->light->next;

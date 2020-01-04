@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/30 19:09:15 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/04 02:00:59 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int			ft_inter_light(t_vect3 *p, t_vect3 *n)
 	t_vect3		tmp_p;
 	t_vect3		tmp_n;
 
+	if (g_data->light->rank == 0)
+		return (0);
 	ft_go_start_lst("light");
 	while (1)
 	{
@@ -45,7 +47,7 @@ int			ft_inter_light(t_vect3 *p, t_vect3 *n)
 		g_data->light = g_data->light->next;
 	}
 	ft_go_start_lst("light");
-	if ((g_data->sp->trans == 1 && ft_strncmp(g_data->obj, "sp", 2) == 0) ||
+	if (((g_data->sp->trans == 1 || g_data->sp->spec == 1) && ft_strncmp(g_data->obj, "sp", 2) == 0) ||
 	(g_data->pl->trans == 1 && ft_strncmp(g_data->obj, "pl", 2) == 0) ||
 	(g_data->tr->trans == 1 && ft_strncmp(g_data->obj, "tr", 2) == 0) ||
 	(g_data->sq->trans == 1 && ft_strncmp(g_data->obj, "sq", 2) == 0) ||
@@ -174,8 +176,11 @@ t_vect3		ft_raytrace(t_ray ray, int coord[], int nb)
 		}
 	}
 	else
+	{
 		g_data->pix = ft_vec_mult_scalar(ft_vec_mult_scalar(g_data->ambience.color,
 					g_data->ambience.ratio), 0.8);
+		ft_check_abs_value(&g_data->pix);
+	}
 	return (g_data->pix);
 }
 
