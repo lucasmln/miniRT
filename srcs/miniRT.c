@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 15:25:31 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/04 00:14:50 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/14 09:48:36 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int		main(int ac, char **av)
 		ft_print_error(-1);
 	if (!(g_mlx.win = malloc(sizeof(void*) * 1)))
 		ft_print_error(-1);
-	if (ft_malloc_data() == -1)
-		ft_print_error(-1);
+	ft_malloc_data();
 	len_name = 0;
 	while (av[1][len_name] && av[1][len_name] != '.')
 		len_name++;
@@ -42,9 +41,7 @@ int		main(int ac, char **av)
 	if (!(g_mlx.win = mlx_new_window(g_mlx.ptr, g_data->render[0],
 		g_data->render[1], "miniRT")))
 		ft_print_error(-5);
-	ft_set_obj_coord(g_data);
-	ft_new_img(g_data);
-	ft_draw(g_data);
+	ft_create_all_img();
 	if (ac == 2)
 		ft_put_scene();
 	else if (ac == 3 && !(ft_strcmp(av[2], "-save")))

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:14:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/30 19:22:42 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/16 14:47:44 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,19 +105,6 @@ int		ft_strlen_nb(int nb)
 		nb /= 10;
 	}
 	return (len);
-}
-
-int		ft_pass_double(char *s, int i)
-{
-	if (s[i] == '-' && s[i + 1] <= '9' && s[i + 1] >= '0')
-		i++;
-	while (s[i] >= '0' && s[i] <= '9')
-		i++;
-	if (s[i] == '.')
-		i++;
-	while (s[i] >= '0' && s[i] <= '9')
-		i++;
-	return (i);
 }
 
 int		ft_set_ori(t_vect3 *pos, double aux[3], int param)

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:59:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/04 00:50:51 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/14 09:29:35 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@
 
 typedef struct		s_image
 {
-	void		*img;
-	char		*ptr;
-	int			bpp;
-	int			stride;
-	int			endian;
+	void			*img;
+	char			*ptr;
+	int				bpp;
+	int				stride;
+	int				endian;
+	int				rank;
+	struct s_image	*next;
 }					t_image;
 
 typedef struct		s_data
@@ -144,5 +146,6 @@ double		ft_sqr(double a);
 void		ft_create_bmp(char *name, int len_name);
 void		ft_set_obj_coord();
 void		ft_print_error(int err_nb);
+void	ft_create_all_img(void);
 
 #endif

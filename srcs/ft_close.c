@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:20:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/17 20:16:04 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/16 22:26:30 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,25 @@ int		close_window(int button, int x, int y, void *p)
 	exit(0);
 }
 
+void	ft_change_cam(int key)
+{
+	int		pos;
+
+	pos = g_data->image->rank;
+	if (key == 123)
+		while (g_data->image->next->rank != pos)
+			g_data->image = g_data->image->next;
+	else if (key == 124)
+		g_data->image = g_data->image->next;
+	mlx_put_image_to_window(g_mlx.ptr, g_mlx.win, g_data->image->img, 0, 0);
+}
+
 int		get_key(int key, void *p)
 {
-	if (key == ESC_KEY)
+	printf("%d key\n", key);
+	if (key == 124 || key == 123)
+		ft_change_cam(key);
+	else if (key == ESC_KEY)
 	{
 		mlx_destroy_window(g_mlx.ptr, g_mlx.win);
 		exit(0);

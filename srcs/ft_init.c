@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 15:34:05 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/04 02:16:00 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/16 15:44:10 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,19 @@ void	ft_init(void)
 	g_data->obj = "";
 	g_data->check_trans = 0;
 	g_data->check_mir = 0;
+	g_data->image->rank = 0;
+	g_data->image->next = NULL;
 }
 
 int		ft_malloc_data(void)
 {
-	if (!(g_data->cam = malloc(sizeof(t_cam) * 1)))
+/*	if (!(g_data = malloc(sizeof(struct s_data) * 1)))
+		ft_print_error(-1);
+	if (!(g_mlx.ptr = malloc(sizeof(void*) * 1)))
+		ft_print_error(-1);
+	if (!(g_mlx.win = malloc(sizeof(void*) * 1)))
+		ft_print_error(-1);
+*/	if (!(g_data->cam = malloc(sizeof(t_cam) * 1)))
 		ft_print_error(-1);
 	if (!(g_data->light = malloc(sizeof(t_light) * 1)))
 		ft_print_error(-1);
@@ -48,6 +56,8 @@ int		ft_malloc_data(void)
 	if (!(g_data->cy = malloc(sizeof(t_cylinder) * 1)))
 		ft_print_error(-1);
 	if (!(g_data->tr = malloc(sizeof(t_triangle) * 1)))
+		ft_print_error(-1);
+	if (!(g_data->image = malloc(sizeof(t_image) * 1)))
 		ft_print_error(-1);
 	return (0);
 }
