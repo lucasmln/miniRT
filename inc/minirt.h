@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:59:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/14 09:29:35 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/18 20:38:05 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,11 @@ double		ft_sqr(double a);
 void		ft_create_bmp(char *name, int len_name);
 void		ft_set_obj_coord();
 void		ft_print_error(int err_nb);
-void	ft_create_all_img(void);
+void		ft_create_all_img(void);
+void		ft_go_start_3(char *lst);
+t_vect3		ft_check_transparence(t_ray ray, int coord[2], int nb);
+int			ft_check_mirroir(t_ray ray, int coord[2], int nb);
+int			ft_check_obj_trans(void);
+int			ft_inter_light(t_vect3 *p, t_vect3 *n);
 
 #endif

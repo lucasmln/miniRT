@@ -6,66 +6,81 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 20:18:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2019/12/28 21:50:58 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/18 21:43:58 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
 
-double		ft_for_each_obj(t_ray ray, t_vect3 *p, t_vect3 *n)
+void		ft_get_type_obj_inter(int type_obj)
 {
-	double	res;
-	double	tmp;
-	t_vect3	tmp_p;
-	t_vect3	tmp_n;
-
-	res = 0;
-	ft_go_start_lst("all obj");
-	if (g_data->sp->next)
-		res = ft_for_each_sp(ray, p, n);
-	g_data->color = g_data->sp->color;
-	g_data->obj = "sp";
-	if (g_data->pl->next)
-		tmp = ft_for_each_pl(ray, &tmp_p, &tmp_n);
-	if (!res || (tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
+	if (type_obj == 1)
 	{
-		res = tmp;
-		*p = tmp_p;
-		*n = tmp_n;
 		g_data->obj = "pl";
 		g_data->color = g_data->pl->color;
 	}
-	if (g_data->tr->next)
-		tmp = ft_for_each_tr(ray, &tmp_p, &tmp_n);
-	if (!res || (tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
+	else if (type_obj == 2)
 	{
-		res = tmp;
-		*p = tmp_p;
-		*n = tmp_n;
 		g_data->obj = "tr";
 		g_data->color = g_data->tr->color;
 	}
-	if (g_data->sq->next)
-		tmp = ft_for_each_square(ray, &tmp_p, &tmp_n);
-	if (!res || (tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
+	else if (type_obj == 3)
 	{
-		res = tmp;
-		*p = tmp_p;
-		*n = tmp_n;
 		g_data->obj = "sq";
 		g_data->color = g_data->sq->color;
 	}
-	if (g_data->cy->next)
-		tmp = ft_for_each_cy(ray, &tmp_p, &tmp_n);
-	if (!res || (tmp > 0 && tmp < res && res > 0) || (res <= 0 && tmp > 0))
+	else if (type_obj == 4)
 	{
-		res = tmp;
-		*p = tmp_p;
-		*n = tmp_n;
 		g_data->obj = "cy";
 		g_data->color = g_data->cy->color;
 	}
-	if (res > EPS)
-		return (res);
-	return (0);
+}
+
+void		ft_switch_inter(double res[], t_vect3 tmp_p_n[], t_vect3 *p,
+																	t_vect3 *n)
+{
+	res[0] = res[1];
+	*p = tmp_p_n[0];
+	*n = tmp_p_n[1];
+	ft_get_type_obj_inter(res[2]);
+}
+
+void		ft_for_each_2(t_ray ray, t_vect3 *p, t_vect3 *n, double res[])
+{
+	res[0] = 0;
+	res[2] = 0;
+	ft_go_start_lst("all obj");
+	if (g_data->sp->next)
+		res[0] = ft_for_each_sp(ray, p, n);
+	g_data->color = g_data->sp->color;
+	g_data->obj = "sp";
+}
+
+double		ft_for_each_obj(t_ray ray, t_vect3 *p, t_vect3 *n)
+{
+	double	res[3];
+	t_vect3	tmp_p_n[2];
+
+	ft_for_each_2(ray, p, n, res);
+	if (g_data->pl->next)
+		res[1] = ft_for_each_pl(ray, &tmp_p_n[0], &tmp_p_n[1]);
+	if ((res[2] += 1) && (!res[0] || (res[1] > 0 && res[1] < res[0] &&
+									res[0] > 0) || (res[0] <= 0 && res[1] > 0)))
+		ft_switch_inter(res, tmp_p_n, p, n);
+	if (g_data->tr->next)
+		res[1] = ft_for_each_tr(ray, &tmp_p_n[0], &tmp_p_n[1]);
+	if ((res[2] += 1) && (!res[0] || (res[1] > 0 && res[1] < res[0] &&
+									res[0] > 0) || (res[0] <= 0 && res[1] > 0)))
+		ft_switch_inter(res, tmp_p_n, p, n);
+	if (g_data->sq->next)
+		res[1] = ft_for_each_square(ray, &tmp_p_n[0], &tmp_p_n[1]);
+	if ((res[2] += 1) && (!res[0] || (res[1] > 0 && res[1] < res[0] &&
+									res[0] > 0) || (res[0] <= 0 && res[1] > 0)))
+		ft_switch_inter(res, tmp_p_n, p, n);
+	if (g_data->cy->next)
+		res[1] = ft_for_each_cy(ray, &tmp_p_n[0], &tmp_p_n[1]);
+	if ((res[2] += 1) && (!res[0] || (res[1] > 0 && res[1] < res[0] &&
+									res[0] > 0) || (res[0] <= 0 && res[1] > 0)))
+		ft_switch_inter(res, tmp_p_n, p, n);
+	return (res[0] > EPS ? res[0] : 0);
 }
