@@ -6,11 +6,19 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:18:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/18 20:52:23 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/19 16:39:53 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minirt.h"
+
+void	ft_put_scene(void)
+{
+	mlx_put_image_to_window(g_mlx.ptr, g_mlx.win, g_data->image->img, 0, 0);
+	mlx_key_hook(g_mlx.win, get_key, 0);
+	mlx_hook(g_mlx.win, 17, 0, close_window, g_mlx.win);
+	mlx_loop(g_mlx.ptr);
+}
 
 int		main(int ac, char **av)
 {
@@ -39,12 +47,4 @@ int		main(int ac, char **av)
 	else if (ac == 3 && !(ft_strcmp(av[2], "-save")))
 		ft_create_bmp(av[1], len_name);
 	return (0);
-}
-
-void	ft_put_scene(void)
-{
-	mlx_put_image_to_window(g_mlx.ptr, g_mlx.win, g_data->image->img, 0, 0);
-	mlx_key_hook(g_mlx.win, get_key, 0);
-	mlx_hook(g_mlx.win, 17, 0, close_window, g_mlx.win);
-	mlx_loop(g_mlx.ptr);
 }
