@@ -1,1 +1,2 @@
-gcc -framework OpenGL -framework Appkit srcs/*.c parse/*.c libft.a minilibx_opengl/libmlx.a
+gcc -framework OpenGL -framework Appkit -Wall -Werror -Wextra srcs/*/*.c srcs/minirt.c minilibx_opengl/libmlx.a
+

@@ -6,7 +6,7 @@
 #    By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/01/19 15:50:41 by lmoulin           #+#    #+#              #
-#    Updated: 2020/01/19 16:03:14 by lmoulin          ###   ########.fr        #
+#    Updated: 2020/01/24 18:00:59 by lmoulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC = 		image_window/ft_close.c image_window/ft_create_bmp.c \
 			raytrace/ft_draw_utils.c \
 			\
 			utils/ft_init.c utils/minirt_utils.c utils/ft_utils_2.c \
+			utils/ft_no_leaks.c \
 			\
 			minirt.c
 

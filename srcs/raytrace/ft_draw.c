@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 15:16:01 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/24 18:02:55 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ t_vect3		ft_raytrace(t_ray ray, int coord[], int nb)
 			g_data->pix = ft_get_pixel_color(g_data->inter.p, g_data->inter.n);
 			if (g_data->check_trans != 1 && ft_inter_light(&g_data->inter.p,
 															&g_data->inter.n))
+			{
 				ft_reset_values(&g_data->pix);
+			}
 		}
 	}
 	else

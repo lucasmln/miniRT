@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:59:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 16:41:46 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/24 17:55:45 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ t_vect3			ft_sub_vector(t_vect3 a, t_vect3 b);
 double			ft_to_radian(double degre);
 double			ft_distance(t_vect3 a, t_vect3 b);
 double			ft_sqr(double a);
+t_vect3			ft_vect_add_scalar(t_vect3 v, double d);
 
 /*
  ** objects
@@ -176,5 +177,6 @@ void			ft_go_start_2(char *lst);
 void			ft_go_start_3(char *lst);
 int				ft_set_color(t_vect3 c);
 char			*ft_read_file(char *av);
+void		ft_no_leaks(void);
 
 #endif

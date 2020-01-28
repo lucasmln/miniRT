@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 20:20:20 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 15:01:08 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/21 11:25:34 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int			ft_set_ambience_intensity(t_vect3 *ambiente, t_vect3 *intense)
 																		255);
 	intense->z = 100000000 * g_data->light->ratio * (g_data->light->color.z /
 																		255);
+	if (ambiente->x < 0.001 && ambiente->y < 0.001 && ambiente->z < 0.001)
+		*ambiente = ft_vect_add_scalar(*ambiente, 0.001);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 12:56:02 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 15:09:08 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/19 17:25:28 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ double		ft_for_each_cy(t_ray ray, t_vect3 *p, t_vect3 *n)
 	while (1)
 	{
 		hit = ft_intersection_ray_cy(ray, g_data->cy);
-		if (hit > 0)
+		if (hit > EPS)
 			if (min == -1 || fmin(hit, min) == hit)
 			{
 				*p = ft_vec_add(ft_vec_mult_scalar(ray.dir, hit), ray.origine);

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:44:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 16:22:22 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/23 13:38:34 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,5 @@ void	ft_change_cam(int key)
 			g_data->image = g_data->image->next;
 	else if (key == 124)
 		g_data->image = g_data->image->next;
-	printf("%d\n", g_data->image->rank);
 	mlx_put_image_to_window(g_mlx.ptr, g_mlx.win, g_data->image->img, 0, 0);
 }

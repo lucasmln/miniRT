@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:18:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 15:20:45 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/21 11:06:55 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char		*ft_read_file(char *av)
 	while ((ret = read(fd, buf, BUF_SIZE)) > 0)
 		size += ret;
 	close(fd);
+	if (size == 0)
+		ft_print_error(-3);
 	fd = open(av, O_RDONLY);
 	if (!(param = malloc(sizeof(char) * (size + 1))))
 		ft_print_error(-1);

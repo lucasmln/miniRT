@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:42:05 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 16:08:52 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/21 11:21:29 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,12 @@ t_vect3		ft_vect_multiplication(t_vect3 v1, t_vect3 v2)
 	res.y = v1.y * v2.y;
 	res.z = v1.z * v2.z;
 	return (res);
+}
+
+t_vect3		ft_vect_add_scalar(t_vect3 v, double d)
+{
+	v.x += d;
+	v.y += d;
+	v.z += d;
+	return (v);
 }

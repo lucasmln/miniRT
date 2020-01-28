@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:20:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 15:03:49 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/28 12:53:26 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 int		close_window(void)
 {
+	ft_no_leaks();
 	mlx_destroy_window(g_mlx.ptr, g_mlx.win);
+//	free(g_mlx.ptr);
+//	free(g_mlx.win);
+	while (1);
 	exit(0);
 }
 
@@ -24,8 +28,7 @@ int		get_key(int key)
 		ft_change_cam(key);
 	else if (key == ESC_KEY)
 	{
-		mlx_destroy_window(g_mlx.ptr, g_mlx.win);
-		exit(0);
+		close_window();
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 20:18:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 14:40:50 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/21 11:03:21 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void		ft_get_type_obj_inter(int type_obj)
 void		ft_switch_inter(double res[], t_vect3 tmp_p_n[], t_vect3 *p,
 																	t_vect3 *n)
 {
+//	printf("t = %lf, obj = %s, color = %lf, %lf, %lf\n", res[0], g_data->obj, g_data->color.x, g_data->color.y, g_data->color.z);
 	res[0] = res[1];
 	*p = tmp_p_n[0];
 	*n = tmp_p_n[1];
@@ -47,15 +48,25 @@ void		ft_switch_inter(double res[], t_vect3 tmp_p_n[], t_vect3 *p,
 
 void		ft_for_each_2(t_ray ray, t_vect3 *p, t_vect3 *n, double res[])
 {
-	res[0] = 0;
+	t_vect3		tmp_p;
+	t_vect3		tmp_n;
+
+	res[0] = -1;
 	res[2] = 0;
 	ft_go_start_lst("all obj");
 	if (g_data->sp->next)
-		res[0] = ft_for_each_sp(ray, p, n);
-	g_data->color = g_data->sp->color;
-	g_data->obj = "sp";
+	{
+		res[1] = ft_for_each_sp(ray, &tmp_p, &tmp_n);
+		if (res[1] > 0)
+		{
+			res[0] = res[1];
+			*p = tmp_p;
+			*n = tmp_n;
+			g_data->color = g_data->sp->color;
+			g_data->obj = "sp";
+		}
+	}
 }
-
 double		ft_for_each_obj(t_ray ray, t_vect3 *p, t_vect3 *n)
 {
 	double	res[3];
