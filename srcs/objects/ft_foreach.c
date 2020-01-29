@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 20:18:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/21 11:03:21 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/29 17:16:05 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void		ft_get_type_obj_inter(int type_obj)
 void		ft_switch_inter(double res[], t_vect3 tmp_p_n[], t_vect3 *p,
 																	t_vect3 *n)
 {
-//	printf("t = %lf, obj = %s, color = %lf, %lf, %lf\n", res[0], g_data->obj, g_data->color.x, g_data->color.y, g_data->color.z);
 	res[0] = res[1];
 	*p = tmp_p_n[0];
 	*n = tmp_p_n[1];
@@ -75,22 +74,22 @@ double		ft_for_each_obj(t_ray ray, t_vect3 *p, t_vect3 *n)
 	ft_for_each_2(ray, p, n, res);
 	if (g_data->pl->next)
 		res[1] = ft_for_each_pl(ray, &tmp_p_n[0], &tmp_p_n[1]);
-	if ((res[2] += 1) && (!res[0] || (res[1] > 0 && res[1] < res[0] &&
+	if ((res[2] += 1) && (res[0] < EPS || (res[1] > 0 && res[1] < res[0] &&
 									res[0] > 0) || (res[0] <= 0 && res[1] > 0)))
 		ft_switch_inter(res, tmp_p_n, p, n);
 	if (g_data->tr->next)
 		res[1] = ft_for_each_tr(ray, &tmp_p_n[0], &tmp_p_n[1]);
-	if ((res[2] += 1) && (!res[0] || (res[1] > 0 && res[1] < res[0] &&
+	if ((res[2] += 1) && (res[0] < EPS || (res[1] > 0 && res[1] < res[0] &&
 									res[0] > 0) || (res[0] <= 0 && res[1] > 0)))
 		ft_switch_inter(res, tmp_p_n, p, n);
 	if (g_data->sq->next)
 		res[1] = ft_for_each_square(ray, &tmp_p_n[0], &tmp_p_n[1]);
-	if ((res[2] += 1) && (!res[0] || (res[1] > 0 && res[1] < res[0] &&
+	if ((res[2] += 1) && (res[0] < EPS || (res[1] > 0 && res[1] < res[0] &&
 									res[0] > 0) || (res[0] <= 0 && res[1] > 0)))
 		ft_switch_inter(res, tmp_p_n, p, n);
 	if (g_data->cy->next)
 		res[1] = ft_for_each_cy(ray, &tmp_p_n[0], &tmp_p_n[1]);
-	if ((res[2] += 1) && (!res[0] || (res[1] > 0 && res[1] < res[0] &&
+	if ((res[2] += 1) >= 0 && (res[0] < EPS || (res[1] > 0 && res[1] < res[0] &&
 									res[0] > 0) || (res[0] <= 0 && res[1] > 0)))
 		ft_switch_inter(res, tmp_p_n, p, n);
 	return (res[0] > EPS ? res[0] : 0);

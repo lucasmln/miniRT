@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:44:36 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/23 13:38:34 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/28 16:33:51 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@ void	ft_create_all_img(void)
 
 void	ft_new_img(void)
 {
-	t_image		*img;
-
-	if (!(img = malloc(sizeof(t_image))))
-		ft_print_error(-1);
 	g_data->image->img = mlx_new_image(g_mlx.ptr, g_data->render[0],
 															g_data->render[1]);
 	if (g_data->image->img == NULL)

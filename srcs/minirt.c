@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/18 20:18:47 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/21 11:05:09 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/28 16:37:12 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_put_scene(void)
 
 int		main(int ac, char **av)
 {
-	char	*file;
 	int		len_name;
 
 	if (ac <= 1 || ac >= 4)
@@ -33,8 +32,8 @@ int		main(int ac, char **av)
 		len_name++;
 	if (ft_strcmp(&av[1][len_name], ".rt"))
 		ft_print_error(-2);
-	file = ft_read_file(av[1]);
-	if (ft_check_file(file) == -1)
+	g_data->file = ft_read_file(av[1]);
+	if (ft_check_file(g_data->file) == -1)
 		ft_print_error(-3);
 	if (!(g_mlx.ptr = mlx_init()))
 		ft_print_error(-4);

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/22 12:05:22 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 15:16:12 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/28 13:17:56 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void		ft_save_bmp_img(char *bmp_name)
 		ft_print_error(-7);
 	write(fd, bmp, size_bmp + 122);
 	close(fd);
+	free(bmp);
+	bmp = NULL;
 }
 
 void		ft_create_bmp(char *name, int len_name)
@@ -89,4 +91,6 @@ void		ft_create_bmp(char *name, int len_name)
 	bmp_name[i++] = 'p';
 	bmp_name[i] = '\0';
 	ft_save_bmp_img(bmp_name);
+	free(bmp_name);
+	bmp_name = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:20:49 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/24 18:02:55 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/29 21:41:24 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ t_vect3		ft_raytrace(t_ray ray, int coord[], int nb)
 			if (g_data->check_trans != 1 && ft_inter_light(&g_data->inter.p,
 															&g_data->inter.n))
 			{
-				ft_reset_values(&g_data->pix);
+				if (g_data->check == 1)
+					printf("g = %lf\n", inter);
+				g_data->pix = ft_vec_div_scalar(ft_vec_add(ft_vec_mult_scalar(g_data->pix, g_data->ambience.ratio / 2), ft_vec_mult_scalar(g_data->ambience.color, g_data->ambience.ratio / 2)), 2);
 			}
 		}
 	}
@@ -92,6 +94,9 @@ void		ft_draw(void)
 		coord[1] = 0;
 		while (coord[1] < g_data->render[1])
 		{
+			g_data->check = 0;
+			if (coord[0] == 700 && coord[1] == 470)
+				g_data->check = 1;
 			ft_reset_values(&g_data->pix);
 			ft_create_ray(coord[0], coord[1]);
 			g_data->pix = ft_raytrace(g_data->ray, coord, 5);
@@ -100,4 +105,5 @@ void		ft_draw(void)
 		}
 		coord[0]++;
 	}
+	ft_put_pixel_to_img(700, 470, 0xff0000);
 }

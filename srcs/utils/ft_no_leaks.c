@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/24 17:49:06 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/28 12:51:55 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/28 16:39:04 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void		ft_no_leaks(void)
 			g_data->sp = g_data->sp->next;
 			free(tmp->sp);
 			tmp->sp = NULL;
-			printf("%d rank sp\n", g_data->sp->rank);
 			if (tmp->check == -1)
 				break ;
 		}
@@ -106,11 +105,11 @@ void		ft_no_leaks(void)
 	if (g_data->cam->next)
 		while (1)
 		{
-			tmp->cam = g_data->cam;
+			tmp->cam = g_data->cam->next;
 			tmp->check = g_data->cam->rank;
-			g_data->cam = g_data->cam->next;
-			free(tmp->cam);
-			tmp->cam = NULL;
+			free(g_data->cam);
+			g_data->cam = NULL;
+			g_data->cam = tmp->cam;
 			if (tmp->check == -1)
 				break ;
 		}
@@ -135,14 +134,19 @@ void		ft_no_leaks(void)
 		free(g_data->light);
 		g_data->light = NULL;
 	}
-	if (g_data->image->next)
+/*	if (g_data->image->next)
 		while (1)
 		{
-			tmp->image = g_data->image;
+			printf("img %d = %p\n", g_data->image->rank, g_data->image->ptr);
+			tmp->image = g_data->image->next;
 			tmp->check = g_data->image->rank;
-			g_data->image = g_data->image->next;
-			free(tmp->image);
-			tmp->image = NULL;
+			free(g_data->image->ptr);
+			free(g_data->image->img);
+			free(g_data->image);
+			g_data->image->img = NULL;
+			g_data->image->ptr = NULL;
+			g_data->image = NULL;
+			g_data->image = tmp->image;
 			if (tmp->check == -1)
 				break ;
 		}
@@ -150,13 +154,11 @@ void		ft_no_leaks(void)
 	{
 		free(g_data->image);
 		g_data->image = NULL;
-	}
-//	free(g_data);
-//	g_data = NULL;
-	free(g_mlx.ptr);
-	g_mlx.ptr = NULL;
-	free(g_mlx.win);
-	g_mlx.win = NULL;
+	}*/
 	free(tmp);
 	tmp = NULL;
+	free(g_data->file);
+	g_data->file = NULL;
+	free(g_data);
+	g_data = NULL;
 }
