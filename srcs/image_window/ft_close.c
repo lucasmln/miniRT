@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 15:20:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/29 19:28:55 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/30 13:41:38 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		close_window(void)
 {
-	//ft_no_leaks();
 	mlx_destroy_window(g_mlx.ptr, g_mlx.win);
 	mlx_destroy_image(g_mlx.ptr, g_data->image->img);
 	g_mlx.ptr = NULL;

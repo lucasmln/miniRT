@@ -5,27 +5,18 @@
 #                                                     +:+ +:+         +:+      #
 #    By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/01/30 12:15:20 by lmoulin           #+#    #+#              #
-#    Updated: 2020/01/30 12:35:25 by lmoulin          ###   ########.fr        #
+#    Created: 2020/01/19 15:50:41 by lmoulin           #+#    #+#              #
+#    Updated: 2020/01/30 12:15:43 by lmoulin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC =			gcc
 
-FLAGS =			-Wall -Wextra -Werror
+NAME =	miniRT
 
-RM =			rm -rf
+SRCS_PATH =		./srcs/
+OBJ_PATH =		./obj/
 
-DIR_HEADERS =	./inc/
-
-DIR_SRCS =		./srcs/
-
-DIR_OBJS =		./
-
-FRAME = -lmlx -framework OpenGl -framework AppKit
-
-
-SRC =		image_window/ft_close.c image_window/ft_create_bmp.c \
+SRC_NAME = 		image_window/ft_close.c image_window/ft_create_bmp.c \
 			image_window/ft_image.c \
 			\
 			math_vector/ft_calcul_vect.c math_vector/ft_calcul_vect2.c \
@@ -48,36 +39,33 @@ SRC =		image_window/ft_close.c image_window/ft_create_bmp.c \
 			\
 			minirt.c
 
+OBJ_NAME =	$(SRC_NAME:.c=.o)
 
-SRCS =			$(addprefix $(DIR_SRCS), $(SRC))
+SRCS =	$(addprefix $(SRCS_PATH), $(SRC_NAME))
+OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 
-COMPIL =		$(FLAGS) $(FRAME)
+CC =	gcc
 
-OBJS =			$(SRCS:.c=.o)
+FRAME = 	-framework OpenGL -framework AppKit
 
-NAME =			miniRT
+LMINX =		-I /usr/local/include -L /usr/local/lib -lmlx
 
-all:			$(NAME)
+CFLAGS =	-Wall -Wextra -Werror
 
-$(NAME) :		$(OBJS)
-				$(CC) $(COMPIL) -I $(DIR_HEADERS) $(OBJS) -o $(NAME)
+all: $(NAME)
 
-%.o: %.c
-				@gcc $(FLAGS) -I $(DIR_HEADERS) -c $< -o $@
-				@echo "Compiled "$<" successfully!"
+.c.o:
+	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-bonus:
+$(NAME):	$(OBJ)
+	gcc $(FRAME) $(CFLAGS) $(LMINX) -o $(NAME) $(OBJS)
 
-norme:
-				norminette $(DIR_SRCS)
-				norminette $(DIR_HEADERS)
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+	@$(CC) -o $@ -c $<
 
 clean:
-				$(RM) $(OBJS)
-
-fclean:			clean
-				$(RM) $(NAME)
-
-re:				fclean all
-
-.PHONY:			all, clean, fclean, re, bonus
+	rm -f srcs/*.o srcs/*/*.o
+fclean: clean
+	rm -f $(NAME)
+re: fclean all

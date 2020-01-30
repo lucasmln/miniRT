@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:59:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/28 15:42:26 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/30 12:31:18 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define EPS 0.000001
 
 # include "minirt_struct.h"
-# include "../minilibx_opengl/mlx.h"
+# include <mlx.h>
 # include <math.h>
 # include <stdlib.h>
 # include <fcntl.h>
