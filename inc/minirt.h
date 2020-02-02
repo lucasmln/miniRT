@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/30 15:59:15 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/30 12:31:18 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/30 15:28:53 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void			ft_go_start_2(char *lst);
 void			ft_go_start_3(char *lst);
 int				ft_set_color(t_vect3 c);
 char			*ft_read_file(char *av);
-void		ft_no_leaks(void);
+void			ft_no_leaks(void);
+void			ft_no_leaks_6(t_data *tmp);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 20:18:57 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/29 17:16:05 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/30 15:13:10 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void		ft_for_each_2(t_ray ray, t_vect3 *p, t_vect3 *n, double res[])
 		}
 	}
 }
+
 double		ft_for_each_obj(t_ray ray, t_vect3 *p, t_vect3 *n)
 {
 	double	res[3];

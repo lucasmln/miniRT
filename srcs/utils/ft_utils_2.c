@@ -6,7 +6,7 @@
 /*   By: lmoulin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/19 15:21:10 by lmoulin           #+#    #+#             */
-/*   Updated: 2020/01/19 15:22:27 by lmoulin          ###   ########.fr       */
+/*   Updated: 2020/01/30 15:14:44 by lmoulin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ double		ft_atod(char *s)
 	return (nb * neg);
 }
 
-int		ft_atoi(const char *str)
+int			ft_atoi(const char *str)
 {
 	long	i;
 	long	negative;
@@ -67,7 +67,7 @@ int		ft_atoi(const char *str)
 	return (nb * negative);
 }
 
-int		ft_strcmp(const char *s1, const char *s2)
+int			ft_strcmp(const char *s1, const char *s2)
 {
 	unsigned int	i;
 	int				res;
@@ -83,7 +83,7 @@ int		ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-int		ft_strncmp(const char *s1, const char *s2, size_t n)
+int			ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t			i;
 	int				res;
