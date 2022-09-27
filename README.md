@@ -70,4 +70,4 @@ sq    0,-10,5 1,1,0 5  255,0,255 t 1
 tr    10,4,-70   20,4,-70   15,-4,-70    0,0,255
 ```
 
-![alt text](https://github.com/lucasmln/miniRT/blob/master/image.jpg?raw=true)
+![alt text](https://github.com/lucasmln/miniRT/blob/master/scenes/example.bmp?raw=true)
