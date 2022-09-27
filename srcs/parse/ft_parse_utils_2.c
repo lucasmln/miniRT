@@ -34,21 +34,34 @@ int		ft_pass_double(char *s, int i)
 	return (i);
 }
 
+void	skip_comment(char *s, int *i)
+{
+	while (s[*i] && (s[*i] == '#' || s[*i] == ' ' || s[*i] == '\n'))
+	{
+		while (s[*i] && s[*i] != '\n')
+			(*i)++;
+		(*i)++;
+	}
+}
+
 int		ft_check_file(char *s)
 {
 	int		i;
 
 	i = 0;
+	skip_comment(s, &i);
 	if (s[i] == 'R' || s[i] == 'A')
+	{
 		if ((i = ft_ambience_and_res(s, i)) == -1)
 			return (-1);
-	while (s[i] == '\n')
-		i++;
+	}
+	else
+		return (-1);
+	skip_comment(s, &i);
 	if (s[i] == 'c' || s[i] == 'l')
 		if ((i = ft_cam_and_light(s, i)) == -1)
 			return (-1);
-	while (s[i] == '\n')
-		i++;
+	skip_comment(s, &i);
 	if (ft_check_valid_obj(s, i) == 1)
 		if ((i = ft_objet(s, i)) == -1)
 			return (-1);
