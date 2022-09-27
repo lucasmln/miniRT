@@ -22,7 +22,9 @@ DIR_SRCS =		./srcs/
 
 DIR_OBJS =		./
 
-FRAME = -lmlx -framework OpenGl -framework AppKit
+LMINX = 	./minilibx_opengl/libmlx.a
+
+FRAME =		-framework OpenGl -framework AppKit
 
 
 SRC =		image_window/ft_close.c image_window/ft_create_bmp.c \
@@ -59,14 +61,17 @@ NAME =			miniRT
 
 all:			$(NAME)
 
-$(NAME) :		$(OBJS)
-				$(CC) $(COMPIL) -I $(DIR_HEADERS) $(OBJS) -o $(NAME)
+$(NAME) :		mlxlib $(OBJS)
+				$(CC) $(COMPIL) -I $(DIR_HEADERS) $(OBJS) $(LMINX) -o $(NAME)
 
 %.o: %.c
 				@gcc $(FLAGS) -I $(DIR_HEADERS) -c $< -o $@
 				@echo "Compiled "$<" successfully!"
 
 bonus:
+
+mlxlib:
+	@[ -f $(LMINX) ] || (echo "Make mlx.a" && make -C ./minilibx_opengl/)
 
 norme:
 				norminette $(DIR_SRCS)
